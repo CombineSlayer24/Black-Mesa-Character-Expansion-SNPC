@@ -7,11 +7,7 @@ assignees: ''
 
 ---
 
-# Checklist (Not mandatory, but it helps me)
-*Mark the boxes down below to help me with squashing bugs*
-
-`To tick a box, put a x in the brackets [x]`
-
+# Checklist
   - [ ] I have checked that my issue [doesn't exist yet](https://github.com/CombineSlayer24/Black-Mesa-Character-Expansion-SNPC/issues).
   - [ ] I am able to reproduce this issue with provided description below.
   - [ ] I have checked without any addons loaded except for VJ Base and VJ BMCE
@@ -25,7 +21,5 @@ assignees: ''
 NOTE: *Github version of VJ Base is the more up-to-date version, as it's constantly getting updated, rather than the workshop version that has the complete stable version.*
 
 # Description
-*Write a full detailed description of the bug that you encountered. A full depth detail of the bug will greatly help me.*
 
 # Steps to reproduce
-*Add steps with a number value (step 1, step 2) to help me replicate the bug*

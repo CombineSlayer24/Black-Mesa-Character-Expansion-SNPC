@@ -1,0 +1,8 @@
+"Teeth"
+{
+	"$baseTexture" "models\undead\base_male/base_m_28_d"
+	"$bumpmap" "models\undead\base_male/base_m_n"
+	"$model" 1
+	"$clientshader" "MouthShader"
+	"$halflambert" 1
+}

@@ -60,7 +60,7 @@ if LNRExists == false then
 					chat.AddText(lightblue,"•       LNR Download:")
 					chat.AddText(white,"• https://steamcommunity.com/sharedfiles/filedetails/?id=1879776316")
 					chat.AddText(vjorange,"-----------------------------")
-					local dingaling_sound = CreateSound(game.GetWorld(), "vj_bmce_zmb/barney_wetrustedyou07.wav")
+					local dingaling_sound = CreateSound(game.GetWorld(), "vj_bmce_zmb/vocals/extra/slam_04.wav")
 					dingaling_sound:SetSoundLevel(0)
 					dingaling_sound:Play()
 				end)

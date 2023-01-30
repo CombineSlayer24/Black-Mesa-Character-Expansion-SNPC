@@ -467,6 +467,10 @@ function ENT:OnRemove()
 			v:EmitSound("vj_bmce_zmb/map_spawner/nz_zmb_amb_sfx/nz_zombie_protoype/amb_spooky_20.mp3",45)
 			v:EmitSound("vj_bmce_zmb/map_spawner/removed.mp3", 51)
 
+			timer.Create("vj_bmce_undead_mapspawn_secondlaugh",12,1,function()
+				v:EmitSound("vj_bmce_zmb/map_spawner/removed_laugh.mp3", 51)
+			end)
+
 			if remove_taunt_message == 1 then
 				v:PrintMessage(HUD_PRINTTALK, "What's the matter? Too scared?")
 			elseif remove_taunt_message == 2 then

@@ -523,7 +523,7 @@ local SoundTbl_DeathGib =
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetNPCBodyGroups()
 	if self:GetClass() == "npc_vj_bmce_und_run_sci_male" then
-		self:SetSkin(math.random(0,5))
+		self:SetSkin(math.random(0,10))
 		self:SetBodygroup(1,math.random(0,1)) -- Body
 		self:SetBodygroup(2,math.random(0,7)) -- Ties
 		if math.random(1,3) == 1 then // (less chance for hat)
@@ -532,7 +532,7 @@ function ENT:SetNPCBodyGroups()
 	end
 
 	if self:GetClass() == "npc_vj_bmce_und_run_sci_cas_male" then
-		self:SetSkin(math.random(0,5))
+		self:SetSkin(math.random(0,10))
 		self:SetBodygroup(1,math.random(0,1)) -- Arms
 
 		if math.random(1,3) == 1 then // (less chance for hat)
@@ -661,13 +661,13 @@ function ENT:SetCrawler()
 end	
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnPreInitialize() -- Picks random voices once a SNPC is spawned.
-	local zmb_cod_voices = math.random(1,2)
+	local zmb_voices = math.random(3,4)
 	local faceflex_rnd = math.random(1,5)
 	
 	if faceflex_rnd == 1 then //  Default Open Face
 		self:SetFlexWeight(43,0.5) -- Lower Lip
 		self:SetFlexWeight(44,1.25) -- Brow H
-		self:SetFlexWeight(79,0.5)-- Cigar
+		self:SetFlexWeight(35,0.62) -- Bite
 	
 	elseif faceflex_rnd == 2 then //  Less exaggerated default face
 		self:SetFlexWeight(43,0.2) -- Lower Lip
@@ -688,7 +688,7 @@ function ENT:CustomOnPreInitialize() -- Picks random voices once a SNPC is spawn
 		self:SetFlexWeight(44,1.6) -- Brow H
 	end
 
-	if zmb_cod_voices == 1 then --  Classic Call Of Duty Zombie sounds
+	if zmb_voices == 1 then --  Classic Call Of Duty Zombie sounds
 		self.SoundTbl_Alert = 
 		{
 			"vj_bmce_zmb/vocals/classic/attack/attack1.wav",
@@ -863,7 +863,7 @@ function ENT:CustomOnPreInitialize() -- Picks random voices once a SNPC is spawn
 			"vj_bmce_zmb/vocals/classic/attack2.wav",
 			"vj_bmce_zmb/vocals/classic/attack3.wav"
 		}
-	elseif zmb_cod_voices == 2 then --  Modern Call Of Duty Zombie sounds
+	elseif zmb_voices == 2 then --  Modern Call Of Duty Zombie sounds
 		self.SoundTbl_Alert = 
 		{
 			"vj_bmce_zmb/vocals/modern/taunt/zm_mod.all_62.mp3",
@@ -1038,6 +1038,429 @@ function ENT:CustomOnPreInitialize() -- Picks random voices once a SNPC is spawn
 			"vj_bmce_zmb/vocals/zm_mod.all_115.wav",
 			"vj_bmce_zmb/vocals/zm_mod.all_116.wav",
 			"vj_bmce_zmb/vocals/zm_mod.all_117.wav"
+		}
+		self.SoundTbl_MeleeAttackMiss =
+		{
+			"vj_bmce_zmb/vocals/classic/attack1.wav",
+			"vj_bmce_zmb/vocals/classic/attack2.wav",
+			"vj_bmce_zmb/vocals/classic/attack3.wav"
+		}
+	elseif zmb_voices == 3 then -- RDR Undead (DLC6) Zombie Male 01
+		self.SoundTbl_Alert = 
+		{
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_12.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_13.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_14.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_15.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_16.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_17.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_18.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_19.wav"
+		}
+		self.SoundTbl_Idle = 
+		{
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_12.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_13.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_14.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_15.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_16.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_17.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_18.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_19.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_20.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_21.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_22.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_23.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_24.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_25.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_26.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_27.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_28.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_29.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_30.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_31.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_32.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_33.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_34.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_35.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_36.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_37.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_38.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_39.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/idle_40.wav"
+		}
+		self.SoundTbl_CombatIdle = 
+		{
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_12.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_13.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_14.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_15.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_16.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_17.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_18.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_19.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_20.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_21.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_22.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_23.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_24.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_25.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_26.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_27.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_28.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_29.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_30.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_31.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_32.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_33.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_34.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_35.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_36.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_37.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_38.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_39.wav"
+		}
+		self.SoundTbl_Suppressing = 
+		{
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_12.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_13.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_14.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_15.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_16.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_17.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_18.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_19.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_20.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_21.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_22.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_23.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_24.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_25.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_26.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_27.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_28.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_29.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_30.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_31.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_32.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_33.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_34.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_35.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_36.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_37.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_38.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attacking_39.wav"
+		}
+		self.SoundTbl_BeforeMeleeAttack = 
+		{
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_12.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_13.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_14.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_15.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_16.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_17.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_18.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_01/attack_noise_19.wav"
+		}
+		self.SoundTbl_Death =
+		{
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_12.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_12.wav"
+		}
+		self.SoundTbl_MeleeAttack =
+		{
+			"vj_bmce_zmb/vocals/classic/attack1.wav",
+			"vj_bmce_zmb/vocals/classic/attack2.wav",
+			"vj_bmce_zmb/vocals/classic/attack3.wav"
+		}
+		self.SoundTbl_MeleeAttackMiss =
+		{
+			"vj_bmce_zmb/vocals/classic/attack1.wav",
+			"vj_bmce_zmb/vocals/classic/attack2.wav",
+			"vj_bmce_zmb/vocals/classic/attack3.wav"
+		}
+	elseif zmb_voices == 4 then -- RDR Undead (DLC6) Zombie Male 02
+		self.SoundTbl_Alert = 
+		{
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_12.wav"
+		}
+		self.SoundTbl_Idle = 
+		{
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/roar_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_12.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_13.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_14.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_15.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_16.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_17.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_18.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_19.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_20.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_21.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_22.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_23.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_24.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_25.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_26.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_27.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_28.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_29.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_30.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_31.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_32.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_33.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_34.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/idle_35.wav"
+		}
+		self.SoundTbl_CombatIdle = 
+		{
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_12.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_13.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_14.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_15.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_16.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_17.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_18.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_19.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_20.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_21.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_22.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_23.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_24.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_25.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_26.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_27.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_28.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_29.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_30.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_31.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_32.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_33.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_34.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_35.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_36.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_37.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_38.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_39.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_40.wav"
+		}
+		self.SoundTbl_Suppressing = 
+		{
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_12.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_13.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_14.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_15.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_16.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_17.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_18.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_19.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_20.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_21.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_22.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_23.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_24.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_25.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_26.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_27.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_28.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_29.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_30.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_31.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_32.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_33.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_34.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_35.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_36.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_37.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_38.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_39.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attacking_40.wav"
+		}
+		self.SoundTbl_BeforeMeleeAttack = 
+		{
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male_02/attack_noise_12.wav"
+		}
+		self.SoundTbl_Death =
+		{
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_12.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_01.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_02.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_03.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_04.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_05.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_06.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_07.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_08.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_09.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_10.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_11.wav",
+			"vj_bmce_zmb/vocals/dlc6/zombie_male/death_far_12.wav"
+		}
+		self.SoundTbl_MeleeAttack =
+		{
+			"vj_bmce_zmb/vocals/classic/attack1.wav",
+			"vj_bmce_zmb/vocals/classic/attack2.wav",
+			"vj_bmce_zmb/vocals/classic/attack3.wav"
 		}
 		self.SoundTbl_MeleeAttackMiss =
 		{

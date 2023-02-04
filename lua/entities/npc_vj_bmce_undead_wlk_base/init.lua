@@ -610,7 +610,23 @@ function ENT:SetCrawler()
 }
     self:CapabilitiesRemove(bit.bor(CAP_MOVE_JUMP))
 	self:CapabilitiesRemove(bit.bor(CAP_MOVE_CLIMB))
-end	
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:Controller_Initialize(ply)
+	if self.LNR_Walker then
+		net.Start("vj_lnr_walker_hud")
+			net.WriteBool(false)
+			net.WriteEntity(self)
+		net.Send(ply)
+
+		function self.VJ_TheControllerEntity:CustomOnStopControlling()
+			net.Start("vj_lnr_walker_hud")
+				net.WriteBool(true)
+				net.WriteEntity(self)
+			net.Send(ply)
+		end
+	end
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnPreInitialize() -- Picks random voices once a SNPC is spawned.
 	local zmb_voices = math.random(3,4)
@@ -2488,7 +2504,6 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,corpseEnt)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink_AIEnabled()
-
 	if GetConVar("vj_bmce_zmb_deathrandom"):GetInt() == 1 then
 		if CurTime() > self.Zombie_EnergyTime then
 			self:PlaySoundSystem("Death", SoundTbl_DeathGib)

@@ -658,7 +658,21 @@ function ENT:SetCrawler()
 }
     self:CapabilitiesRemove(bit.bor(CAP_MOVE_JUMP))
 	self:CapabilitiesRemove(bit.bor(CAP_MOVE_CLIMB))
-end	
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:Controller_Initialize(ply)
+    net.Start("vj_lnr_walker_hud")
+		net.WriteBool(false)
+		net.WriteEntity(self)
+    net.Send(ply)
+
+	function self.VJ_TheControllerEntity:CustomOnStopControlling()
+		net.Start("vj_lnr_walker_hud")
+			net.WriteBool(true)
+			net.WriteEntity(self)
+		net.Send(ply)
+	end
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnPreInitialize() -- Picks random voices once a SNPC is spawned.
 	local zmb_voices = math.random(3,4)

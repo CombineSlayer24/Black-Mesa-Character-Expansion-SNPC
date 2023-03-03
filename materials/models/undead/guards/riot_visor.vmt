@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/undead/guards/riot_visor"
+	"$translucent" "1"	
+           "$nodecal" "1"
+	"$envmap"	env_cubemap
+	"$envmaptint" "[.8 .8 .75]"	
+//	"$envmapcontrast" "1"
+//	"$envmapsaturation" ".5" 
+//	"$mostlyopaque" 1
+//	"$additive" 1`
+}

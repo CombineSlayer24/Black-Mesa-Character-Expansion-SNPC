@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
 	"$baseTexture" "models\undead\ninja/L4D2/roadworker/Roadwork_green"
-                "$bumpmap"    "models\undead\ninja/L4D2/roadworker/Roadwork_n"
+                "$bumpmap"    "models\ninja/L4D2/roadworker/Roadwork_n"
 
 	"$model" "1"
 	"$phong"     "1"
@@ -9,8 +9,8 @@
 	"$phongboost"   "20"
 	"$phongfresnelranges"	"[.5 1 11]"
 	"$phongalbedotint" "1"
-          "$lightwarptexture" 	"models\undead\ninja/L4D2/Clothes_wrp"
-	"$phongexponenttexture" "models\undead\ninja/L4D2/exp"
+          "$lightwarptexture" 	"models\ninja/L4D2/Clothes_wrp"
+	"$phongexponenttexture" "models\ninja/L4D2/exp"
 
 //	"$envmap" "env_cubemap"
 //	"$envmaptint" "[.2 .2 .2]"

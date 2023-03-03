@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
 	"$baseTexture" "models\undead\scientists/body_var2"
-	"$bumpmap" "models\undead\scientists/body_normals"
+	"$bumpmap" "models\humans\scientists/body_normals"
 	"$model" "1"
 	"$surfaceprop" "flesh"
 	"$nocull" 1

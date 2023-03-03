@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "models\humans\base_male/Base_M_13_D"
+	"$baseTexture" "models\undead\base_male/Base_M_13_D"
 	"$bumpmap" "models\humans\base_male/base_M_13_N"
         "$lightwarptexture" "models\humans\base_male\Base_M_caucasian_wrp"
 //        "$lightwarptexture" "models\humans\base_male\Base_M_african_wrp"

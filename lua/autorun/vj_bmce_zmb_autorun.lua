@@ -11,63 +11,6 @@ local AddonType = "SNPC"
 local AutorunFile = "autorun/vj_bmce_autorun.lua"
 -------------------------------------------------------
 local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
-local LNRExists = file.Exists("lua/autorun/vj_lnrhl2_autorun.lua","GAME")
-
-if LNRExists == true then		
-	if GetConVarNumber("vj_bmce_lnr_alert") == 1 then
-		if CLIENT then
-			hook.Add("Initialize","LNRTRUE",function()
-				local vjorange = Color(255,100,0)
-				local lightblue = Color(0,199,255)
-				local white = Color(255,255,255)
-				timer.Simple(8.0,function()
-					chat.AddText(vjorange,"---------- BMCE ----------")
-					chat.AddText(lightblue,"• LNR Detected!")
-					chat.AddText(white,"• To disable this message, set vj_bmce_lnr_alert to 0")
-					chat.AddText(vjorange,"-----------------------------")
-					local dingaling_sound = CreateSound(game.GetWorld(), "vj_bmce_zmb/musicalex1.mp3")
-					dingaling_sound:SetSoundLevel(0)
-					dingaling_sound:Play()
-				end)
-			end)
-		end
-	end
-end
-
-// If Lethal Necrotics Reanimated: Half-Life 2 is not installed and not detected, pester the player with a message
-if LNRExists == false then
-	if GetConVarNumber("vj_bmce_lnr_alert") == 1 then
-		if CLIENT then
-			hook.Add("Initialize","LNRFALSE",function()
-				local vjorange = Color(255,100,0)
-				local yellow = Color(255,255,0)
-				local red = Color(255,0,0)
-				local white = Color(255,255,255)
-				local lightblue = Color(0,199,255)
-				timer.Simple(10,function()
-					chat.AddText(vjorange,"---------- BMCE ----------")
-					chat.AddText(yellow,"• LNR isn't Detected!")
-					chat.AddText(red,"• You cannot use Undead NPCs.")
-					chat.AddText(red,"• Install LNR to use Undead NPCs")
-					chat.AddText(white,"• To disable this message, set vj_bmce_lnr_alert to 0")
-					chat.AddText(vjorange,"-----------------------------")
-					local dingaling_sound = CreateSound(game.GetWorld(), "vj_bmce_zmb/barney_wetrustedyou07.wav")
-					dingaling_sound:SetSoundLevel(0)
-					dingaling_sound:Play()
-				end)
-				timer.Simple(15,function()
-					chat.AddText(vjorange,"---------- BMCE ----------")
-					chat.AddText(lightblue,"•       LNR Download:")
-					chat.AddText(white,"• https://steamcommunity.com/sharedfiles/filedetails/?id=1879776316")
-					chat.AddText(vjorange,"-----------------------------")
-					local dingaling_sound = CreateSound(game.GetWorld(), "vj_bmce_zmb/vocals/extra/slam_04.wav")
-					dingaling_sound:SetSoundLevel(0)
-					dingaling_sound:Play()
-				end)
-			end)
-		end
-	end
-end
 
 if VJExists == true then
 	include('autorun/vj_controls.lua')
@@ -83,6 +26,12 @@ if VJExists == true then
 	VJ.AddNPC("Undead Casual Scientist (Walker)","npc_vj_bmce_und_wlk_sci_cas_male",vCat)
 	VJ.AddNPC("Undead Casual Scientist (Bolter)","npc_vj_bmce_und_run_sci_cas_male",vCat)
 
+	VJ.AddNPC("Undead Guard (Walker)","npc_vj_bmce_und_wlk_guard",vCat)
+	VJ.AddNPC("Undead Guard (Bolter)","npc_vj_bmce_und_run_guard",vCat)
+
+	VJ.AddNPC("Undead Female Guard (Walker)","npc_vj_bmce_und_wlk_guardfem",vCat)
+	VJ.AddNPC("Undead Female Guard (Bolter)","npc_vj_bmce_und_run_guardfem",vCat)
+
 	VJ.AddNPC("(Undead Map Spawner)","sent_vj_bmce_undead_mapspawner",vCat)
 
 	VJ.AddConVar("vj_bmce_zmb_eyeglow", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
@@ -92,10 +41,10 @@ if VJExists == true then
 	VJ.AddConVar("vj_bmce_zmb_deathrandom", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
 	VJ.AddConVar("vj_bmce_zmb_deathtime_min", 45, {FCVAR_ARCHIVE})
 	VJ.AddConVar("vj_bmce_zmb_deathtime_max", 90, {FCVAR_ARCHIVE})
-	VJ.AddConVar("vj_bmce_lnr_alert", 1, {FCVAR_ARCHIVE})
 	VJ.AddConVar("vj_bmce_zmb_map_music", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
 	VJ.AddConVar("vj_bmce_zmb_map_spooky_snds", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
 	VJ.AddConVar("vj_bmce_zmb_map_delete", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
+	VJ.AddConVar("vj_bmce_zmb_bruisers", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 	if CLIENT then
 		hook.Add("PopulateToolMenu", "VJ_ADDTOMENU_BMCE_UNDEAD", function()
@@ -127,6 +76,9 @@ if VJExists == true then
 				Panel:AddControl("Slider", {Label ="Undead Death Rand Max",Command ="vj_bmce_zmb_deathtime_max", Min = "5", Max = "120"})
 				Panel:ControlHelp("Note: Max must be higher than Min.")
 
+				Panel:AddControl("Checkbox", {Label = "Enable Undead Bruiser chance?", Command = "vj_bmce_zmb_bruisers"})
+				Panel:ControlHelp("If enabled, Undead may have a chance to be a Brusier. Only applies to certain Undead.")
+
 				Panel:AddControl("Header", {Description = "Undead Map Spawner Commands"})
 				Panel:ControlHelp("Navigate to LNR (MapSp) to tinker settings for the Manhunt Undead Map Spawner.")
 				
@@ -136,7 +88,22 @@ if VJExists == true then
 			end)
 		end)
 	end
+end
 
+if CLIENT then
+	net.Receive("vj_bmce_zombie_hud",function(len,pl)
+		local delete = net.ReadBool()
+		local ent = net.ReadEntity()
+		if !IsValid(ent) then delete = true end
+
+     if GetConVar("VJ_LNR_ZombieOverlay"):GetInt() == 1 then
+		hook.Add("RenderScreenspaceEffects","VJ_BMCE_ZombieHUD_Overlay",function(zom)
+            local threshold = 0.30
+            DrawMaterialOverlay("lnr/overlay/infected_vision",threshold)
+    end)
+end
+		if delete then hook.Remove("RenderScreenspaceEffects","VJ_BMCE_ZombieHUD_Overlay") end
+end)
 -- !!!!!! DON'T TOUCH ANYTHING BELOW THIS !!!!!! -------------------------------------------------------------------------------------------------------------------------
 	AddCSLuaFile(AutorunFile)
 	VJ.AddAddonProperty(AddonName,AddonType)

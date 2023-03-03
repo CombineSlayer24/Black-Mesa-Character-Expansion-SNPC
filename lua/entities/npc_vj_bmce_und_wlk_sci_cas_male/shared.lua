@@ -1,6 +1,6 @@
 ENT.Base 			= "npc_vj_bmce_undead_wlk_base" -- Credit to Darkborn
 ENT.Type 			= "ai"
-ENT.PrintName 		= "Undead Casual Scientist Runner"
+ENT.PrintName 		= "Undead Casual Scientist Walker"
 ENT.Author 			= "Pyri"
 ENT.Contact 		= ""
 ENT.Purpose 		= "Braaaainnns?"

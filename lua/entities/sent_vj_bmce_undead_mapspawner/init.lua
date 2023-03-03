@@ -70,31 +70,31 @@ function ENT:Initialize()
 	self.tbl_SpawnedNPCs = {}
 	self.tbl_NPCsWithEnemies = {}
 	self.tbl_SpawnedSpecialZombie = {}
-	self.NextAICheckTime = CurTime() +5
-	self.NextZombieSpawnTime = CurTime() +1
-	self.NextSpecialZombieSpawnTime = CurTime() +math.random(4,20)
+	self.NextAICheckTime = CurTime() + 5
+	self.NextZombieSpawnTime = CurTime() + 1
+	self.NextSpecialZombieSpawnTime = CurTime() + 9999
 	self.NextHordeSpawnTime = CurTime() +math.Rand(self.LNR_HordeCooldownMin,self.LNR_HordeCooldownMax)
-	self.NextAISpecialCheckTime = CurTime() +5
+	self.NextAISpecialCheckTime = CurTime() + 5
 	self.HordeSpawnRate = 0.19
-	self.MaxSpecialZombie = 15
-	self.CanSpawnSpecialZombie = true 
+	self.MaxSpecialZombie = 0
+	--self.CanSpawnSpecialZombie = true 
 
 	for _,v in ipairs(player.GetAll()) do
 
 		if GetConVarNumber("vj_bmce_zmb_map_spooky_snds") == 1 then
 			
 			timer.Create("vj_bmce_undead_mapspawn_amb_snds",math.random(8,26),0,function()
-				v:EmitSound("vj_bmce_zmb/map_spawner/nz_zmb_amb_sfx/nz_zombie_protoype/amb_spooky_"..math.random(0,21)..".mp3", 40)
+				v:EmitSound("vj_bmce_zmb/map_spawner/nz_zmb_amb_sfx/nz_zombie_protoype/amb_spooky_"..math.random(0,21)..".mp3", 45)
 			end)
 			
 			timer.Create("vj_bmce_undead_mapspawn_amb_music",math.random(35,75),0,function()
-				v:EmitSound("vj_bmce_zmb/map_spawner/nz_zmb_amb_sfx/nz_zmb_proto_amb_spooky_"..math.random(1,4)..".mp3", 40)
+				v:EmitSound("vj_bmce_zmb/map_spawner/nz_zmb_amb_sfx/nz_zmb_proto_amb_spooky_"..math.random(1,4)..".mp3", 45)
 			end)
 		
 		end
 
 		if GetConVarNumber("vj_bmce_zmb_map_music") == 1 then
-			v:EmitSound("vj_bmce_zmb/map_spawner/map_tune"..math.random(1,6)..".mp3", 51)
+			v:EmitSound("vj_bmce_zmb/map_spawner/map_tune"..math.random(1,8)..".mp3", 51)
 		end
 
 		v:ChatPrint("Warning: Undead are nearby.")
@@ -303,6 +303,7 @@ function ENT:Think()
 					end
 				end
 			end
+
 			if #self.tbl_SpawnedSpecialZombie > 0 then
 				for i,v in ipairs(self.tbl_SpawnedSpecialZombie) do
 					if IsValid(v) then
@@ -329,12 +330,13 @@ function ENT:Think()
 			self:SpawnZombie(self:PickZombie(self.Zombie),self:FindSpawnPosition(false))				
 			self.NextZombieSpawnTime = CurTime() +math.Rand(GetConVarNumber("VJ_LNR_MapSpawner_DelayMin"),GetConVarNumber("VJ_LNR_MapSpawner_DelayMax"))
 			
-end
+		end
 
-			if CurTime() > self.NextSpecialZombieSpawnTime then
-				self:SpawnSpecialZombie(self:PickZombie(self.SpecialZombie),self:FindSpawnPosition(true))
-				self.NextSpecialZombieSpawnTime = CurTime() +math.Rand(4,20)			
-end		
+		if CurTime() > self.NextSpecialZombieSpawnTime then
+			self:SpawnSpecialZombie(self:PickZombie(self.SpecialZombie),self:FindSpawnPosition(true))
+			self.NextSpecialZombieSpawnTime = CurTime() +math.Rand(4,20)			
+		end	
+
 		-- Spawns Hordes
 		if CurTime() > self.NextHordeSpawnTime && math.random(1,self.LNR_HordeChance) == 1 then
 			for i = 1,self.LNR_MaxHordeSpawn do
@@ -348,7 +350,7 @@ end
 			for _,v in ipairs(player.GetAll()) do
 				v:ChatPrint("Incoming horde!")
 				v:EmitSound("vj_bmce_zmb/map_spawner/map_tune"..math.random(1,6)..".mp3", 51)
-             end			
+			end			
 			self.NextHordeSpawnTime = CurTime() +math.Rand(self.LNR_HordeCooldownMin,self.LNR_HordeCooldownMax)
 		end
 	end
@@ -462,58 +464,10 @@ function ENT:OnRemove()
 		end
 
 		for _,v in ipairs(player.GetAll()) do
-
-			local remove_taunt_message = math.random(1,20)
 			v:EmitSound("vj_bmce_zmb/map_spawner/nz_zmb_amb_sfx/nz_zombie_protoype/amb_spooky_20.mp3",45)
 			v:EmitSound("vj_bmce_zmb/map_spawner/removed.mp3", 51)
 
-			timer.Create("vj_bmce_undead_mapspawn_secondlaugh",12,1,function()
-				v:EmitSound("vj_bmce_zmb/map_spawner/removed_laugh.mp3", 51)
-			end)
-
-			if remove_taunt_message == 1 then
-				v:PrintMessage(HUD_PRINTTALK, "What's the matter? Too scared?")
-			elseif remove_taunt_message == 2 then
-				v:PrintMessage(HUD_PRINTTALK, "Guess you couldn't handle them, huh?")
-			elseif remove_taunt_message == 3 then
-				v:PrintMessage(HUD_PRINTTALK, "Can't handle Zombies?")
-			elseif remove_taunt_message == 4 then
-				v:PrintMessage(HUD_PRINTTALK, "Whimp!")
-			elseif remove_taunt_message == 5 then
-				v:PrintMessage(HUD_PRINTTALK, "Too bad you don't have Mustang and Sally with ya.")
-			elseif remove_taunt_message == 6 then
-				v:PrintMessage(HUD_PRINTTALK, "GAME OVER! YOU SUCK!")
-			elseif remove_taunt_message == 7 then
-				v:PrintMessage(HUD_PRINTTALK, "GAME OVER!")
-			elseif remove_taunt_message == 8 then
-				v:PrintMessage(HUD_PRINTTALK, "Well, you made it that far, I hope.")
-			elseif remove_taunt_message == 9 then
-				v:PrintMessage(HUD_PRINTTALK, "Died with the Raygun?")
-			elseif remove_taunt_message == 10 then
-				v:PrintMessage(HUD_PRINTTALK, "Get some buddies, or have some Cerberus members watch your back next time.")
-			elseif remove_taunt_message == 11 then
-				v:PrintMessage(HUD_PRINTTALK, "Better luck next time. You would've made it to the high ranks of the leaderboards for rounds survived.")
-			elseif remove_taunt_message == 12 then
-				v:PrintMessage(HUD_PRINTTALK, "Better luck next time.")
-			elseif remove_taunt_message == 13 then
-				v:PrintMessage(HUD_PRINTTALK, "I think you like to see me taunt you, huh?")
-			elseif remove_taunt_message == 14 then
-				v:PrintMessage(HUD_PRINTTALK, "Aim... Point... Shoot... Easy steps for survival.")
-			elseif remove_taunt_message == 14 then
-				v:PrintMessage(HUD_PRINTTALK, "I think you like to see me taunt you, huh?")
-			elseif remove_taunt_message == 15 then
-				v:PrintMessage(HUD_PRINTTALK, "Nobody saw that, right?")
-			elseif remove_taunt_message == 16 then
-				v:PrintMessage(HUD_PRINTTALK, "Laughing at you for deleting me!")
-			elseif remove_taunt_message == 17 then
-				v:PrintMessage(HUD_PRINTTALK, "Awww, the fun was just starting.")
-			elseif remove_taunt_message == 18 then
-				v:PrintMessage(HUD_PRINTTALK, "Loser!")
-			elseif remove_taunt_message == 19 then
-				v:PrintMessage(HUD_PRINTTALK, "I don't blame you, Zombies make me rage-quit!")
-			elseif remove_taunt_message == 20 then
-				v:PrintMessage(HUD_PRINTTALK, "Well, too bad that didn't kill me.")
-			end
+			timer.Create("vj_bmce_undead_mapspawn_secondlaugh",12,1,function() v:EmitSound("vj_bmce_zmb/map_spawner/removed_laugh.mp3", 51) end)
 		end
 	end
 end

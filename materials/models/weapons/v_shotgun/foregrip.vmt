@@ -1,0 +1,27 @@
+"VertexlitGeneric"
+{
+ 	"$basetexture" "models\weapons\v_shotgun\foregrip"
+ 	"$bumpmap" "models\weapons\v_shotgun\foregrip_nrm" 
+ 	"$PhongExponentTexture" "models\weapons\v_shotgun\foregrip_exp" 
+	
+	$envmap						env_cubemap
+	$envmaptint					"[ .005 .005 .005 ]"
+	$normalmapalphaenvmapmask	"1"	
+	
+	$phong						1
+	$phongexponent				10
+	$phongboost					.03
+	$phongfresnelranges			"[5 10 10]"
+	
+	
+	$detail "effects/models/model_blood_red.vtf"
+	$detailscale 5
+	$detailblendfactor 0.0
+	$detailblendmode 0
+	Proxies
+	{
+		ModelDetailFx
+		{
+		}
+	}
+}

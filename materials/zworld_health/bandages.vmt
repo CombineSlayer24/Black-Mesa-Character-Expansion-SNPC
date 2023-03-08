@@ -1,0 +1,11 @@
+"VertexlitGeneric"
+{
+$basetexture "zworld_health/bandages"
+	"$phongboost" 1
+	"$phongexponent" 1
+	"$phongfresnelranges" "[0 2 30]"
+	"$BASEMAPLUMINANCEPHONGMASK" 1
+	"$halflambert" 1
+	"$phong" 0
+	"$nocull" 1
+}

@@ -1,0 +1,15 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models\weapons\v_shotgun\stock_flap"
+	"$bumpmap" "models\weapons\v_shotgun\stock_flap_nrm"
+	"$PhongExponentTexture" "models\weapons\v_shotgun\stock_flap_exp" 
+	
+	$envmap						env_cubemap
+	$envmaptint					"[ .02 .02 .02 ]"
+	$normalmapalphaenvmapmask	"1"	
+	
+	$phong						1
+	$phongexponent				10
+	$phongboost					.4
+	$phongfresnelranges			"[5 10 10]"
+}

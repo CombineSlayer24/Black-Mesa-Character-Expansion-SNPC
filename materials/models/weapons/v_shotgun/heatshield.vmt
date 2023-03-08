@@ -1,0 +1,30 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\weapons\v_shotgun\heatshield"
+	"$bumpmap" "models\weapons\v_shotgun\heatshield_nrm"              	
+	"$PhongExponentTexture" "models\weapons\v_shotgun\heatshield_exp" 
+
+	"$selfillum" 1
+	"$selfillummask" "models\weapons\v_shotgun\heatshield_si"
+	
+	$envmap						env_cubemap
+	$envmaptint					"[ .02 .02 .02 ]"
+	$normalmapalphaenvmapmask	"1"	
+	
+	$phong						1
+	$phongexponent				10
+	$phongboost					.75
+	$phongfresnelranges			"[5 10 10]"
+	
+	
+	$detail "effects/models/model_blood_red.vtf"
+	$detailscale 5
+	$detailblendfactor 0.0
+	$detailblendmode 0
+	Proxies
+	{
+		ModelDetailFx
+		{
+		}
+	}
+}

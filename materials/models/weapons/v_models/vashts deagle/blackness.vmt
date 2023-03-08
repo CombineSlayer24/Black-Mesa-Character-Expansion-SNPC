@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\Weapons\v_Models\Vashts Deagle\front"
+	"$bumpmap" 	"models\Weapons\v_Models\Vashts Deagle\front_norm"
+}
+

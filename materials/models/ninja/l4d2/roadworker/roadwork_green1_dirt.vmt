@@ -1,0 +1,21 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\ninja/L4D2/roadworker/roadwork_green1"
+                "$bumpmap"    "models\ninja/L4D2/roadworker/Roadwork_n1"
+	"$phong" "1"
+	"$phongexponent" "5"
+//	"$phongalbedotint" "1"
+	"$phongboost" "0.1"
+	"$phongfresnelranges"	"[.5 1 11]"
+        "$lightwarptexture" 	"models\ninja/L4D2/Clothes_wrp"
+//	"$phongexponenttexture" "models\ninja/L4D2/exp"
+//	$translucent 1
+//	$halflambert 1
+	"$detail" "models\ninja/L4D2/dirt_detail"
+//	"$detail" "models\ninja/L4D2/Centurion/dirt_Detail"
+	"$detailscale" 2
+	"$detailblendfactor" .9
+	"$detailblendmode" 0
+}
+
+

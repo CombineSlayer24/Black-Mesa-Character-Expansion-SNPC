@@ -1,0 +1,40 @@
+"VertexLitGeneric"
+{	
+	"$baseTexture" "models\weapons\hands_Thanez/hand_diffuse"
+	"$bumpmap" "models\weapons\hands_Thanez/hand_normal"
+
+	"$nodecal" "1"
+	"$multipass" 0
+
+	"$envmap" "env_cubemap"
+	"$normalmapalphaenvmapmask" "1"
+	"$normalmapalphaphongmask"    "1"
+	"$normalmapalpharimlightmask"    "1"
+	"$envmaptint" "[.1 .1 .1]"
+//	"$envmapcontrast" "1.0"
+
+	"$phong" "1"
+	"$phongboost" "1.7"
+	"$phongexponent" "15"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges"	"[0.8 0.9 2.6]"
+
+	// Rim lighting parameters
+	"$rimlight" "1"
+	"$rimlightexponent" "34"
+	"$rimlightboost" "0.4"
+
+	$detail "effects/models/model_blood_red.vtf"
+	$detailscale 5
+	$detailblendfactor 0.0
+	$detailblendmode 0
+
+	$viewmodelhands 1
+
+	Proxies
+	{
+		ModelDetailFx
+		{
+		}
+	}
+}

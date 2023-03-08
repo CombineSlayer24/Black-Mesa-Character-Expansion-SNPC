@@ -1,0 +1,29 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models\weapons\v_shotgun\string"
+	"$bumpmap" "models\weapons\v_shotgun\string_nrm"
+	"$PhongExponentTexture" "models\weapons\v_shotgun\string_exp" 
+	"$color2"			"[0 0 0]"
+	"$translucent"		"1"
+	
+	$envmap						env_cubemap
+	$envmaptint					"[ .13 .13 .13 ]"
+
+	$phong						1
+	$phongboost					30
+	$phongfresnelranges			"[5 10 10]"
+	"$phongalbedotint" 			"1"
+	"$phongalbedoboost" 		"48"
+	
+	
+	$detail "effects/models/model_blood_red.vtf"
+	$detailscale 5
+	$detailblendfactor 0.0
+	$detailblendmode 0
+	Proxies
+	{
+		ModelDetailFx
+		{
+		}
+	}
+}

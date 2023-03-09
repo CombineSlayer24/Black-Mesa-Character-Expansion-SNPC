@@ -1,0 +1,22 @@
+"VertexlitGeneric"
+{
+"$basetexture" "models\ninja\l4d2/jumpsuit/AlphaBody"
+"$bumpmap" "models\ninja\l4d2/jumpsuit/common_worker_male_upper_01_n"
+	"$phong" "1"
+	"$phongexponent" "1"
+	"$phongalbedotint" "1"
+//	"$phongboost" "0.5"
+	"$phongfresnelranges"	"[.5 1 11]"
+        "$lightwarptexture" 	"models\ninja/L4D2/Clothes_wrp"
+	"$phongexponenttexture" "models\ninja/L4D2/exp"
+//	$translucent 1
+//	$halflambert 1
+	"$detail" "models\ninja/L4D2/clothes_detail"
+//	"$detail" "models\ninja/L4D2/Centurion/Wool_Detail"
+	"$detailscale" 5
+	"$detailblendfactor" .5
+	"$detailblendmode" 0
+	$halflambert 1
+}
+
+

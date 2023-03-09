@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\humans\hev_nametags\hev_nametag_qe_hubi"
+	"$surfaceprop" "metal"
+	"$model" "1"
+}

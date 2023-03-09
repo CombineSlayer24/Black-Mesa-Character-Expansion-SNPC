@@ -1,0 +1,32 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/humans/marines/gloves"
+	"$bumpmap" "models/humans/marines/gloves_n"
+	"$surfaceprop" "flesh"
+	
+	"$model" 1
+	
+// -- From here down is new stuff which will only be applied if $phong is set to 1 --
+    $phong 1
+    $phongexponent 7
+    $phongboost 1
+    $phongtint "[1 1 1]"
+    $halflambert 1    
+    $phongfresnelranges "[.4 .8 30]"
+
+// Rim lighting parameters
+	"$rimlight" "1"				// To enable rim lighting (requires phong)
+	"$rimlightexponent" "80"             // Exponent for phong component of rim lighting
+	"$rimlightboost" ".3"	               // Boost for ambient cube component of rim lighting
+
+//	$detail "effects/models/model_blood_red.vtf"
+	$detailscale 5
+	$detailblendfactor 0.0
+	$detailblendmode 0
+	Proxies
+	{
+		ModelDetailFx
+		{
+		}
+	}
+}

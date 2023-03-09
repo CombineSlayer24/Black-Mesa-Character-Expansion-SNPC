@@ -1,0 +1,28 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\humans\guards/guard_vest_2"
+	"$bumpmap" "models\humans\guards/guard_vest_n"
+	"$surfaceprop" "flesh"
+
+        "$phong" "1"
+	"$phongboost" "2"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges" "[.4 2 1]"
+
+
+        // Rim lighting parameters
+	"$rimlight" "1"				// To enable rim lighting (requires phong)
+	"$rimlightexponent" "33"		// Exponent for phong component of rim lighting
+	"$rimlightboost" "1"			// Boost for ambient cube component of rim lighting
+
+//	$detail "effects/models/model_blood_red.vtf"
+	$detailscale 5
+	$detailblendfactor 0.0
+	$detailblendmode 0
+	Proxies
+	{
+		ModelDetailFx
+		{
+		}
+	}
+}

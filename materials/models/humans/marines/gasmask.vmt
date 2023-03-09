@@ -1,0 +1,23 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/humans/marines/gasmask"
+	"$bumpmap" "models/humans/marines/gasmask_normals"
+	"$surfaceprop" "plastic"
+	"$normalmapalphaenvmapmask" 	"1"
+	"$envmap" "env_cubemap"
+	"$envmaptint" 			"[0.3 0.2 0.2]"
+	"$nocull" "1"
+	
+	"$model" 1
+
+//	$detail "effects/models/model_blood_red.vtf"
+	$detailscale 5
+	$detailblendfactor 0.0
+	$detailblendmode 0
+	Proxies
+	{
+		ModelDetailFx
+		{
+		}
+	}
+}

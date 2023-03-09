@@ -1,0 +1,24 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models\humans\hair_trans_grey"
+	"$bumpmap"		"models\humans\hair_trans_n"
+	"$halflambert" 0
+//   "$normalmapalphaenvmapmask" "1"
+	"$nodecal" "1"
+	"$alphatest" "1"
+           "$alphatestreference" ".25"
+	"$model" "1"
+	"$surfaceprop" "flesh"
+	"$nocull" "1"
+// -- From here down is new stuff which will only be applied if $phong is set to 1 --
+	"$phong" "1"
+	"$phongexponent" "33"
+     "$phongboost" "1"
+     "$phongtint" "[.85 .85 1]"
+	"$phongfresnelranges"	"[0.05 0.5 1]"
+
+// Rim lighting parameters
+	"$rimlight" "1"				// To enable rim lighting (requires phong)
+	"$rimlightexponent" "80"             // Exponent for phong component of rim lighting
+	"$rimlightboost" ".5"	               // Boost for ambient cube component of rim lighting
+}

@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\humans\gordon/gordon_glasses"
+	"$nodecal" "1"
+	"$model" "1"
+	"$surfaceprop" "plastic"
+
+// -- From here down is new stuff which will only be applied if $phong is set to 1 --
+	"$phong" "1"
+	"$phongexponent" "3"
+	"$phongboost"	".25"
+	"$phongfresnelranges"	"[0.05 0.5 1]"
+
+// Rim lighting parameters
+	"$rimlight" "1"				// To enable rim lighting (requires phong)
+	"$rimlightexponent" "80"             // Exponent for phong component of rim lighting
+	"$rimlightboost" "1"	               // Boost for ambient cube component of rim lighting
+}

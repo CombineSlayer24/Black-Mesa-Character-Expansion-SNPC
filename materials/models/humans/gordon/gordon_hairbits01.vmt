@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\humans\gordon/gordon_hairbits01"
+	"$nodecal" "1"
+	"$model" "1"
+	"$translucent" "1"
+}

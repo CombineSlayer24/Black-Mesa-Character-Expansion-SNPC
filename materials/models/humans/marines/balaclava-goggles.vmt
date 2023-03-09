@@ -1,0 +1,21 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\humans\marines/balaclava-goggles"
+                "$bumpmap"    "models\humans\marines/balaclava-goggles_n"
+	"$phong" "1"
+//	"$phongexponent" "5"
+	"$phongalbedotint" "1"
+	"$phongboost" "20"
+	"$phongfresnelranges"	"[.5 1 11]"
+        "$lightwarptexture" 	"models\ninja/L4D2/Clothes_wrp"
+	"$phongexponenttexture" "models\ninja/L4D2/exp"
+//	$translucent 1
+//	$halflambert 1
+//	"$detail" "models\ninja/L4D2/clothes_detail"
+//	"$detail" "models\ninja/L4D2/Centurion/Wool_Detail"
+	"$detailscale" 5
+	"$detailblendfactor" .5
+	"$detailblendmode" 0
+}
+
+

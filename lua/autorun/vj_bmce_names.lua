@@ -89,6 +89,8 @@ VJ_BMCE_NAMES_FIRST_M = {
     " Alan",
     " Arnold",
     " Bob",
+    " Tom",
+    " Tommy",
     " Cassier",
     " Cesar",
     " Donald",
@@ -112,7 +114,6 @@ VJ_BMCE_NAMES_FIRST_M = {
     " Issac",
     " Trent",
     " Larry",
-    " Becker",
     " Johnathan",
     " Saxton",
     " Grant",
@@ -124,12 +125,24 @@ VJ_BMCE_NAMES_FIRST_M = {
     " Warren",
     " Allen",
     " Fred",
-    " Fredick",
+    " Fredich",
     " Jeffrey",
-    " Jeff"
+    " Jeff",
+    " Vito",
+    " Henry",
+    " Joe",
+    " Aldern",
+    " Heinrich"
 }
 VJ_BMCE_NAMES_LAST = {
     " Mann",
+    " Angelo",
+    " D'Angelo",
+    " Becker",
+    " Tomasino",
+    " Scaletta",
+    " Barbaroe",
+    " Vinci",
     " Greene",
     " Hubai",
     " Young",
@@ -200,11 +213,19 @@ VJ_BMCE_NAMES_LAST = {
     " O'Leary",
     " Shepherd",
     " Steiner",
-    " Galante"
+    " Galante",
+    " Schultz",
+    " Bergmann",
+    " Amsel"
 }
-VJ_BMCE_RANKS = {"Pvt.","Pfc.","Cpl."}
-VJ_BMCE_RANKS_OFFICER = {"Sgt.","SSgt.","Lt.","Capt.","Col."}
-VJ_BMCE_RANKS_SCI = {"Intern.","Intern.","Intern.","R&D.","R&D.","R&D.","R&D.","Research Associate.","Research Associate.","Research Associate.","Research Associate.","Supervisor.","Supervisor.","Instructor."}
-VJ_BMCE_RANKS_SCI_HEV = {"Survey Team.","Survey Team.","Survey Team.","Survey Team.","Supervisor.","Supervisor.","Instructor."}
-VJ_BMCE_RANKS_ENGINEER = {"Architect.","Architect.","Architect.","Foreman.","Foreman.","Foreman.","Supervisor.","Supervisor."}
-VJ_BMCE_RANKS_ADMIN = {"Accountant.","Accountant.","Accountant.","Office Manager.","Office Manager.", "IT."}
+VJ_BMCE_RANKS_HECU = {"Pvt.", "Pfc.", "Cpl."}
+VJ_BMCE_RANKS_HECU_OFFICER = {"Sgt.", "Sgt.", "Sgt.", "SSgt.", "SSgt.", "Lt.", "Capt.", "CO."}
+VJ_BMCE_RANKS_BMSF = {"Cadet.", "Cadet.", "Officer.", "Officer.", "Officer.", "Officer."}
+VJ_BMCE_RANKS_BMSF_OFFICER = {"Senior Officer.", "Senior Officer.", "Senior Officer.", "Sgt.", "Sgt.", "Capt.", "Lt."}
+VJ_BMCE_RANKS_SCI = {"Intern.", "Intern.", "Research Associate.", "Research Associate.", "Research Associate.", "Research Associate.", "Lab Technician.", "Lab Technician.", "Lab Technician.", "Researcher.", "Researcher.", "Researcher.", "Head Researcher.", "Head Researcher.", "Project Leader.", "Science Instructor."}
+VJ_BMCE_RANKS_SCI_HEV = {"Surveyor.", "Surveyor.", "Surveyor.", "Surveyor.", "Surveyor.", "Lead Surveyor.", "Lead Surveyor.", "Lead Surveyor.", "Head Surveyor.", "Head Surveyor.", "Head Surveyor.", "Surveyor Instructor."}
+VJ_BMCE_RANKS_CONSTRUCTION = {"Architect.", "Architect.", "Architect.", "Foreman.", "Foreman.", "Foreman.", "Supervisor.", "Supervisor."}
+VJ_BMCE_RANKS_ENGINEER = {"Engineer.", "Engineer.", "Engineer.", "Engineer.", "Lead Engineer.", "Lead Engineer."}
+VJ_BMCE_RANKS_ADMIN = { "Receptionist.", "Receptionist.", "Receptionist.", "Clerk.", "Clerk.", "Clerk.", "Inspector.", "Office Manager."}
+VJ_BMCE_RANKS_FF = {"Firefighter.", "Firefighter.", "Firefighter.", "Firefighter.", "Firefighter.", "Firefighter.", "Lt.", "Lt.", "Lt.", "Capt.", "Capt.", "Capt.", "Asst. Fire Chief.", "Fire Chief."}
+VJ_BMCE_RANKS_EMS = {"EMS.", "EMS.", "EMS.", "EMS.", "EMS.", "EMS.", "EMS.", "EMS Supervisor.", "EMS Supervisor.", "EMS Supervisor.", "EMS Supervisor.", "EMS Lt.", "EMS Lt.", "EMS Lt." }

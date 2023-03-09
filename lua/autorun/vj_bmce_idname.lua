@@ -3,6 +3,8 @@ if CLIENT then -- this is needed
 		font = "ChatFont",
 		size = 32,
 		extended = true,
+		shadow = true,
+		outline = true,
 	})
 
 	surface.CreateFont("id_blur", {
@@ -11,6 +13,8 @@ if CLIENT then -- this is needed
 		extended = true,
 		blursize = 4,
 		scanlines = 2,
+		shadow = true,
+		--outline = true,
 	})
 end
 
@@ -33,6 +37,10 @@ local blurEnemyColor = Color(255, 25, 25)
 local enemyColor = Color(255, 50, 50)
 local name_enable = GetConVar( "vj_bmce_shownames" )
 
+
+local EnemyStat = false -- Check for the NPC's state with the player
+-- true = enemy to ply, false = friend to ply
+
 function NPC_Text() -- show some names
 	if not name_enable:GetBool() then return end
 
@@ -42,33 +50,12 @@ function NPC_Text() -- show some names
 	local _GetClass = trace.Entity:GetClass()
 	local _PrintName = trace.Entity.PrintName
 
-	local EnemyStat = false -- Check for the NPC's state with the player
-	-- true = enemy to ply, false = friend to ply
-
-	if SERVER then
-		local _Disposition = trace.Entity:Disposition(ply)
-		if VJ_BMCE_VALIDNPCS[ _GetClass ] then
-
-			if _Disposition == D_LI then
-				EnemyStat = false
-			elseif _Disposition == D_HT then
-				EnemyStat = true 
-			end
-		end
-	end
-
-	print(EnemyStat)
-
-
 	if IsValid(trace.Entity) then -- if a valid BMCE NPC is in the crosshair, show us their name
 		if VJ_BMCE_VALIDNPCS[ _GetClass ] then
 
-			if EnemyStat == true then
+			if EnemyStat == false then
 				draw.SimpleText( _PrintName , "id_blur", ScrW() * 0.5 + 40, ScrH() * 0.5, friendblurColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
 				draw.SimpleText( _PrintName , "id_main", ScrW() * 0.5 + 40, ScrH() * 0.5, frienddisplayColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
-			elseif EnemyStat == false then
-				draw.SimpleText( _PrintName , "id_blur", ScrW() * 0.5 + 40, ScrH() * 0.5, blurEnemyColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
-				draw.SimpleText( _PrintName , "id_main", ScrW() * 0.5 + 40, ScrH() * 0.5, enemyColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
 			end
 		end
 	end

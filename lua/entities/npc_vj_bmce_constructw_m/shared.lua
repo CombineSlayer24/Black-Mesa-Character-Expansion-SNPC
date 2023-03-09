@@ -11,7 +11,7 @@ if CLIENT then
     function ENT:Initialize()        
         local firstname = VJ_PICK(VJ_BMCE_NAMES_FIRST_M)
         local lastname = VJ_PICK(VJ_BMCE_NAMES_LAST)
-        local ranks = VJ_PICK(VJ_BMCE_RANKS_ENGINEER)
+        local ranks = VJ_PICK(VJ_BMCE_RANKS_CONSTRUCTION)
         local random = math.random
         local rc = random(1,2)
 

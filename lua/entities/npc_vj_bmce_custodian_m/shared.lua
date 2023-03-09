@@ -13,6 +13,5 @@ if CLIENT then
         local lastname = VJ_PICK(VJ_BMCE_NAMES_LAST)
         
         self.PrintName = firstname .. lastname
-        end
     end
 end

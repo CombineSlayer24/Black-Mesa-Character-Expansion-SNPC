@@ -1,27 +1,27 @@
 if CLIENT then -- this is needed
-    surface.CreateFont("id_main", {
-        font = "ChatFont",
-        size = 32,
-        extended = true
-    })
+	surface.CreateFont("id_main", {
+		font = "ChatFont",
+		size = 32,
+		extended = true,
+	})
 
-    surface.CreateFont("id_blur", {
-        font = "ChatFont",
-        size = 32,
-        extended = true,
-        blursize = 4,
-        scanlines = 2
-    })
+	surface.CreateFont("id_blur", {
+		font = "ChatFont",
+		size = 32,
+		extended = true,
+		blursize = 4,
+		scanlines = 2,
+	})
 end
 
 local VJ_BMCE_VALIDNPCS = {
-    [ "npc_vj_bmce_scientist_m" ] = true,
-    [ "npc_vj_bmce_scientist_f" ] = true,
-    [ "npc_vj_bmce_cw_f" ] = true,
-    [ "npc_vj_bmce_cw_m" ] = true,
-    [ "npc_vj_bmce_scientist_casual_m" ] = true,
-    [ "npc_vj_bmce_constructw_m" ] = true,
-    [ "npc_vj_bmce_custodian_m" ] = true
+	[ "npc_vj_bmce_scientist_m" ] = true,
+	[ "npc_vj_bmce_scientist_f" ] = true,
+	[ "npc_vj_bmce_cw_f" ] = true,
+	[ "npc_vj_bmce_cw_m" ] = true,
+	[ "npc_vj_bmce_scientist_casual_m" ] = true,
+	[ "npc_vj_bmce_constructw_m" ] = true,
+	[ "npc_vj_bmce_custodian_m" ] = true
 }
 
 CreateConVar("vj_bmce_shownames", 1, {FCVAR_ARCHIVE}, "Should names pop up?", 0, 1)
@@ -34,20 +34,44 @@ local enemyColor = Color(255, 50, 50)
 local name_enable = GetConVar( "vj_bmce_shownames" )
 
 function NPC_Text() -- show some names
-    if not name_enable:GetBool() then return end
+	if not name_enable:GetBool() then return end
 
-    local ply = LocalPlayer()
-    local tr = util.GetPlayerTrace( ply, ply:GetAimVector() )
-    local trace = util.TraceLine( tr )
-    local _GetClass = trace.Entity:GetClass()
-    local _PrintName = trace.Entity.PrintName
+	local ply = LocalPlayer()
+	local tr = util.GetPlayerTrace( ply, ply:GetAimVector() )
+	local trace = util.TraceLine( tr )
+	local _GetClass = trace.Entity:GetClass()
+	local _PrintName = trace.Entity.PrintName
 
-    if IsValid(trace.Entity) then -- if a valid BMCE NPC is in the crosshair, show us their name
-        if VJ_BMCE_VALIDNPCS[ _GetClass ] then
-            draw.SimpleText( _PrintName , "id_blur", ScrW() * 0.5 + 40, ScrH() * 0.5, friendblurColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
-            draw.SimpleText( _PrintName , "id_main", ScrW() * 0.5 + 40, ScrH() * 0.5, frienddisplayColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
-        end
-    end
+	local EnemyStat = false -- Check for the NPC's state with the player
+	-- true = enemy to ply, false = friend to ply
+
+	if SERVER then
+		local _Disposition = trace.Entity:Disposition(ply)
+		if VJ_BMCE_VALIDNPCS[ _GetClass ] then
+
+			if _Disposition == D_LI then
+				EnemyStat = false
+			elseif _Disposition == D_HT then
+				EnemyStat = true 
+			end
+		end
+	end
+
+	print(EnemyStat)
+
+
+	if IsValid(trace.Entity) then -- if a valid BMCE NPC is in the crosshair, show us their name
+		if VJ_BMCE_VALIDNPCS[ _GetClass ] then
+
+			if EnemyStat == true then
+				draw.SimpleText( _PrintName , "id_blur", ScrW() * 0.5 + 40, ScrH() * 0.5, friendblurColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
+				draw.SimpleText( _PrintName , "id_main", ScrW() * 0.5 + 40, ScrH() * 0.5, frienddisplayColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
+			elseif EnemyStat == false then
+				draw.SimpleText( _PrintName , "id_blur", ScrW() * 0.5 + 40, ScrH() * 0.5, blurEnemyColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
+				draw.SimpleText( _PrintName , "id_main", ScrW() * 0.5 + 40, ScrH() * 0.5, enemyColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
+			end
+		end
+	end
 end
 
 hook.Add("HUDPaint", "NPC_HUD_MAIN", NPC_Text)

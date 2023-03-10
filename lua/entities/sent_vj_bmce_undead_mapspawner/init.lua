@@ -11,10 +11,14 @@ ENT.Zombie = {
 	{class="npc_vj_bmce_und_run_sci_male",chance=1},
 	{class="npc_vj_bmce_und_wlk_sci_cas_male",chance=1},
 	{class="npc_vj_bmce_und_run_sci_cas_male",chance=1},
+	{class="npc_vj_bmce_und_wlk_guard",chance=1},
+	{class="npc_vj_bmce_und_run_guard",chance=1},
+	{class="npc_vj_bmce_und_wlk_guardfem",chance=1},
+	{class="npc_vj_bmce_und_run_guardfem",chance=1},
 }
 
 ENT.SpecialZombie = {
-	{class="npc_vj_mh_undead_cerberus_run",max=5},
+	{class="npc_vj_bmce_und_wlk_guardfem",max=5},
 }
 -- i'll add the main characters as special zmbs
 ---------------------------------------------------------------------------------------------------------------------------------------------

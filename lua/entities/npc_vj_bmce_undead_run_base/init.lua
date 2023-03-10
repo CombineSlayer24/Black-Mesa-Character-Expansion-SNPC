@@ -40,7 +40,7 @@ function ENT:CustomOnInitialize()
 		local color
 		local c_string
 		local cmd_enable = GetConVarNumber("vj_bmce_zmb_eyeglow") // sets eye color
-		local eyecolor_mat = random(1,3)
+		local eyecolor_mat = random(2,2)
 
  		if cmd_enable == 1 then
 			if eyecolor_mat == 1 then // orange
@@ -109,53 +109,35 @@ function ENT:CustomOnInitialize()
 		self.CanOpenDoors = false
 	end
 
+	local random_supersprint = random(0,24)
+	local sprint_anim = random(1,8)
+	local random_riser = random(1,5)
+
+
 	if GetConVarNumber("vj_bmce_zmb_faster") == 0 then 
-		local random_supersprint = random(0,24)
-		if random_supersprint == 0 then
+		if (random_supersprint >= 0 and random_supersprint <= 7) then
 			self.AnimTbl_Run = {ACT_RUN}
-		elseif random_supersprint == 8 then // super sprint
+		elseif (random_supersprint >= 8 and random_supersprint <= 15) then // super sprint
 			self.AnimTbl_Run = {ACT_SPRINT}
-		elseif random_supersprint == 24 then // super sonic sprint
+		elseif (random_supersprint >= 16 and random_supersprint <= 24) then // super sonic sprint
 			self.LNR_SuperSprinter = true
 			self.AnimTbl_Run = {ACT_RUN_AIM}
 		end
 	end	
 
 	if GetConVarNumber("vj_bmce_zmb_faster") == 1 then 
-		local sprint_anim = random(1,8)
-		if sprint_anim == 1 then
+		if (sprint_anim >= 1 and sprint_anim <= 6) then
 			self.AnimTbl_Run = {ACT_SPRINT}
-		elseif sprint_anim == 2 then
-			self.AnimTbl_Run = {ACT_SPRINT}
-		elseif sprint_anim == 3 then
-			self.AnimTbl_Run = {ACT_SPRINT}
-		elseif sprint_anim == 4 then
-			self.AnimTbl_Run = {ACT_SPRINT}
-		elseif sprint_anim == 5 then
-			self.AnimTbl_Run = {ACT_SPRINT}
-		elseif sprint_anim == 6 then
-			self.AnimTbl_Run = {ACT_SPRINT}
-		elseif sprint_anim == 7 then
-			self.LNR_SuperSprinter = true
-			self.AnimTbl_Run = {ACT_RUN_AIM}
-		elseif sprint_anim == 8 then // super sonic sprint
+		elseif (sprint_anim >= 7 and sprint_anim <= 8) then -- Super Sprinter
 			self.LNR_SuperSprinter = true
 			self.AnimTbl_Run = {ACT_RUN_AIM}
 		end
 	end
 	
-	if GetConVarNumber("vj_bmce_zmb_riser") == 1 then // If ZMB Riser cmd is on, undead will use the Rising out of dirt animation
-		local random_riser = random(1,5)
-
-		if random_riser == 1 then
+	if GetConVarNumber("vj_bmce_zmb_riser") == 1 then
+		if (random_riser >= 1 and random_riser <= 3) then
 			self:SlowDirtSpawn()
-		elseif random_riser == 2 then
-			self:SlowDirtSpawn()
-		elseif random_riser == 3 then
-			self:SlowDirtSpawn()
-		elseif random_riser == 4 then
-			self:FastDirtSpawn()
-		elseif random_riser == 5 then
+		elseif (random_riser >= 4 and random_riser <= 5) then
 			self:FastDirtSpawn()
 		end
 	end
@@ -394,11 +376,11 @@ function ENT:UseFemaleZombieVoice()
 		self.SoundTbl_MeleeAttack = {"vj_bmce_zmb/vocals/zm_mod.all_112.wav","vj_bmce_zmb/vocals/zm_mod.all_113.wav","vj_bmce_zmb/vocals/zm_mod.all_114.wav","vj_bmce_zmb/vocals/zm_mod.all_115.wav","vj_bmce_zmb/vocals/zm_mod.all_116.wav","vj_bmce_zmb/vocals/zm_mod.all_117.wav"}
 		self.SoundTbl_MeleeAttackMiss = {"vj_bmce_zmb/vocals/classic/attack1.wav","vj_bmce_zmb/vocals/classic/attack2.wav","vj_bmce_zmb/vocals/classic/attack3.wav"}
 	elseif Zombie_Voice_Female == 3 then --   RDR Undead (DLC6) Zombie Female 01
-		self.SoundTbl_Alert = {"vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_01.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_02.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_03.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_04.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_05.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_06.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_07.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_08.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_09.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_10.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_11.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_12.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_13.mp3"}
+		self.SoundTbl_Alert = {"vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_01.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_02.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_03.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_04.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_05.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_06.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_07.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_08.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_09.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_10.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_11.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_12.mp3"}
 		self.SoundTbl_Idle = {"vj_bmce_zmb/vocals/dlc6/zombie_female/roar_01.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/roar_02.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/roar_03.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/roar_04.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/roar_05.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/roar_06.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/roar_07.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/roar_08.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/roar_09.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_01.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_02.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_03.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_04.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_05.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_06.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_07.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_08.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_09.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_10.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_11.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_12.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_13.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_14.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_15.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_16.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_17.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_18.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_19.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_20.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_21.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_22.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_23.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_24.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_25.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_26.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_27.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_28.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_29.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_30.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_31.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_32.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_33.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/idle_34.mp3"}
 		self.SoundTbl_CombatIdle = {"vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_01.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_02.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_03.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_04.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_05.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_06.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_07.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_08.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_09.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_10.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_11.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_12.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_13.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_14.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_15.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_16.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_17.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_18.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_19.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_20.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_21.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_22.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_23.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_24.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_25.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_26.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_27.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_28.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_29.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_30.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_31.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_32.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_33.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_34.mp3"}
 		self.SoundTbl_Suppressing = {"vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_01.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_02.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_03.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_04.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_05.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_06.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_07.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_08.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_09.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_10.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_11.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_12.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_13.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_14.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_15.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_16.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_17.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_18.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_19.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_20.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_21.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_22.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_23.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_24.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_25.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_26.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_27.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_28.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_29.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_30.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_31.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_32.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_33.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attacking_34.mp3"}
-		self.SoundTbl_BeforeMeleeAttack = {"vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_01.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_02.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_03.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_04.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_05.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_06.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_07.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_08.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_09.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_10.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_11.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_12.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_13.mp3"}
+		self.SoundTbl_BeforeMeleeAttack = {"vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_01.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_02.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_03.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_04.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_05.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_06.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_07.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_08.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_09.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_10.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_11.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female_01/attack_noise_12.mp3"}
 		self.SoundTbl_Death = {"vj_bmce_zmb/vocals/dlc6/zombie_female/death_01.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/death_02.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/death_03.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/death_04.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/death_05.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/death_06.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/death_07.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/death_08.mp3"}
 		self.SoundTbl_Pain = {"vj_bmce_zmb/vocals/dlc6/zombie_female/pain_01.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/pain_02.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/pain_03.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/pain_04.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/pain_05.mp3","vj_bmce_zmb/vocals/dlc6/zombie_female/pain_06.mp3"}
 		self.SoundTbl_MeleeAttack = { "vj_bmce_zmb/vocals/classic/attack1.wav","vj_bmce_zmb/vocals/classic/attack2.wav","vj_bmce_zmb/vocals/classic/attack3.wav"}
@@ -428,7 +410,7 @@ function ENT:SetupZombie()
 	local Hat_Chance = random(1,3)
 	local Unique_Hat = random(1,3)
 
-	if MDL == "models/undead/scientist.mdl" or "models/undead/scientist_02.mdl" then
+	if MDL == "models/undead/scientist.mdl" or MDL == "models/undead/scientist_02.mdl" then
 		self:UseMaleZombieVoice()
 		self:SetSkin( random( 0, 14 ))
 		self:SetBodygroup( 1, random( 0, 2 )) -- Body
@@ -436,7 +418,7 @@ function ENT:SetupZombie()
 		if Hat_Chance == 1 then self:SetBodygroup( 2, random( 0, 2 )) end
 	end
 
-	if MDL == "models/undead/scientist_casual.mdl" or "models/undead/scientist_casual_02.mdl" then
+	if MDL == "models/undead/scientist_casual.mdl" or MDL == "models/undead/scientist_casual_02.mdl" then
 		self:UseMaleZombieVoice()
 		self:SetSkin( random( 0, 14 ))
 		self:SetBodygroup( 1, random( 0, 5 )) -- Body
@@ -444,7 +426,7 @@ function ENT:SetupZombie()
 		if Hat_Chance == 1 then self:SetBodygroup( 2, random( 0, 3 )) end
 	end
 
-	if MDL == "models/undead/guard.mdl" then
+	if MDL == "models/undead/guard.mdl" or MDL == "models/undead/guard_02.mdl" or MDL == "models/undead/guard_03.mdl" then
 		self:SetSkin( random( 0, 14 ))
 		self:SetBodygroup( 1, random( 0, 3 )) -- Body
 		self:SetBodygroup( 3, random( 0, 3 )) -- Chest
@@ -453,23 +435,18 @@ function ENT:SetupZombie()
 		if Unique_Hat == 1 then
 			self.BMCE_Hat = 1
 			self:GiveUniqueHat()
+		else
+			self:SetBodygroup( 2, random( 0, 5 ))
 		end
 
-		if self.BMCE_Hat == 0 then
-			self:SetBodygroup( 2, random( 0, 5 )) -- Hats
-		end
-
-		if GetConVar("vj_bmce_zmb_bruisers"):GetInt() == 0 then
-			self:UseMaleZombieVoice()
-
-		elseif GetConVar("vj_bmce_zmb_bruisers"):GetInt() == 1 then
-			if Bruiser_Chance == 1 then
-				self:UseMaleZombieVoice()
-			elseif Bruiser_Chance == 2 then
+		if GetConVar("vj_bmce_zmb_bruisers"):GetInt() == 1 then
+			if (Bruiser_Chance >= 1 and Bruiser_Chance <= 2) then
 				self:UseMaleZombieVoice()
 			elseif Bruiser_Chance == 3 then
 				self:UseBruiserZombieMale()
 			end
+		else
+			self:UseMaleZombieVoice()
 		end
 	end
 
@@ -481,6 +458,33 @@ function ENT:SetupZombie()
 		self:SetBodygroup( 4, random( 0, 2 )) -- Chest
 		self:SetBodygroup( 5, random( 0, 2 )) -- holster
 	end
+
+	if MDL == "models/undead/fem_office_worker.mdl" then
+		self:UseFemaleZombieVoice()
+		self:SetSkin( random( 0, 35 ))
+		self:SetBodygroup( 1, random( 0, 1 )) -- Body
+		self:SetBodygroup( 2, random( 0, 5 )) -- Hair
+	end
+
+	if MDL == "models/undead/construction_worker.mdl" then
+		self:SetSkin(random( 0, 16 ))
+		self:SetBodygroup(1,random( 0, 3 )) -- t-shirts
+		self:SetBodygroup(2,random( 0, 3 )) -- pants
+		self:SetBodygroup(3,random( 0, 1 )) -- shows
+		self:SetBodygroup(5,random( 3, 14 )) -- Glasses
+		if Hat_Chance == 1 then self:SetBodygroup( 4, random( 0, 4 )) end
+
+		if GetConVar("vj_bmce_zmb_bruisers"):GetInt() == 1 then
+			if (Bruiser_Chance >= 1 and Bruiser_Chance <= 2) then
+				self:UseMaleZombieVoice()
+			elseif Bruiser_Chance == 3 then
+				self:UseBruiserZombieMale()
+			end
+		else
+			self:UseMaleZombieVoice()
+		end
+	end
+	if (self.BMCE_Hat >= 1) then self:GiveUniqueHat() end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:GiveUniqueHat()

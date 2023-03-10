@@ -14,8 +14,7 @@ local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
 
 if VJExists == true then
 	include('autorun/vj_controls.lua')
-
-	local vCat = "BMCE - Undead"
+	local vCat = "Black Mesa | CE - Undead"
 
 	VJ.AddCategoryInfo(vCat, {Icon = "vgui/bms_logo.png"})
 
@@ -32,19 +31,25 @@ if VJExists == true then
 	VJ.AddNPC("Undead Female Guard (Walker)","npc_vj_bmce_und_wlk_guardfem",vCat)
 	VJ.AddNPC("Undead Female Guard (Bolter)","npc_vj_bmce_und_run_guardfem",vCat)
 
+	VJ.AddNPC("Undead Female Office Worker (Walker)","npc_vj_bmce_und_wlk_femoffworker",vCat)
+	VJ.AddNPC("Undead Female Office Worker (Bolter)","npc_vj_bmce_und_run_femoffworker",vCat)
+
+	VJ.AddNPC("Undead Construction Worker (Walker)","npc_vj_bmce_und_wlk_constwrk",vCat)
+	VJ.AddNPC("Undead Construction Worker (Bolter)","npc_vj_bmce_und_run_constwrk",vCat)
+
 	VJ.AddNPC("(Undead Map Spawner)","sent_vj_bmce_undead_mapspawner",vCat)
 
-	VJ.AddConVar("vj_bmce_zmb_eyeglow", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
-	VJ.AddConVar("vj_bmce_zmb_faster", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
-	VJ.AddConVar("vj_bmce_zmb_riser", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
-	VJ.AddConVar("vj_bmce_zmb_deathanim", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
-	VJ.AddConVar("vj_bmce_zmb_deathrandom", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
+	VJ.AddConVar("vj_bmce_zmb_eyeglow", 1, {FCVAR_ARCHIVE})
+	VJ.AddConVar("vj_bmce_zmb_faster", 0, {FCVAR_ARCHIVE})
+	VJ.AddConVar("vj_bmce_zmb_riser", 1, {FCVAR_ARCHIVE})
+	VJ.AddConVar("vj_bmce_zmb_deathanim", 1, {FCVAR_ARCHIVE})
+	VJ.AddConVar("vj_bmce_zmb_deathrandom", 1, {FCVAR_ARCHIVE})
 	VJ.AddConVar("vj_bmce_zmb_deathtime_min", 45, {FCVAR_ARCHIVE})
 	VJ.AddConVar("vj_bmce_zmb_deathtime_max", 90, {FCVAR_ARCHIVE})
-	VJ.AddConVar("vj_bmce_zmb_map_music", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
-	VJ.AddConVar("vj_bmce_zmb_map_spooky_snds", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
-	VJ.AddConVar("vj_bmce_zmb_map_delete", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
-	VJ.AddConVar("vj_bmce_zmb_bruisers", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
+	VJ.AddConVar("vj_bmce_zmb_map_music", 1, {FCVAR_ARCHIVE})
+	VJ.AddConVar("vj_bmce_zmb_map_spooky_snds", 1, {FCVAR_ARCHIVE})
+	VJ.AddConVar("vj_bmce_zmb_map_delete", 1, {FCVAR_ARCHIVE})
+	VJ.AddConVar("vj_bmce_zmb_bruisers", 1, {FCVAR_ARCHIVE})
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 	if CLIENT then
 		hook.Add("PopulateToolMenu", "VJ_ADDTOMENU_BMCE_UNDEAD", function()
@@ -54,7 +59,7 @@ if VJExists == true then
 					Panel:AddControl( "Label", {Text = "#vjbase.menu.general.admin.only"})
 					return
 				end
-				Panel:AddControl("Header", {Description = "NOTICE!: Newly spawned SNPC's will take affect to the changes you made!"})
+				Panel:AddControl("Header", {Description = "Note: Newly spawned SNPC's will take affect to the changes you made!"})
 				Panel:AddControl( "Label", {Text = "#vjbase.menu.general.admin.only"})
 				Panel:AddControl("Button", {Text = "#vjbase.menu.general.reset.everything", Command = ""})
 				
@@ -108,30 +113,64 @@ end)
 	AddCSLuaFile(AutorunFile)
 	VJ.AddAddonProperty(AddonName,AddonType)
 else
-	if (CLIENT) then
-		chat.AddText(Color(0,200,200),PublicAddonName,
-		Color(0,255,0)," was unable to install, you are missing ",
-		Color(255,100,0),"VJ Base!")
+	if CLIENT then
+		chat.AddText(Color(0, 200, 200), PublicAddonName,
+		Color(0, 255, 0), " was unable to install, you are missing ",
+		Color(255, 100, 0), "VJ Base!")
 	end
-	timer.Simple(1,function()
-		if not VJF then
-			if (CLIENT) then
-				VJF = vgui.Create("DFrame")
-				VJF:SetTitle("ERROR!")
-				VJF:SetSize(790,560)
-				VJF:SetPos((ScrW()-VJF:GetWide())/2,(ScrH()-VJF:GetTall())/2)
-				VJF:MakePopup()
-				VJF.Paint = function()
-					draw.RoundedBox(8,0,0,VJF:GetWide(),VJF:GetTall(),Color(200,0,0,150))
+	
+	timer.Simple(1, function()
+		if not VJBASE_ERROR_MISSING then
+			VJBASE_ERROR_MISSING = true
+			if CLIENT then
+				// Get rid of old error messages from addons running on older code...
+				if VJF && type(VJF) == "Panel" then
+					VJF:Close()
 				end
+				VJF = true
 				
-				local VJURL = vgui.Create("DHTML",VJF)
-				VJURL:SetPos(VJF:GetWide()*0.005, VJF:GetTall()*0.03)
-				VJURL:Dock(FILL)
-				VJURL:SetAllowLua(true)
-				VJURL:OpenURL("https://sites.google.com/site/vrejgaming/vjbasemissing")
+				local frame = vgui.Create("DFrame")
+				frame:SetSize(600, 160)
+				frame:SetPos((ScrW() - frame:GetWide()) / 2, (ScrH() - frame:GetTall()) / 2)
+				frame:SetTitle("Error: VJ Base is missing!")
+				frame:SetBackgroundBlur(true)
+				frame:MakePopup()
+	
+				local labelTitle = vgui.Create("DLabel", frame)
+				labelTitle:SetPos(250, 30)
+				labelTitle:SetText("VJ BASE IS MISSING!")
+				labelTitle:SetTextColor(Color(255,128,128))
+				labelTitle:SizeToContents()
+				
+				local label1 = vgui.Create("DLabel", frame)
+				label1:SetPos(170, 50)
+				label1:SetText("Garry's Mod was unable to find VJ Base in your files!")
+				label1:SizeToContents()
+				
+				local label2 = vgui.Create("DLabel", frame)
+				label2:SetPos(10, 70)
+				label2:SetText("You have an addon installed that requires VJ Base but VJ Base is missing. To install VJ Base, click on the link below. Once\n                                                   installed, make sure it is enabled and then restart your game.")
+				label2:SizeToContents()
+				
+				local link = vgui.Create("DLabelURL", frame)
+				link:SetSize(300, 20)
+				link:SetPos(195, 100)
+				link:SetText("VJ_Base_Download_Link_(Steam_Workshop)")
+				link:SetURL("https://steamcommunity.com/sharedfiles/filedetails/?id=131759821")
+				
+				local buttonClose = vgui.Create("DButton", frame)
+				buttonClose:SetText("CLOSE")
+				buttonClose:SetPos(260, 120)
+				buttonClose:SetSize(80, 35)
+				buttonClose.DoClick = function()
+					frame:Close()
+				end
 			elseif (SERVER) then
-				timer.Create("VJBASEMissing",5,0,function() print("VJ Base is Missing! Download it from the workshop!") end)
+				VJF = true
+				timer.Remove("VJBASEMissing")
+				timer.Create("VJBASE_ERROR_CONFLICT", 5, 0, function()
+					print("VJ Base is missing! Download it from the Steam Workshop! Link: https://steamcommunity.com/sharedfiles/filedetails/?id=131759821")
+				end)
 			end
 		end
 	end)

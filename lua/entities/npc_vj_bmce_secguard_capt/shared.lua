@@ -11,14 +11,8 @@ if CLIENT then
     function ENT:Initialize()        
         local firstname = VJ_PICK(VJ_BMCE_NAMES_FIRST_M)
         local lastname = VJ_PICK(VJ_BMCE_NAMES_LAST)
-        local rank = VJ_PICK(VJ_BMCE_RANKS_JANITOR)
-        local random = math.random
-        local rc = random(1,2)
-
-        if rc == 1 then
-            self.PrintName = rank .. firstname .. lastname
-        elseif rc == 2 then
-            self.PrintName = firstname .. lastname
-        end
+        local rank = VJ_PICK(VJ_BMCE_RANKS_BMSF_OFFICER)
+        
+        self.PrintName = rank .. firstname .. lastname
     end
 end

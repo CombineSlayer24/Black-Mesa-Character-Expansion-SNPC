@@ -4,7 +4,7 @@ if CLIENT then -- this is needed
 		size = 32,
 		extended = true,
 		shadow = true,
-		outline = true,
+		--outline = true,
 	})
 
 	surface.CreateFont("id_blur", {
@@ -25,7 +25,10 @@ local VJ_BMCE_VALIDNPCS = {
 	[ "npc_vj_bmce_cw_m" ] = true,
 	[ "npc_vj_bmce_scientist_casual_m" ] = true,
 	[ "npc_vj_bmce_constructw_m" ] = true,
-	[ "npc_vj_bmce_custodian_m" ] = true
+	[ "npc_vj_bmce_custodian_m" ] = true,
+	[ "npc_vj_bmce_secguard_m" ] = true,
+	[ "npc_vj_bmce_secguard_f" ] = true,
+	[ "npc_vj_bmce_secguard_capt" ] = true
 }
 
 CreateConVar("vj_bmce_shownames", 1, {FCVAR_ARCHIVE}, "Should names pop up?", 0, 1)
@@ -49,6 +52,8 @@ function NPC_Text() -- show some names
 	local trace = util.TraceLine( tr )
 	local _GetClass = trace.Entity:GetClass()
 	local _PrintName = trace.Entity.PrintName
+
+	if !trace.Entity:IsValid() or trace.Entity:IsWorld() then return end
 
 	if IsValid(trace.Entity) then -- if a valid BMCE NPC is in the crosshair, show us their name
 		if VJ_BMCE_VALIDNPCS[ _GetClass ] then

@@ -28,135 +28,8 @@ if VJExists == true then
 	VJ.AddNPC("Male Casual Scientist","npc_vj_bmce_scientist_casual_m",vPDCat)
 	VJ.AddNPC("Male Construction Worker","npc_vj_bmce_constructw_m",vPDCat)
 	VJ.AddNPC("Male Custodian Worker","npc_vj_bmce_custodian_m",vPDCat)
-
-
-
-	-- Pre Disaster Unarmed Humans
---[[	 VJ.AddNPC("(PD) Male Scientist","npc_vj_bmce_pre_scientist_male",vPDCat)
-	 VJ.AddNPC("(PD) Female Scientist","npc_vj_bmce_pre_scientist_female",vPDCat)
-	 VJ.AddNPC("(PD) Male Office Worker","npc_vj_bmce_pre_officeworker_male",vPDCat)
-	 VJ.AddNPC("(PD) Male Casual Scientist","npc_vj_bmce_pre_scientist_casual_male",vPDCat)
-	 VJ.AddNPC("(PD) Male Hazmat","npc_vj_bmce_pre_hazmat_male",vPDCat)
-	 VJ.AddNPC("(PD) Male Maintenance Worker","npc_vj_bmce_pre_mw_male",vPDCat)
-	 VJ.AddNPC("(PD) Male Engineer","npc_vj_bmce_pre_engineer_male",vPDCat)
-	 VJ.AddNPC("(PD) Female Canteen Worker","npc_vj_bmce_pre_canteenworker_female",vPDCat)
-	 VJ.AddNPC("(PD) Male Custodian Worker","npc_vj_bmce_pre_custodian_male",vPDCat)
-	 VJ.AddNPC("(PD) Male Canteen Worker","npc_vj_bmce_pre_canteenworker_male",vPDCat)
-
-	 --Pre Disaster Friendly Humans
-	 VJ.AddNPC_HUMAN("(PD) HECU Marine","npc_vj_bmce_pre_hgrunt",vHGeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) HECU Gasmask","npc_vj_bmce_pre_hgrunt_gasmask",vHGeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) HECU Sergeant","npc_vj_bmce_pre_hgrunt_sgt",vHGeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Male Security Guard","npc_vj_bmce_pre_secguard_male",vSeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Male Security Guard Captaian","npc_vj_bmce_pre_secguard_cpt",vSHPeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Female Security Guard","npc_vj_bmce_pre_secguard_female",vSeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Male Fat Security Guard","npc_vj_bmce_pre_secguard_fat_male",vSHPeapons,vPDCat)
-
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Scientist","npc_vj_bmce_pre_scientist_male_armed",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Office Worker","npc_vj_bmce_pre_officeworker_male_armed",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Casual Scientist","npc_vj_bmce_pre_scientist_casual_male_armed",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Hazmat","npc_vj_bmce_pre_hazmat_male_armed",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Maintenance Worker","npc_vj_bmce_pre_mw_male_armed",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Engineer","npc_vj_bmce_pre_engineer_male_armed",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Female Canteen Worker","npc_vj_bmce_pre_canteenworker_female_armed",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Female Scientist","npc_vj_bmce_pre_scientist_female_armed",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Custodian Worker","npc_vj_bmce_pre_custodian_male_armed",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Canteen Worker","npc_vj_bmce_pre_canteenworker_male_armed",vASeapons,vPDCat)
- 	
- 	--Pre Disaster Hostile Humans
-	 VJ.AddNPC_HUMAN("(PD) HECU Marine (Hostile)","npc_vj_bmce_pre_hgrunt_hostile",vHGeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) HECU Gasmask (Hostile)","npc_vj_bmce_pre_hgrunt_gasmask_hostile",vHGeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) HECU Sergeant (Hostile)","npc_vj_bmce_pre_hgrunt_sgt_hostile",vHGeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Male Security Guard (Hostile)","npc_vj_bmce_pre_secguard_male_hostile",vSeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Male Security Guard Captaian (Hosttile)","npc_vj_bmce_pre_secguard_cpt_hostile",vSHPeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Female Security Guard (Hostile)","npc_vj_bmce_pre_secguard_female_hostile",vSeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Male Fat Security Guard (Hostile)","npc_vj_bmce_pre_secguard_fat_male_hostile",vSHPeapons,vPDCat)
-
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Scientist (Hostile)","npc_vj_bmce_pre_scientist_male_armed_hostile",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Office Worker (Hostile)","npc_vj_bmce_pre_officeworker_male_armed_hostile",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Casual (Hostile)","npc_vj_bmce_pre_scientist_casual_male_armed_hostile",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Hazmat (Hostile)","npc_vj_bmce_pre_hazmat_male_armed_hostile",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Maintenance Worker (Hostile)","npc_vj_bmce_pre_mw_male_armed_hostile",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Engineer (Hostile)","npc_vj_bmce_pre_engineer_male_armed_hostile",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Female Canteen Worker (Hostile)","npc_vj_bmce_pre_canteenworker_female_armed_hostile",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Female Scientist (Hostile)","npc_vj_bmce_pre_scientist_female_armed_hostile",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Custodian Worker (Hostile)","npc_vj_bmce_pre_custodian_male_armed_hostile",vASeapons,vPDCat)
-	 VJ.AddNPC_HUMAN("(PD) Armed Male Canteen Worker","npc_vj_bmce_pre_canteenworker_male_armed_hostile",vASeapons,vPDCat)
-
-	 -- Post Disaster Unarmed Humans
-	 VJ.AddNPC("(D) Male Scientist","npc_vj_bmce_scientist_male",vDCat)
-	 VJ.AddNPC("(D) Female Scientist","npc_vj_bmce_scientist_female",vDCat)
-	 VJ.AddNPC("(D) Male Office Worker","npc_vj_bmce_officeworker_male",vDCat)
-	 VJ.AddNPC("(D) Male Casual Scientist","npc_vj_bmce_scientist_casual_male",vDCat)
-	 VJ.AddNPC("(D) Male Hazmat","npc_vj_bmce_hazmat_male",vDCat)
-	 VJ.AddNPC("(D) Male Maintenance Worker","npc_vj_bmce_mw_male",vDCat)
-	 VJ.AddNPC("(D) Male Engineer","npc_vj_bmce_engineer_male",vDCat)
-	 VJ.AddNPC("(D) Female Canteen Worker","npc_vj_bmce_canteenworker_female",vDCat)
-	 VJ.AddNPC("(D) Male Custodian Worker","npc_vj_bmce_custodian_male",vDCat)
-	 VJ.AddNPC("(D) Male Canteen Worker","npc_vj_bmce_canteenworker_male",vDCat)
-
-     -- Post Disaster Friendly Humans
-	 VJ.AddNPC_HUMAN("(D) HECU Marine","npc_vj_bmce_hgrunt",vHGeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) HECU Gasmask","npc_vj_bmce_hgrunt_gasmask",vHGeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) HECU Sergeant","npc_vj_bmce_hgrunt_sgt",vHGeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Male Security Guard","npc_vj_bmce_secguard_male",vSHPeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Male Security Guard Captaian","npc_vj_bmce_secguard_cpt",vSHPeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Female Security Guard","npc_vj_bmce_secguard_female",vSHPeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Male Fat Security Guard","npc_vj_bmce_secguard_fat_male",vSHPeapons,vDCat)
-
-	 VJ.AddNPC_HUMAN("(D) Armed Male Scientist","npc_vj_bmce_scientist_male_armed",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Office Worker","npc_vj_bmce_officeworker_male_armed",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Casual Scientist","npc_vj_bmce_scientist_casual_male_armed",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Hazmat","npc_vj_bmce_hazmat_male_armed",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Maintenance Worker","npc_vj_bmce_mw_male_armed",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Engineer","npc_vj_bmce_engineer_male_armed",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Female Canteen Worker","npc_vj_bmce_canteenworker_female_armed",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Female Scientist","npc_vj_bmce_scientist_female_armed",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Custodian Worker","npc_vj_bmce_custodian_male_armed",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Canteen Worker","npc_vj_bmce_canteenworker_male_armed",vASeapons,vDCat)
-
-	 -- Post Disaster Hostile Humans
-	 VJ.AddNPC_HUMAN("(D) HECU Marine (Hostile)","npc_vj_bmce_hgrunt_hostile",vHGeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) HECU Gasmask (Hostile)","npc_vj_bmce_hgrunt_gasmask_hostile",vHGeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) HECU Sergeant (Hostile)","npc_vj_bmce_hgrunt_sgt_hostile",vHGeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Male Security Guard (Hostile)","npc_vj_bmce_secguard_male_hostile",vSHPeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Male Security Guard Captaian (Hostile)","npc_vj_bmce_secguard_cpt_hostile",vSHPeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Female Security Guard (Hostile)","npc_vj_bmce_secguard_female_hostile",vSHPeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Male Fat Security Guard (Hostile)","npc_vj_bmce_secguard_fat_male_hostile",vSHPeapons,vDCat)
-
-	 VJ.AddNPC_HUMAN("(D) Armed Male Scientist (Hostile)","npc_vj_bmce_scientist_male_armed_hostile",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Office Worker (Hostile)","npc_vj_bmce_officeworker_male_armed_hostile",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Casual (Hostile)","npc_vj_bmce_scientist_casual_male_armed_hostile",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Hazmat (Hostile)","npc_vj_bmce_hazmat_male_armed_hostile",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Maintenance Worker (Hostile)","npc_vj_bmce_mw_male_armed_hostile",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Engineer (Hostile)","npc_vj_bmce_engineer_male_armed_hostile",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Female Canteen Worker (Hostile)","npc_vj_bmce_canteenworker_female_armed_hostile",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Female Scientist (Hostile)","npc_vj_bmce_scientist_female_armed_hostile",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Custodian Worker (Hostile)","npc_vj_bmce_custodian_male_armed_hostile",vASeapons,vDCat)
-	 VJ.AddNPC_HUMAN("(D) Armed Male Canteen Worker (Hostile)","npc_vj_bmce_canteenworker_male_armed_hostile",vASeapons,vDCat)
-
-	-- Spawners and Groups
-	VJ.AddNPC("(PD) Random BM Staff","sent_vj_bmce_pre_random_staff",vPDCat)
-	VJ.AddNPC("(PD) Random BM Staff Armed","sent_vj_bmce_pre_random_staff_armed",vPDCat)
-	VJ.AddNPC("(PD) Random BM Security","sent_vj_bmce_pre_random_security",vPDCat)
-	VJ.AddNPC("(PD) Random HECU","sent_vj_bmce_pre_random_hecu",vPDCat)
-
-	VJ.AddNPC("(PD) Random BM Staff Armed (Hostile)","sent_vj_bmce_pre_random_staff_armed_hostile",vPDCat)
-	VJ.AddNPC("(PD) Random BM Security (Hostile)","sent_vj_bmce_pre_random_security_hostile",vPDCat)
-	VJ.AddNPC("(PD) Random HECU (Hostile)","sent_vj_bmce_pre_random_hecu_hostile",vPDCat)
-
-	VJ.AddNPC("(D) Random BM Staff","sent_vj_bmce_random_staff",vDCat)
-	VJ.AddNPC("(D) Random BM Staff Armed","sent_vj_bmce_random_staff_armed",vDCat)
-	VJ.AddNPC("(D) Random BM Security","sent_vj_bmce_random_security",vDCat)
-	VJ.AddNPC("(D) Random HECU","sent_vj_bmce_random_hecu",vDCat)
-
-	VJ.AddNPC("(D) Random BM Staff Armed (Hostile)","sent_vj_bmce_random_staff_armed_hostile",vDCat)
-	VJ.AddNPC("(D) Random BM Security (Hostile)","sent_vj_bmce_random_security_hostile",vDCat)
-	VJ.AddNPC("(D) Random HECU (Hostile)","sent_vj_bmce_random_hecu_hostile",vDCat)
-
-	VJ.AddNPC("Headcrab Zombie","npc_vj_bmce_zombie",vDCat)
-	VJ.AddNPC("Headcrab ZECU","npc_vj_bmce_zecu",vDCat)
-	VJ.AddNPC("Headcrab Security Guard","npc_vj_bmce_secguard_zombie",vDCat)--]]
+	VJ.AddNPC("Male Security Guard","npc_vj_bmce_secguard_m",vPDCat)
+	VJ.AddNPC("Security Guard Captain","npc_vj_bmce_secguard_capt",vPDCat)
 
 	-- Weapons
 	VJ.AddNPCWeapon("VJ_BMCE_M4_GRENADIER", "weapon_vj_bmce_m4")
@@ -184,6 +57,62 @@ if VJExists == true then
 	VJ.AddConVar("vj_bmce_disaster_status", 0, {FCVAR_ARCHIVE})
 	VJ.AddConVar("vj_bmce_weapons", 0, {FCVAR_ARCHIVE})
 	VJ.AddConVar("vj_bmce_hostile", 0, {FCVAR_ARCHIVE})
+
+	-- Globals --
+
+	VJ_BMCE_WP_STAFF = {
+		"weapon_vj_bmce_glock17",
+		"weapon_vj_bmce_glock17",
+		"weapon_vj_bmce_glock17",
+		"weapon_vj_bmce_glock17",
+		"weapon_vj_bmce_m9",
+		"weapon_vj_bmce_m9",
+		"weapon_vj_bmce_m9",
+		"weapon_vj_bmce_m9",
+		"weapon_vj_bmce_357",
+		"weapon_vj_bmce_357",
+		"weapon_vj_bmce_degal",
+		"weapon_vj_bmce_degal",
+		"weapon_vj_bmce_mp5",
+		"weapon_vj_bmce_m4",
+		"weapon_vj_crowbar"
+	}
+	
+	VJ_BMCE_WP_STAFF_CONSTRU = {
+		"weapon_vj_bmce_glock17",
+		"weapon_vj_bmce_glock17",
+		"weapon_vj_bmce_glock17",
+		"weapon_vj_bmce_glock17",
+		"weapon_vj_crowbar",
+		"weapon_vj_crowbar",
+		"weapon_vj_crowbar",
+		"weapon_vj_crowbar",
+		"weapon_vj_bmce_m9",
+		"weapon_vj_bmce_m9",
+		"weapon_vj_bmce_mp5"
+	}
+
+	VJ_BMCE_WP_BMSF = {
+		"weapon_vj_bmce_glock17",
+		"weapon_vj_bmce_glock17",
+		"weapon_vj_bmce_glock17",
+		"weapon_vj_bmce_m9",
+		"weapon_vj_bmce_m9",
+		"weapon_vj_bmce_m9"
+	}
+
+	VJ_BMCE_WP_BMSF_ADVW = {
+		"weapon_vj_bmce_glock17",
+		"weapon_vj_bmce_m9",
+		"weapon_vj_bmce_shotgun",
+		"weapon_vj_bmce_degal",
+		"weapon_vj_bmce_degal",
+		"weapon_vj_bmce_357",
+		"weapon_vj_bmce_357"
+	}
+
+	VJ_MODEL_ANIMSET_BMSTAFF = 0
+	VJ_MODEL_ANIMSET_HECU = 1
 
 	------------------------------------------------------------------------------------------------------------------------------------------------------
 	if CLIENT then

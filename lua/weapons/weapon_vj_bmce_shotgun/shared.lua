@@ -16,7 +16,7 @@ end
 	-- NPC Settings 
 SWEP.NPC_NextPrimaryFire 		= 1.5 -- Next time it can use primary fire
 SWEP.NPC_CustomSpread 			= 1.5 -- This is added on top of the custom spread that's set inside the SNPC! | Starting from 1: Closer to 0 = better accuracy, Farther than 1 = worse accuracy
-SWEP.NPC_ExtraFireSound			= {"vj_bmce/weapons/bms_shotgun/pump.mp3"} -- Plays an extra sound after it fires (Example: Bolt action sound)
+--SWEP.NPC_ExtraFireSound			= {"vj_bmce/weapons/bms_shotgun/pump.mp3"} -- Plays an extra sound after it fires (Example: Bolt action sound)
 SWEP.NPC_FiringDistanceScale 	= 0.5 -- Changes how far the NPC can fire | 1 = No change, x < 1 = closer, x > 1 = farther
 	-- Main Settings 
 SWEP.ViewModel 					= "models/weapons/viewmodels/bms/v_shotgun.mdl"

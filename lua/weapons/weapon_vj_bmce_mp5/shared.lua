@@ -17,7 +17,7 @@ end
 	-- Main Settings 
 SWEP.ViewModel					= "models/weapons/viewmodels/bms/v_mp5.mdl"
 SWEP.WorldModel					= "models/weapons/black_mesa_src/w_mp5.mdl"
-SWEP.HoldType 					= "ar2"
+SWEP.HoldType 					= "smg"
 SWEP.ViewModelFOV				= 85 -- Player FOV for the view model
 SWEP.ViewModelFlip				= false -- Flip the model? Usally used for CS:S models
 SWEP.Spawnable					= true

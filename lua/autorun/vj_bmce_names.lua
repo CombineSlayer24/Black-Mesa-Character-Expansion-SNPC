@@ -348,3 +348,4 @@ VJ_BMCE_RANKS_ADMIN = { "Receptionist.", "Receptionist.", "Receptionist.", "Cler
 VJ_BMCE_RANKS_JANITOR = { "Custodian.", "Custodian.", "Custodian.", "Custodian.", "Custodian.", "Senior Custodian.", "Senior Custodian.", "Senior Custodian.", "Senior Custodian.", "Head Custodian."}
 VJ_BMCE_RANKS_FF = {"Firefighter.", "Firefighter.", "Firefighter.", "Firefighter.", "Firefighter.", "Firefighter.", "Lt.", "Lt.", "Lt.", "Capt.", "Capt.", "Capt.", "Asst. Fire Chief.", "Fire Chief."}
 VJ_BMCE_RANKS_EMS = {"EMS.", "EMS.", "EMS.", "EMS.", "EMS.", "EMS.", "EMS.", "EMS Supervisor.", "EMS Supervisor.", "EMS Supervisor.", "EMS Supervisor.", "EMS Lt.", "EMS Lt.", "EMS Lt." }
+VJ_BMCE_RANKS_CANTEEN = {"Counter Attendant.", "Counter Attendant.", "Counter Attendant.", "Server.", "Server.", "Server.", "Cook.", "Cook.", "Cook.", "Cook.", "Cook.", "Head Cook.", "Head Cook.", "Head Cook."}

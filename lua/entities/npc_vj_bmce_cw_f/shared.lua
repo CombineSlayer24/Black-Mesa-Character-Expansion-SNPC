@@ -9,9 +9,16 @@ ENT.Category		= "Black Mesa CE"
 
 if CLIENT then
     function ENT:Initialize()        
-        local firstname = VJ_PICK(VJ_BMCE_NAMES_FIRST_F)
+        local firstname = VJ_PICK(VJ_BMCE_NAMES_FIRST_M)
         local lastname = VJ_PICK(VJ_BMCE_NAMES_LAST)
+        local rank = VJ_PICK(VJ_BMCE_RANKS_CANTEEN)
+        local random = math.random
+        local rc = random(1,2)
 
-        self.PrintName = firstname .. lastname
+        if rc == 1 then
+            self.PrintName = rank .. firstname .. lastname
+        elseif rc == 2 then
+            self.PrintName = firstname .. lastname
+        end
     end
 end

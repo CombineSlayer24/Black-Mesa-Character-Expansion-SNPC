@@ -1,5 +1,8 @@
 -- When adding names to the table, be mindful in adding a space to separate them
 -- or they won't look pretty when looking at them. Prettyniess counts damnit!
+-- Doesn't apply to Ranks since they show up in the name first.
+
+-- Global Names --
 VJ_BMCE_NAMES_FIRST_F = {
     " Jannet",
     " Edith",
@@ -184,7 +187,6 @@ VJ_BMCE_NAMES_FIRST_M = {
     " Rick",
     " Ricky",
     " Davis",
-    " Duncan",
     " Greg",
     " Gregory",
     " Karl",
@@ -220,7 +222,9 @@ VJ_BMCE_NAMES_FIRST_M = {
     " Anthony",
     " Winston",
     " Mike",
-    " Vlad"
+    " Vlad",
+    " Terry",
+    " Tarrance"
 }
 VJ_BMCE_NAMES_LAST = {
     " Mann",
@@ -334,7 +338,9 @@ VJ_BMCE_NAMES_LAST = {
     " Reid",
     " Reed",
     " Harrington",
-    " Sullivan"
+    " Sullivan",
+    " Kasper",
+    " Duncan",
 }
 VJ_BMCE_RANKS_HECU = {"Pvt.", "Pfc.", "Cpl."}
 VJ_BMCE_RANKS_HECU_OFFICER = {"Sgt.", "Sgt.", "Sgt.", "SSgt.", "SSgt.", "Lt.", "Capt.", "CO."}

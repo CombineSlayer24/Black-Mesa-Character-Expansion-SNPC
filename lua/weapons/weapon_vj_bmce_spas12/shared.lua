@@ -89,6 +89,7 @@ function SWEP:CustomOnSecondaryAttack()
 		self.Primary.NumberOfShots = 16
 		self.Primary.TakeAmmo = 2
 		self.NextIdle_PrimaryAttack = 1
+		self.Primary.Force = 3.5
 		self.AnimTbl_PrimaryFire = {ACT_VM_SECONDARYATTACK}
 		owner:ViewPunch(Angle(-self.Primary.Recoil *24, 6, 0))
 		VJ_EmitSound(self, "vj_bmce/weapons/bmce_shotgun_spas12/close1.mp3", 85, math.random(65,90))
@@ -99,6 +100,7 @@ function SWEP:CustomOnSecondaryAttack()
 	self.Primary.NumberOfShots = 8
 	self.Primary.TakeAmmo = 1
 	self.NextIdle_PrimaryAttack = 0.8
+	self.Primary.Force = 1
 	self.AnimTbl_PrimaryFire = {ACT_VM_PRIMARYATTACK}
 	
 	self:SetNextSecondaryFire(CurTime() + 1.2)

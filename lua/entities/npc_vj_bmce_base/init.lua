@@ -58,14 +58,14 @@ ENT.HitGroupFlinching_Values = {
 	{HitGroup={HITGROUP_HEAD}, Animation={ACT_FLINCH_HEAD}}
 }
 -- ====== Death Animation Variables ====== --
-ENT.HasDeathAnimation = true -- Does it play an animation when it dies?
---ENT.AnimTbl_Death = {"Ranen_Idle1","Ranen_Idle1","Ranen_Idle1","Ranen3_Idle1","Ranen3_Idle1","Ranen3_Idle1"/*,"vjseq_nz_death_1","vjseq_nz_death_2","vjseq_nz_death_3","vjseq_nz_death_expl_f_2","vjseq_nz_death_expl_f_3"*/} -- Death Animations
+ENT.HasDeathAnimation = false -- Does it play an animation when it dies?
+ENT.AnimTbl_Death = {"Ranen_Idle1","Ranen_Idle1","Ranen_Idle1","Ranen3_Idle1","Ranen3_Idle1","Ranen3_Idle1"} -- Death Animations
 	-- To let the base automatically detect the animation duration, set this to false:
 ENT.DeathAnimationTime = false
 ENT.DeathAnimationChance = 4
 ENT.DeathAnimationDecreaseLengthAmount = 0 -- This will decrease the time until it turns into a corpse
 -- move to armed down bellow --
-ENT.HasMeleeAttack = false -- Should the SNPC have a melee attack?
+ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {"swing","pushplayer","thrust","barrelpush","melee_slice"} -- Melee Attack Animations
 ENT.MeleeAttackDamage = random( 4, 10)
 -- sound pitches
@@ -297,7 +297,7 @@ function ENT:SetBehaviorAndWeapons() -- Sets the Black Mesa Staff disaster behav
 	end
 
 	-- Setting the Custom Weapons
-	if NPC == "npc_vj_bmce_scientist_m" or "npc_vj_bmce_scientist_casual_m" or "npc_vj_bmce_scientist_f" or "npc_vj_bmce_cw_f" or "npc_vj_bmce_cw_m" then
+	if NPC == "npc_vj_bmce_scientist_m" or NPC == "npc_vj_bmce_scientist_casual_m" or NPC == "npc_vj_bmce_scientist_f" or NPC == "npc_vj_bmce_cw_f" or NPC == "npc_vj_bmce_cw_m" then
 		if wpns:GetInt() == 1 then 
 			if Weapon_Chance == 1 then
 				self:Give(Staff_Wep)
@@ -313,7 +313,7 @@ function ENT:SetBehaviorAndWeapons() -- Sets the Black Mesa Staff disaster behav
 		end
 	end
 
-	if NPC == "npc_vj_bmce_constructw_m" or "npc_vj_bmce_custodian_m" then
+	if NPC == "npc_vj_bmce_constructw_m" or NPC == "npc_vj_bmce_custodian_m" then
 		if wpns:GetInt() == 1 then 
 			if Weapon_Chance == 1 then
 				self:Give(Staff_Constu_Wep)
@@ -329,7 +329,7 @@ function ENT:SetBehaviorAndWeapons() -- Sets the Black Mesa Staff disaster behav
 		end
 	end
 
-	if NPC == "npc_vj_bmce_secguard_m" or "npc_vj_bmce_secguard_capt" then
+	if NPC == "npc_vj_bmce_secguard_m" or NPC == "npc_vj_bmce_secguard_capt" then
 		--local rnd = random( 1, 3 )
 
 		if (Weapon_Chance >= 1 and Weapon_Chance <= 2) then
@@ -337,6 +337,9 @@ function ENT:SetBehaviorAndWeapons() -- Sets the Black Mesa Staff disaster behav
 		elseif Weapon_Chance == 3 then
 			self:Give(BMSFADV_Wep)
 		end
+
+		self.WeaponInventory_Melee = true
+		self.WeaponInventory_MeleeList = {"weapon_vj_crowbar"}
 	end
 
 	if wpns:GetInt() == 0 and !self.Agressive then
@@ -584,7 +587,7 @@ function ENT:DoGibbing()
 	self:CreateGibEntity("obj_vj_gib","models/gibs/humans/eye_gib.mdl",{Pos=self:LocalToWorld(Vector(0,0,65)),Ang=self:GetAngles()+Angle(0,-90,0),Vel=self:GetRight()*rand(150,250)+self:GetForward()*rand(-200,200)})
 	self:CreateGibEntity("obj_vj_gib","models/gibs/humans/eye_gib.mdl",{Pos=self:LocalToWorld(Vector(0,3,65)),Ang=self:GetAngles()+Angle(0,-90,0),Vel=self:GetRight()*rand(-150,-250)+self:GetForward()*rand(-200,200)})
 
-	if NPC == "npc_vj_bmce_scientist_m" || NPC == "npc_vj_bmce_scientist_m" then
+	if NPC == "npc_vj_bmce_scientist_m" or NPC == "npc_vj_bmce_scientist_m" then
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/scientists/torso.mdl",{Pos=self:LocalToWorld(Vector(0,0,0)),Ang=self:GetAngles(),Vel=self:GetRight()*rand(-100,100)+self:GetForward()*rand(-100,100)})
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/scientists/right_leg.mdl",{Pos=self:LocalToWorld(Vector(0,7,2)),Ang=self:GetAngles(),Vel=self:GetRight()*rand(-350,-550)+self:GetForward()*rand(-500,500)})
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/scientists/left_leg.mdl",{Pos=self:LocalToWorld(Vector(0,-7,2)),Ang=self:GetAngles(),Vel=self:GetRight()*rand(350,550)+self:GetForward()*rand(-500,500)})
@@ -592,12 +595,12 @@ function ENT:DoGibbing()
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/scientists/left_arm.mdl",{Pos=self:LocalToWorld(Vector(0,2,2)),Ang=self:GetAngles(),Vel=self:GetRight()*rand(-150,-250)+self:GetForward()*rand(-200,200)})
 	end
 
-	if NPC == "npc_vj_bmce_scientist_casual_m" || NPC == "npc_vj_bmce_scientist_casual_m" then
+	if NPC == "npc_vj_bmce_scientist_casual_m" or NPC == "npc_vj_bmce_scientist_casual_m" then
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/scientists/right_leg.mdl",{Pos=self:LocalToWorld(Vector(0,7,2)),Ang=self:GetAngles(),Vel=self:GetRight()*rand(-350,-550)+self:GetForward()*rand(-500,500)})
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/scientists/left_leg.mdl",{Pos=self:LocalToWorld(Vector(0,-7,2)),Ang=self:GetAngles(),Vel=self:GetRight()*rand(350,550)+self:GetForward()*rand(-500,500)})
 	end
 
-	if NPC == "npc_vj_bmce_scientist_f" || NPC == "npc_vj_bmce_scientist_f" then
+	if NPC == "npc_vj_bmce_scientist_f" or NPC == "npc_vj_bmce_scientist_f" then
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/fem_sci/torso.mdl",{Pos=self:LocalToWorld(Vector(0,0,0)),Ang=self:GetAngles(),Vel=self:GetRight()*rand(-100,100)+self:GetForward()*rand(-100,100)})
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/scientists/right_leg.mdl",{Pos=self:LocalToWorld(Vector(0,7,20)),Ang=self:GetAngles(),Vel=self:GetRight()*rand(-350,-550)+self:GetForward()*rand(-500,500)})
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/scientists/left_leg.mdl",{Pos=self:LocalToWorld(Vector(0,-7,20)),Ang=self:GetAngles(),Vel=self:GetRight()*rand(350,550)+self:GetForward()*rand(-500,500)})
@@ -605,13 +608,13 @@ function ENT:DoGibbing()
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/scientists/left_arm.mdl",{Pos=self:LocalToWorld(Vector(0,2,2)),Ang=self:GetAngles(),Vel=self:GetRight()*rand(-150,-250)+self:GetForward()*rand(-200,200)})
 	end
 	
-	if NPC == "npc_vj_bmce_cw_f" || NPC == "npc_vj_bmce_cw_f" then
+	if NPC == "npc_vj_bmce_cw_f" or NPC == "npc_vj_bmce_cw_f" then
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/cafe/torso.mdl",{Pos=self:LocalToWorld(Vector(0,0,5)),Ang=self:GetAngles()+Angle(90,0,0)})
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/cafe/right_leg.mdl",{Pos=self:LocalToWorld(Vector(0,7,60)),Ang=self:GetAngles(),Vel=self:GetRight()*rand(-350,-550)+self:GetForward()*rand(-500,500)})
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/cafe/left_leg.mdl",{Pos=self:LocalToWorld(Vector(0,-7,50)),Ang=self:GetAngles(),Vel=self:GetRight()*rand(350,550)+self:GetForward()*rand(-500,500)})
 	end
 
-	if NPC == "npc_vj_bmce_secguard_m" || NPC == "npc_vj_bmce_secguard_capt" || NPC == "npc_vj_bmce_secguard_f" then
+	if NPC == "npc_vj_bmce_secguard_m" or NPC == "npc_vj_bmce_secguard_capt" or NPC == "npc_vj_bmce_secguard_f" then
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/guard/torso.mdl",{Pos=self:LocalToWorld(Vector(0,0,0)),Ang=self:GetAngles(),Vel=self:GetRight()*math.Rand(-100,100)+self:GetForward()*rand(-100,100)})
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/guard/right_leg.mdl",{Pos=self:LocalToWorld(Vector(0,0,0)),Ang=self:GetAngles(),Vel=self:GetRight()*math.Rand(100,250)+self:GetForward()*rand(-300,300)})
 		self:CreateGibEntity("prop_ragdoll","models/gibs/humans/guard/right_leg.mdl",{Pos=self:LocalToWorld(Vector(0,7,0)),Ang=self:GetAngles(),Vel=self:GetRight()*math.Rand(-100,-250)+self:GetForward()*rand(-300,300)})
@@ -728,7 +731,7 @@ function ENT:SetupWeaponHoldTypeAnims(hType)
 			self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= ACT_RELOAD_SMG1_LOW
 			
 			self.WeaponAnimTranslations[ACT_IDLE] 							= ACT_IDLE_PISTOL
-			self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= VJ_SequenceToActivity(self, "idle_pistol")
+			self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= ACT_IDLE_ANGRY_PISTOL
 			
 			self.WeaponAnimTranslations[ACT_WALK] 							= ACT_WALK_PISTOL
 			self.WeaponAnimTranslations[ACT_WALK_AIM] 						= VJ_SequenceToActivity(self, "walk_hold_pistol")

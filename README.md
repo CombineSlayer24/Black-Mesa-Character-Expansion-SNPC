@@ -2,7 +2,7 @@
 This addon is heavy in development
 
 ### REQUIREMENTS:
-[LNR](https://steamcommunity.com/sharedfiles/filedetails/?id=1879776316)
+- [LNR](https://steamcommunity.com/sharedfiles/filedetails/?id=1879776316)
 
 ### FEATURES:
 - Configureable ConVars.

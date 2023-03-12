@@ -31,6 +31,7 @@ DBT:
 - [Black Mesa Character Expansion](https://steamcommunity.com/sharedfiles/filedetails/?id=2068862348) - Models, Textures
 - [Adam](https://steamcommunity.com/id/AdamIGuess/) - Female models for Engineer, Custodian, Maintenance Workers
 - [Pyri](https://steamcommunity.com/id/swellseeker7820/) - Everything, Spawnicons, M9 Custom retexture
+- Joawnai#8448 (discord) - Custom radio sounds.
 
 ### CREDITS, ASSETS:
 - [bobkendo Earl](https://steamcommunity.com/sharedfiles/filedetails/?id=1624618672) - Bandage Model

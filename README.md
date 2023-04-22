@@ -7,7 +7,7 @@ Black Mesa Character Expansion SNPCS is an addon that adds NPCs from the Black M
 This version is overhualed fromn my first iteration doing VJ SNPCS.
 
 ### REQUIREMENTS:
-DBT:
+- BMCE Content: https://steamcommunity.com/workshop/filedetails/?id=2949416975
 
 ### FEATURES:
 - Configureable ConVars.

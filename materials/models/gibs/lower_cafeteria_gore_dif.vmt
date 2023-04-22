@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
 	"$baseTexture" "models\gibs/lower_cafeteria_gore_dif"
-	"$bumpmap" "models\humans\scientists/cafeteria/lower-nm"
+	"$bumpmap" "models\gibs/cafe_fem_lower-nm"
 	"$model" "1"
 	"$surfaceprop" "flesh"
 	"$nocull" 1

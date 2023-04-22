@@ -6,6 +6,9 @@ local rand = math.Rand
 local behaviour = GetConVar( "vj_bmce_disaster_status" )
 local enemy = GetConVar( "vj_bmce_hostile" )
 local wpns = GetConVar( "vj_bmce_weapons" )
+local follower = GetConVar( "vj_bmce_following" )
+local Hat_Chance = random(1,3)
+local Unique_Hat = random(1,1)
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2023 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
@@ -15,39 +18,41 @@ ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 -- ====== Controller Data ====== --
 ENT.VJC_Data = {
-	CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-	ThirdP_Offset = Vector(30, 25, -50), -- The offset for the controller when the camera is in third person
-	FirstP_Bone = "ValveBiped.Bip01_Head1", -- If left empty, the base will attempt to calculate a position for first person
-	FirstP_Offset = Vector(0, 0, 5), -- The offset for the controller when the camera is in first person
+	CameraMode = 1,
+	ThirdP_Offset = Vector(30, 25, -50),
+	FirstP_Bone = "ValveBiped.Bip01_Head1",
+	FirstP_Offset = Vector(0, 0, 5),
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.FollowPlayer = true -- Should the SNPC follow the player when the player presses a certain key?
-ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.FriendsWithAllPlayerAllies = true -- Should this SNPC be friends with all other player allies that are running on VJ Base?
-ENT.BecomeEnemyToPlayer = true -- Should the friendly SNPC become enemy towards the player if it's damaged by a player?
-ENT.BecomeEnemyToPlayerLevel = 2 -- How many times does the player have to hit the SNPC for it to become enemy? (Three hits)
-ENT.HasItemDropsOnDeath = true -- Should it drop items on death?
+ENT.FollowPlayer = true
+ENT.BloodColor = "Red"
+ENT.BecomeEnemyToPlayer = true
+ENT.BecomeEnemyToPlayerLevel = 2
+ENT.HasItemDropsOnDeath = true
 ENT.ItemDropsOnDeathChance = 12
 ENT.ItemDropsOnDeath_EntityList = {"item_healthvial","item_battery"}
-ENT.HasOnPlayerSight = true -- Should do something when it sees the enemy? Example: Play a sound
-ENT.FootStepTimeRun = 0.3 -- Next foot step sound when it is running
-ENT.FootStepTimeWalk = 0.5 -- Next foot step sound when it is walking
-ENT.HasGrenadeAttack = nil -- Should the SNPC have a grenade attack?
+ENT.HasOnPlayerSight = true
+ENT.FootStepTimeRun = 0.3
+ENT.FootStepTimeWalk = 0.5
+ENT.HasGrenadeAttack = nil
 ENT.AnimTbl_GrenadeAttack = {"GrenadeThrow"}
-ENT.GrenadeAttackAttachment = "anim_attachment_LH" -- The attachment that the grenade will spawn at | false = Custom position
+ENT.GrenadeAttackAttachment = "anim_attachment_LH"
 
 	-- ====== Medic Variables ====== --
 ENT.AnimTbl_Medic_GiveHealth = {"ThrowItem"}
 ENT.Medic_SpawnPropOnHealModel = "models/weapons/zworld_health/bandages.mdl" 
-ENT.Medic_CheckDistance = 600 -- How far does it check for allies that are hurt? | World units
-ENT.Medic_HealDistance = 100 -- How close does it have to be until it stops moving and heals its ally?
-ENT.Medic_HealthAmount = 50 -- How health does it give?
-ENT.Medic_NextHealTime = VJ_Set(10, 15) -- How much time until it can give health to an ally again
-ENT.Medic_SpawnPropOnHeal = true -- Should it spawn a prop, such as small health vial at a attachment when healing an ally?
+ENT.Medic_CheckDistance = 600
+ENT.Medic_HealDistance = 100
+ENT.Medic_HealthAmount = 50
+ENT.Medic_NextHealTime = VJ_Set(10, 15)
+ENT.Medic_SpawnPropOnHeal = true
+
+ENT.AllowPrintingInChat = false -- Usually, I keep this one, but with the custom no following deal, you get conflicting chat msgs, hide it!
+ENT.IdleDialogueDistance = 300
 
 	-- ====== Flinching Variables ====== --
-ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
-ENT.FlinchChance = 8 -- Chance of it flinching from 1 to x | 1 will make it always flinch
+ENT.CanFlinch = 1
+ENT.FlinchChance = 8
 ENT.HitGroupFlinching_Values = {
 	{HitGroup={HITGROUP_LEFTARM}, Animation={ACT_FLINCH_LEFTARM}},
 	{HitGroup={HITGROUP_LEFTLEG}, Animation={ACT_FLINCH_LEFTARM}},
@@ -57,25 +62,22 @@ ENT.HitGroupFlinching_Values = {
 	{HitGroup={HITGROUP_CHEST}, Animation={ACT_FLINCH_CHEST}},
 	{HitGroup={HITGROUP_HEAD}, Animation={ACT_FLINCH_HEAD}}
 }
--- ====== Death Animation Variables ====== --
-ENT.HasDeathAnimation = false -- Does it play an animation when it dies?
-ENT.AnimTbl_Death = {"Ranen_Idle1","Ranen_Idle1","Ranen_Idle1","Ranen3_Idle1","Ranen3_Idle1","Ranen3_Idle1"} -- Death Animations
-	-- To let the base automatically detect the animation duration, set this to false:
-ENT.DeathAnimationTime = false
-ENT.DeathAnimationChance = 4
-ENT.DeathAnimationDecreaseLengthAmount = 0 -- This will decrease the time until it turns into a corpse
+
 -- move to armed down bellow --
-ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
-ENT.AnimTbl_MeleeAttack = {"swing","pushplayer","thrust","barrelpush","melee_slice"} -- Melee Attack Animations
+ENT.HasMeleeAttack = true 
+ENT.AnimTbl_MeleeAttack = {"swing","pushplayer","thrust","barrelpush","melee_slice"}
 ENT.MeleeAttackDamage = random( 4, 10)
+ENT.NextMeleeAttackTime = 0
 -- sound pitches
 ENT.DeathSoundPitch = VJ_Set(100, 100)
 ENT.OnPlayerSightSoundChance = 3
 -- CUSTOM BELOW!
-ENT.MeleeAttackDistance = 45 -- How close does it have to be until it attacks?
+ENT.MeleeAttackDistance = 45
 ENT.DisasterBehavior = nil -- 0 = Pre Disaster sounds, 1 = Post Disaster sounds
 ENT.Agressive = false -- used for HECU, SEC Guards
 ENT.PainVoice = 0 -- used for HECU custom pain voices
+ENT.Otis = nil -- used for Otis Voiceset
+ENT.Radio_ChatterTime = 0 -- used for radios, security / hecu.
 ENT.BMCE_Staff = nil -- used for VJ_NPC_Class
 ENT.BMCE_Hat = 0
 -- 0 no hat
@@ -83,10 +85,10 @@ ENT.BMCE_Hat = 0
 -- 2 beret (hecu)
 -- 3 boonie
 
-local SoundTbl_OnFire = {"vj_bmce/vocals/vj_bmce_hgrunt/die_long1.wav","vj_bmce/vocals/vj_bmce_hgrunt/die_long2.wav","vj_bmce/vocals/vj_bmce_hgrunt/die_long3.wav","vj_bmce/vocals/vj_bmce_hgrunt/die_long4.wav","vj_bmce/vocals/vj_bmce_hgrunt/die_long5.wav","vj_bmce/vocals/vj_bmce_hgrunt/die_long6.wav"}
+--local SoundTbl_OnFire = {"vj_bmce/vocals/vj_bmce_hgrunt/die_long1.wav","vj_bmce/vocals/vj_bmce_hgrunt/die_long2.wav","vj_bmce/vocals/vj_bmce_hgrunt/die_long3.wav","vj_bmce/vocals/vj_bmce_hgrunt/die_long4.wav","vj_bmce/vocals/vj_bmce_hgrunt/die_long5.wav","vj_bmce/vocals/vj_bmce_hgrunt/die_long6.wav"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomInitialize()
-	self:SetNPCBodyGroups()
+	self:SetNPCBodyGroups()	
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:UseMaleVoice()
@@ -108,6 +110,9 @@ function ENT:UseMaleVoice()
 		self.SoundTbl_DamageByPlayer = {"vj_bmce/vocals/vj_bmce_male/stupidplayer1.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer2.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer3.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer4.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer5.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer6.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer7.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer8.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer9.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer10.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer11.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer12.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer13.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer14.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer15.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer16.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer17.wav","vj_bmce/vocals/vj_bmce_male/stupidplayer18.wav"}
 		self.SoundTbl_MedicBeforeHeal = {"vj_bmce/vocals/vj_bmce_male/heal_player1.wav","vj_bmce/vocals/vj_bmce_male/heal_player2.wav","vj_bmce/vocals/vj_bmce_male/heal_player3.wav","vj_bmce/vocals/vj_bmce_male/heal_player4.wav","vj_bmce/vocals/vj_bmce_male/heal_player5.wav","vj_bmce/vocals/vj_bmce_male/heal_player6.wav"}
 		self.SoundTbl_Investigate = {"vj_bmce/vocals/vj_bmce_male/attack1.wav","vj_bmce/vocals/vj_bmce_male/attack2.wav","vj_bmce/vocals/vj_bmce_male/attack3.wav","vj_bmce/vocals/vj_bmce_male/attack7.wav",}
+		-- custom
+		self.SoundTbl_LeaveMeAlone = {}
+		self.SoundTbl_OnFire = {}
 	end
 end
 
@@ -132,36 +137,46 @@ function ENT:UseFemaleVoice()
 		self.SoundTbl_DamageByPlayer = {"vj_bmce/vocals/vj_bmce_female/stupidplayer1.wav","vj_bmce/vocals/vj_bmce_female/stupidplayer2.wav","vj_bmce/vocals/vj_bmce_female/stupidplayer3.wav","vj_bmce/vocals/vj_bmce_female/stupidplayer4.wav","vj_bmce/vocals/vj_bmce_female/stupidplayer5.wav","vj_bmce/vocals/vj_bmce_female/stupidplayer6.wav"}
 		self.SoundTbl_MedicBeforeHeal = {"vj_bmce/vocals/vj_bmce_female/health1.wav","vj_bmce/vocals/vj_bmce_female/health2.wav","vj_bmce/vocals/vj_bmce_female/health3.wav","vj_bmce/vocals/vj_bmce_female/health4.wav"}
 		self.SoundTbl_Investigate = {"vj_bmce/vocals/vj_bmce_female/answer_pre21.wav","vj_bmce/vocals/vj_bmce_female/answer_pre09.wav"}
+		-- custom
+		self.SoundTbl_LeaveMeAlone = {}
+		self.SoundTbl_OnFire = {}
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:UseMaleSecGuardVoice()
 	if self.DisasterBehavior == 0 then -- Pre Disaster sounds
-		self.SoundTbl_Idle = {"vj_bmce/vocals/vj_bmce_secguard/sm_idlechatter1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_idlechatter2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_idlechatter3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_idlechatter4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_idlechatter5.wav","vj_bmce/vocals/vj_bmce_secguard/sm_idlechatter6.wav","vj_bmce/vocals/vj_bmce_secguard/sm_idlechatter7.wav"}
-		self.SoundTbl_IdleDialogue = {"vj_bmce/vocals/vj_bmce_secguard_qna/question01.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question02.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question03.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question04.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question05.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question06.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question07.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question08.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question09.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question10.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question11.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question12.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question13.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question14.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question15.wav","vj_bmce/vocals/vj_bmce_secguard_qna/question16.wav"}
-		self.SoundTbl_IdleDialogueAnswer = {"vj_bmce/vocals/vj_bmce_secguard_qna/answer01.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer02.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer03.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer04.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer05.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer06.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer07.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer08.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer09.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer10.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer11.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer12.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer13.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer14.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer15.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer16.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer17.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer18.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer19.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer20.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer21.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer22.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer23.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer24.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer25.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer26.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer27.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer28.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer29.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer30.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer31.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer32.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer33.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer34.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer35.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer36.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer37.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer38.wav","vj_bmce/vocals/vj_bmce_secguard_qna/answer39.wav"}
-		self.SoundTbl_CombatIdle = {"vj_bmce/vocals/vj_bmce_secguard/sm_combat1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_combat2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_combat3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_combat4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_combat5.wav","vj_bmce/vocals/vj_bmce_secguard/sm_combat6.wav","vj_bmce/vocals/vj_bmce_secguard/sm_combat7.wav","vj_bmce/vocals/vj_bmce_secguard/sm_combat8.wav"}
-		self.SoundTbl_WeaponReload = {"vj_bmce/vocals/vj_bmce_secguard/sm_reload1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_reload2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_reload3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_reload4.wav"}
-		self.SoundTbl_OnPlayerSight = {"vj_bmce/vocals/vj_bmce_secguard/sm_seeplayer1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_seeplayer2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_seeplayer3wav","vj_bmce/vocals/vj_bmce_secguard/sm_seeplayer4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_seeplayer5.wav","vj_bmce/vocals/vj_bmce_secguard/sm_seeplayer6.wav","vj_bmce/vocals/vj_bmce_secguard/sm_seeplayer7.wav"}
-		self.SoundTbl_BecomeEnemyToPlayer = {"vj_bmce/vocals/vj_bmce_secguard/sm_hateplayer1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_hateplayer2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_hateplayer3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_hateplayer4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_hateplayer5.wav","vj_bmce/vocals/vj_bmce_secguard/sm_hateplayer6.wav","vj_bmce/vocals/vj_bmce_secguard/sm_hateplayer7.wav"}
-		self.SoundTbl_MoveOutOfPlayersWay = {"vj_bmce/vocals/vj_bmce_secguard/sm_bump1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_bump2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_bump3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_bump4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_bump5.wav","vj_bmce/vocals/vj_bmce_secguard/sm_bump6.wav","vj_bmce/vocals/vj_bmce_secguard/sm_bump7.wav","vj_bmce/vocals/vj_bmce_secguard/sm_bump8.wav","vj_bmce/vocals/vj_bmce_secguard/sm_bump9.wav","vj_bmce/vocals/vj_bmce_secguard/sm_bump10.wav"}
-		self.SoundTbl_Alert = {"vj_bmce/vocals/vj_bmce_secguard/sm_alert1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_alert2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_alert3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_alert4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_alert5.wav","vj_bmce/vocals/vj_bmce_secguard/sm_alert6.wav","vj_bmce/vocals/vj_bmce_secguard/sm_alert7.wav"}
-		self.SoundTbl_AllyDeath = {"vj_bmce/vocals/vj_bmce_secguard/sm_ally_death1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_ally_death2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_ally_death3.wav"}
-		self.SoundTbl_Suppressing = {"vj_bmce/vocals/vj_bmce_secguard/sm_suppress1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_suppress2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_suppress3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_suppress4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_suppress5.wav","vj_bmce/vocals/vj_bmce_secguard/sm_suppress6.wav","vj_bmce/vocals/vj_bmce_secguard/sm_suppress7.wav"}
-		self.SoundTbl_FollowPlayer = {"vj_bmce/vocals/vj_bmce_secguard/sm_followplayer1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_followplayer2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_followplayer3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_followplayer4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_followplayer5.wav"}
-		self.SoundTbl_UnFollowPlayer = {"vj_bmce/vocals/vj_bmce_secguard/sm_unfollowplayer1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_unfollowplayer2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_unfollowplayer3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_unfollowplayer4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_unfollowplayer5.wav","vj_bmce/vocals/vj_bmce_secguard/sm_unfollowplayer6.wav","vj_bmce/vocals/vj_bmce_secguard/sm_unfollowplayer7.wav","vj_bmce/vocals/vj_bmce_secguard/sm_unfollowplayer8.wav"}
-		self.SoundTbl_OnGrenadeSight = {"vj_bmce/vocals/vj_bmce_secguard/sm_spotgrenade1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_spotgrenade2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_spotgrenade3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_spotgrenade4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_spotgrenade5.wav"}
-		self.SoundTbl_Pain = {"vj_bmce/vocals/vj_bmce_secguard/sm_pain1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_pain2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_pain3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_pain4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_pain5.wav","vj_bmce/vocals/vj_bmce_secguard/sm_pain6.wav","vj_bmce/vocals/vj_bmce_secguard/sm_pain7.wav","vj_bmce/vocals/vj_bmce_secguard/sm_pain8.wav","vj_bmce/vocals/vj_bmce_secguard/sm_pain9.wav","vj_bmce/vocals/vj_bmce_secguard/sm_pain10.wav","vj_bmce/vocals/vj_bmce_secguard/sm_pain11.wav","vj_bmce/vocals/vj_bmce_secguard/sm_pain12.wav","vj_bmce/vocals/vj_bmce_secguard/sm_pain13.wav"}
-		self.SoundTbl_Death = {"vj_bmce/vocals/vj_bmce_secguard/sm_die1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_die2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_die3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_die4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_die5.wav","vj_bmce/vocals/vj_bmce_secguard/sm_die6.wav","vj_bmce/vocals/vj_bmce_hgrunt_us_waw/generic_death_german_10.mp3","vj_bmce/vocals/vj_bmce_hgrunt_us_waw/generic_death_german_11.mp3","vj_bmce/vocals/vj_bmce_hgrunt_us_waw/generic_death_german_12.mp3","vj_bmce/vocals/vj_bmce_hgrunt_us_waw/generic_death_german_13.mp3","vj_bmce/vocals/vj_bmce_hgrunt_us_waw/generic_death_german_14.mp3" }
-		self.SoundTbl_DamageByPlayer = {"vj_bmce/vocals/vj_bmce_secguard/sm_stupidplayer1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_stupidplayer2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_stupidplayer3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_stupidplayer4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_stupidplayer5.wav","vj_bmce/vocals/vj_bmce_secguard/sm_stupidplayer6.wav","vj_bmce/vocals/vj_bmce_secguard/sm_stupidplayer7.wav","vj_bmce/vocals/vj_bmce_secguard/sm_stupidplayer8.wav","vj_bmce/vocals/vj_bmce_secguard/sm_stupidplayer8.wav","vj_bmce/vocals/vj_bmce_secguard/sm_stupidplayer9.wav","vj_bmce/vocals/vj_bmce_secguard/sm_stupidplayer10.wav","vj_bmce/vocals/vj_bmce_secguard/sm_onyourside1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_onyourside2.wav","vj_bmce/vocals/vj_bmce_secguard/sm_onyourside3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_onyourside4.wav","vj_bmce/vocals/vj_bmce_secguard/sm_onyourside5.wav","vj_bmce/vocals/vj_bmce_secguard/sm_onyourside6.wav"}
-		self.SoundTbl_Investigate = {"vj_bmce/vocals/vj_bmce_secguard/sm_hateplayer7.wav","vj_bmce/vocals/vj_bmce_secguard/sm_hateplayer6.wav","vj_bmce/vocals/vj_bmce_secguard/sm_post_idlechatter1.wav","vj_bmce/vocals/vj_bmce_secguard/sm_post_idlechatter3.wav","vj_bmce/vocals/vj_bmce_secguard/sm_post_idlechatter8.wav","vj_bmce/vocals/vj_bmce_secguard/sm_post_idlechatter9.wav"}
+		self.SoundTbl_Idle = {"vj_bmce/vocals_revamp/secguard/idle/idle_01.wav","vj_bmce/vocals_revamp/secguard/idle/idle_02.wav","vj_bmce/vocals_revamp/secguard/idle/idle_03.wav","vj_bmce/vocals_revamp/secguard/idle/idle_04.wav","vj_bmce/vocals_revamp/secguard/idle/idle_05.wav","vj_bmce/vocals_revamp/secguard/idle/idle_06.wav","vj_bmce/vocals_revamp/secguard/idle/idle_07.wav","vj_bmce/vocals_revamp/secguard/idle/idle_08.wav","vj_bmce/vocals_revamp/secguard/idle/idle_09.wav","vj_bmce/vocals_revamp/secguard/idle/idle_10.wav","vj_bmce/vocals_revamp/secguard/idle/idle_11.wav","vj_bmce/vocals_revamp/secguard/idle/idle_12.wav","vj_bmce/vocals_revamp/secguard/idle/idle_13.wav","vj_bmce/vocals_revamp/secguard/idle/idle_14.wav","vj_bmce/vocals_revamp/secguard/idle/idle_15.wav","vj_bmce/vocals_revamp/secguard/idle/idle_16.wav","vj_bmce/vocals_revamp/secguard/idle/idle_17.wav","vj_bmce/vocals_revamp/secguard/idle/idle_18.wav","vj_bmce/vocals_revamp/secguard/idle/idle_19.wav","vj_bmce/vocals_revamp/secguard/idle/idle_20.wav","vj_bmce/vocals_revamp/secguard/idle/idle_21.wav","vj_bmce/vocals_revamp/secguard/idle/idle_22.wav","vj_bmce/vocals_revamp/secguard/idle/idle_23.wav","vj_bmce/vocals_revamp/secguard/idle/idle_24.wav","vj_bmce/vocals_revamp/secguard/idle/idle_25.wav","vj_bmce/vocals_revamp/secguard/idle/idle_26.wav","vj_bmce/vocals_revamp/secguard/idle/idle_27.wav","vj_bmce/vocals_revamp/secguard/idle/idle_28.wav","vj_bmce/vocals_revamp/secguard/idle/idle_29.wav","vj_bmce/vocals_revamp/secguard/idle/idle_30.wav","vj_bmce/vocals_revamp/secguard/idle/idle_31.wav","vj_bmce/vocals_revamp/secguard/idle/idle_32.wav"}
+		self.SoundTbl_IdleDialogue = {"vj_bmce/vocals_revamp/secguard/idle/question_01.wav","vj_bmce/vocals_revamp/secguard/idle/question_02.wav","vj_bmce/vocals_revamp/secguard/idle/question_03.wav","vj_bmce/vocals_revamp/secguard/idle/question_04.wav","vj_bmce/vocals_revamp/secguard/idle/question_05.wav","vj_bmce/vocals_revamp/secguard/idle/question_06.wav","vj_bmce/vocals_revamp/secguard/idle/question_07.wav","vj_bmce/vocals_revamp/secguard/idle/question_08.wav","vj_bmce/vocals_revamp/secguard/idle/question_09.wav","vj_bmce/vocals_revamp/secguard/idle/question_10.wav","vj_bmce/vocals_revamp/secguard/idle/question_11.wav","vj_bmce/vocals_revamp/secguard/idle/question_12.wav","vj_bmce/vocals_revamp/secguard/idle/question_13.wav","vj_bmce/vocals_revamp/secguard/idle/question_14.wav","vj_bmce/vocals_revamp/secguard/idle/question_15.wav","vj_bmce/vocals_revamp/secguard/idle/question_16.wav","vj_bmce/vocals_revamp/secguard/idle/question_17.wav","vj_bmce/vocals_revamp/secguard/idle/question_18.wav","vj_bmce/vocals_revamp/secguard/idle/question_19.wav","vj_bmce/vocals_revamp/secguard/idle/question_20.wav","vj_bmce/vocals_revamp/secguard/idle/question_21.wav","vj_bmce/vocals_revamp/secguard/idle/question_22.wav","vj_bmce/vocals_revamp/secguard/idle/question_23.wav","vj_bmce/vocals_revamp/secguard/idle/question_24.wav","vj_bmce/vocals_revamp/secguard/idle/question_25.wav","vj_bmce/vocals_revamp/secguard/idle/question_26.wav"}
+		self.SoundTbl_IdleDialogueAnswer = {"vj_bmce/vocals_revamp/secguard/idle/respond_01.wav","vj_bmce/vocals_revamp/secguard/idle/respond_02.wav","vj_bmce/vocals_revamp/secguard/idle/respond_03.wav","vj_bmce/vocals_revamp/secguard/idle/respond_04.wav","vj_bmce/vocals_revamp/secguard/idle/respond_05.wav","vj_bmce/vocals_revamp/secguard/idle/respond_06.wav","vj_bmce/vocals_revamp/secguard/idle/respond_07.wav","vj_bmce/vocals_revamp/secguard/idle/respond_08.wav","vj_bmce/vocals_revamp/secguard/idle/respond_09.wav","vj_bmce/vocals_revamp/secguard/idle/respond_10.wav","vj_bmce/vocals_revamp/secguard/idle/respond_11.wav","vj_bmce/vocals_revamp/secguard/idle/respond_12.wav","vj_bmce/vocals_revamp/secguard/idle/respond_13.wav","vj_bmce/vocals_revamp/secguard/idle/respond_14.wav","vj_bmce/vocals_revamp/secguard/idle/respond_15.wav","vj_bmce/vocals_revamp/secguard/idle/respond_16.wav","vj_bmce/vocals_revamp/secguard/idle/respond_17.wav","vj_bmce/vocals_revamp/secguard/idle/respond_18.wav","vj_bmce/vocals_revamp/secguard/idle/respond_19.wav","vj_bmce/vocals_revamp/secguard/idle/respond_20.wav","vj_bmce/vocals_revamp/secguard/idle/respond_21.wav","vj_bmce/vocals_revamp/secguard/idle/respond_22.wav","vj_bmce/vocals_revamp/secguard/idle/respond_23.wav","vj_bmce/vocals_revamp/secguard/idle/respond_24.wav","vj_bmce/vocals_revamp/secguard/idle/respond_25.wav","vj_bmce/vocals_revamp/secguard/idle/respond_26.wav","vj_bmce/vocals_revamp/secguard/idle/respond_27.wav","vj_bmce/vocals_revamp/secguard/idle/respond_28.wav","vj_bmce/vocals_revamp/secguard/idle/respond_29.wav","vj_bmce/vocals_revamp/secguard/idle/respond_30.wav","vj_bmce/vocals_revamp/secguard/idle/respond_31.wav","vj_bmce/vocals_revamp/secguard/idle/respond_32.wav","vj_bmce/vocals_revamp/secguard/idle/respond_33.wav","vj_bmce/vocals_revamp/secguard/idle/respond_34.wav","vj_bmce/vocals_revamp/secguard/idle/respond_35.wav","vj_bmce/vocals_revamp/secguard/idle/respond_36.wav","vj_bmce/vocals_revamp/secguard/idle/respond_37.wav","vj_bmce/vocals_revamp/secguard/idle/respond_38.wav","vj_bmce/vocals_revamp/secguard/idle/respond_39.wav","vj_bmce/vocals_revamp/secguard/idle/respond_41.wav","vj_bmce/vocals_revamp/secguard/idle/respond_42.wav","vj_bmce/vocals_revamp/secguard/idle/respond_43.wav","vj_bmce/vocals_revamp/secguard/idle/respond_44.wav","vj_bmce/vocals_revamp/secguard/idle/respond_45.wav","vj_bmce/vocals_revamp/secguard/idle/respond_46.wav","vj_bmce/vocals_revamp/secguard/idle/respond_47.wav","vj_bmce/vocals_revamp/secguard/idle/respond_48.wav","vj_bmce/vocals_revamp/secguard/idle/respond_49.wav","vj_bmce/vocals_revamp/secguard/idle/respond_50.wav","vj_bmce/vocals_revamp/secguard/idle/respond_51.wav","vj_bmce/vocals_revamp/secguard/idle/respond_52.wav","vj_bmce/vocals_revamp/secguard/idle/respond_53.wav","vj_bmce/vocals_revamp/secguard/idle/respond_54.wav","vj_bmce/vocals_revamp/secguard/idle/respond_55.wav","vj_bmce/vocals_revamp/secguard/idle/respond_56.wav","vj_bmce/vocals_revamp/secguard/idle/respond_57.wav","vj_bmce/vocals_revamp/secguard/idle/respond_58.wav","vj_bmce/vocals_revamp/secguard/idle/respond_59.wav","vj_bmce/vocals_revamp/secguard/idle/respond_60.wav","vj_bmce/vocals_revamp/secguard/idle/respond_61.wav","vj_bmce/vocals_revamp/secguard/idle/respond_61.wav","vj_bmce/vocals_revamp/secguard/idle/respond_62.wav","vj_bmce/vocals_revamp/secguard/idle/respond_63.wav","vj_bmce/vocals_revamp/secguard/idle/respond_64.wav","vj_bmce/vocals_revamp/secguard/idle/respond_65.wav","vj_bmce/vocals_revamp/secguard/idle/respond_66.wav"}
+		self.SoundTbl_Alert = {"vj_bmce/vocals_revamp/secguard/combat/alert_01.wav","vj_bmce/vocals_revamp/secguard/combat/alert_02.wav","vj_bmce/vocals_revamp/secguard/combat/alert_03.wav","vj_bmce/vocals_revamp/secguard/combat/alert_04.wav","vj_bmce/vocals_revamp/secguard/combat/alert_05.wav","vj_bmce/vocals_revamp/secguard/combat/alert_06.wav","vj_bmce/vocals_revamp/secguard/combat/alert_07.wav","vj_bmce/vocals_revamp/secguard/combat/alert_08.wav","vj_bmce/vocals_revamp/secguard/combat/alert_09.wav","vj_bmce/vocals_revamp/secguard/combat/alert_10.wav","vj_bmce/vocals_revamp/secguard/combat/alert_11.wav","vj_bmce/vocals_revamp/secguard/combat/alert_12.wav","vj_bmce/vocals_revamp/secguard/combat/alert_13.wav"}
+		self.SoundTbl_Investigate = {"vj_bmce/vocals_revamp/secguard/combat/invest_01.wav","vj_bmce/vocals_revamp/secguard/combat/invest_02.wav","vj_bmce/vocals_revamp/secguard/combat/invest_03.wav","vj_bmce/vocals_revamp/secguard/combat/invest_04.wav","vj_bmce/vocals_revamp/secguard/combat/invest_05.wav","vj_bmce/vocals_revamp/secguard/combat/invest_06.wav"}
+		self.SoundTbl_CombatIdle = {"vj_bmce/vocals_revamp/secguard/combat/combat_01.wav","vj_bmce/vocals_revamp/secguard/combat/combat_02.wav","vj_bmce/vocals_revamp/secguard/combat/combat_03.wav","vj_bmce/vocals_revamp/secguard/combat/combat_04.wav","vj_bmce/vocals_revamp/secguard/combat/combat_05.wav","vj_bmce/vocals_revamp/secguard/combat/combat_06.wav","vj_bmce/vocals_revamp/secguard/combat/combat_07.wav","vj_bmce/vocals_revamp/secguard/combat/combat_08.wav","vj_bmce/vocals_revamp/secguard/combat/combat_09.wav","vj_bmce/vocals_revamp/secguard/combat/combat_10.wav","vj_bmce/vocals_revamp/secguard/combat/combat_11.wav","vj_bmce/vocals_revamp/secguard/combat/combat_12.wav","vj_bmce/vocals_revamp/secguard/combat/combat_13.wav"}
+		self.SoundTbl_Suppressing = {"vj_bmce/vocals_revamp/secguard/combat/suppressing_01.wav","vj_bmce/vocals_revamp/secguard/combat/suppressing_02.wav","vj_bmce/vocals_revamp/secguard/combat/suppressing_03.wav","vj_bmce/vocals_revamp/secguard/combat/suppressing_04.wav","vj_bmce/vocals_revamp/secguard/combat/suppressing_05.wav","vj_bmce/vocals_revamp/secguard/combat/suppressing_06.wav","vj_bmce/vocals_revamp/secguard/combat/suppressing_07.wav","vj_bmce/vocals_revamp/secguard/combat/suppressing_08.wav","vj_bmce/vocals_revamp/secguard/combat/suppressing_09.wav","vj_bmce/vocals_revamp/secguard/combat/suppressing_10.wav","vj_bmce/vocals_revamp/secguard/combat/suppressing_11.wav","vj_bmce/vocals_revamp/secguard/combat/suppressing_12.wav","vj_bmce/vocals_revamp/secguard/combat/suppressing_13.wav","vj_bmce/vocals_revamp/secguard/combat/suppressing_14.wav"}
+		self.SoundTbl_AllyDeath = {"vj_bmce/vocals_revamp/secguard/combat/ally_death_01.wav","vj_bmce/vocals_revamp/secguard/combat/ally_death_02.wav","vj_bmce/vocals_revamp/secguard/combat/ally_death_03.wav","vj_bmce/vocals_revamp/secguard/combat/ally_death_04.wav","vj_bmce/vocals_revamp/secguard/combat/ally_death_05.wav","vj_bmce/vocals_revamp/secguard/combat/ally_death_06.wav"}
+		self.SoundTbl_OnKilledEnemy = {"vj_bmce/vocals_revamp/secguard/combat/kill_01.wav","vj_bmce/vocals_revamp/secguard/combat/kill_02.wav","vj_bmce/vocals_revamp/secguard/combat/kill_03.wav","vj_bmce/vocals_revamp/secguard/combat/kill_04.wav","vj_bmce/vocals_revamp/secguard/combat/kill_05.wav","vj_bmce/vocals_revamp/secguard/combat/kill_06.wav","vj_bmce/vocals_revamp/secguard/combat/kill_07.wav","vj_bmce/vocals_revamp/secguard/combat/kill_08.wav","vj_bmce/vocals_revamp/secguard/combat/kill_09.wav"}
+		self.SoundTbl_WeaponReload = {"vj_bmce/vocals_revamp/secguard/combat/reloading_01.wav","vj_bmce/vocals_revamp/secguard/combat/reloading_02.wav","vj_bmce/vocals_revamp/secguard/combat/reloading_03.wav","vj_bmce/vocals_revamp/secguard/combat/reloading_04.wav","vj_bmce/vocals_revamp/secguard/combat/reloading_05.wav","vj_bmce/vocals_revamp/secguard/combat/reloading_06.wav","vj_bmce/vocals_revamp/secguard/combat/reloading_07.wav","vj_bmce/vocals_revamp/secguard/combat/reloading_08.wav","vj_bmce/vocals_revamp/secguard/combat/reloading_09.wav","vj_bmce/vocals_revamp/secguard/combat/reloading_10.wav"}
+		self.SoundTbl_OnPlayerSight = {"vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_01.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_02.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_03.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_04.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_05.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_06.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_07.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_08.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_09.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_10.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_11.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_12.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_13.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_14.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_15.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_16.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_17.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_18.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_19.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_20.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_21.wav","vj_bmce/vocals_revamp/secguard/ply_interact/spotplayer_22.wav"}
+		self.SoundTbl_BecomeEnemyToPlayer = {"vj_bmce/vocals_revamp/secguard/ply_interact/hateplayer_01.wav","vj_bmce/vocals_revamp/secguard/ply_interact/hateplayer_02.wav","vj_bmce/vocals_revamp/secguard/ply_interact/hateplayer_03.wav","vj_bmce/vocals_revamp/secguard/ply_interact/hateplayer_04.wav","vj_bmce/vocals_revamp/secguard/ply_interact/hateplayer_05.wav","vj_bmce/vocals_revamp/secguard/ply_interact/hateplayer_06.wav","vj_bmce/vocals_revamp/secguard/ply_interact/hateplayer_07.wav","vj_bmce/vocals_revamp/secguard/ply_interact/hateplayer_08.wav"}
+		self.SoundTbl_MoveOutOfPlayersWay = {"vj_bmce/vocals_revamp/secguard/ply_interact/bump_01.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_02.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_03.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_04.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_05.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_06.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_07.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_08.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_09.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_10.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_11.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_12.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_13.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_14.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_15.wav","vj_bmce/vocals_revamp/secguard/ply_interact/bump_16.wav"}
+		self.SoundTbl_DamageByPlayer = {"vj_bmce/vocals_revamp/secguard/ply_interact/stupidplayer_01.wav","vj_bmce/vocals_revamp/secguard/ply_interact/stupidplayer_02.wav","vj_bmce/vocals_revamp/secguard/ply_interact/stupidplayer_03.wav","vj_bmce/vocals_revamp/secguard/ply_interact/stupidplayer_04.wav","vj_bmce/vocals_revamp/secguard/ply_interact/stupidplayer_05.wav","vj_bmce/vocals_revamp/secguard/ply_interact/stupidplayer_06.wav","vj_bmce/vocals_revamp/secguard/ply_interact/stupidplayer_07.wav","vj_bmce/vocals_revamp/secguard/ply_interact/stupidplayer_08.wav","vj_bmce/vocals_revamp/secguard/ply_interact/stupidplayer_09.wav","vj_bmce/vocals_revamp/secguard/ply_interact/stupidplayer_10.wav","vj_bmce/vocals_revamp/secguard/ply_interact/stupidplayer_11.wav","vj_bmce/vocals_revamp/secguard/ply_interact/stupidplayer_12.wav"}
+		self.SoundTbl_FollowPlayer = {"vj_bmce/vocals_revamp/secguard/ply_interact/follow_01.wav","vj_bmce/vocals_revamp/secguard/ply_interact/follow_02.wav","vj_bmce/vocals_revamp/secguard/ply_interact/follow_03.wav","vj_bmce/vocals_revamp/secguard/ply_interact/follow_04.wav","vj_bmce/vocals_revamp/secguard/ply_interact/follow_05.wav","vj_bmce/vocals_revamp/secguard/ply_interact/follow_06.wav","vj_bmce/vocals_revamp/secguard/ply_interact/follow_07.wav","vj_bmce/vocals_revamp/secguard/ply_interact/follow_08.wav","vj_bmce/vocals_revamp/secguard/ply_interact/follow_09.wav","vj_bmce/vocals_revamp/secguard/ply_interact/follow_10.wav","vj_bmce/vocals_revamp/secguard/ply_interact/follow_11.wav","vj_bmce/vocals_revamp/secguard/ply_interact/follow_12.wav","vj_bmce/vocals_revamp/secguard/ply_interact/follow_13.wav"}
+		self.SoundTbl_UnFollowPlayer = {"vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_01.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_02.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_03.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_04.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_05.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_06.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_07.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_08.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_09.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_10.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_11.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_12.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_13.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_14.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_15.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_16.wav","vj_bmce/vocals_revamp/secguard/ply_interact/unfollow_17.wav"}
+		self.SoundTbl_OnGrenadeSight = {"vj_bmce/vocals_revamp/secguard/danger_01.wav","vj_bmce/vocals_revamp/secguard/danger_02.wav","vj_bmce/vocals_revamp/secguard/danger_03.wav","vj_bmce/vocals_revamp/secguard/danger_04.wav","vj_bmce/vocals_revamp/secguard/danger_05.wav","vj_bmce/vocals_revamp/secguard/danger_06.wav","vj_bmce/vocals_revamp/secguard/danger_07.wav","vj_bmce/vocals_revamp/secguard/danger_08.wav"}
+		self.SoundTbl_OnDangerSight = {"vj_bmce/vocals_revamp/secguard/danger_01.wav","vj_bmce/vocals_revamp/secguard/danger_02.wav","vj_bmce/vocals_revamp/secguard/danger_03.wav","vj_bmce/vocals_revamp/secguard/danger_04.wav","vj_bmce/vocals_revamp/secguard/danger_05.wav","vj_bmce/vocals_revamp/secguard/danger_06.wav","vj_bmce/vocals_revamp/secguard/danger_07.wav","vj_bmce/vocals_revamp/secguard/danger_08.wav"}
+		self.SoundTbl_Pain = {"vj_bmce/vocals_revamp/secguard/pain_01.wav","vj_bmce/vocals_revamp/secguard/pain_02.wav","vj_bmce/vocals_revamp/secguard/pain_03.wav","vj_bmce/vocals_revamp/secguard/pain_04.wav","vj_bmce/vocals_revamp/secguard/pain_05.wav","vj_bmce/vocals_revamp/secguard/pain_06.wav","vj_bmce/vocals_revamp/secguard/pain_07.wav","vj_bmce/vocals_revamp/secguard/pain_08.wav","vj_bmce/vocals_revamp/secguard/pain_09.wav","vj_bmce/vocals_revamp/secguard/pain_10.wav"}
+		self.SoundTbl_Death = {"vj_bmce/vocals_revamp/secguard/death_01.wav","vj_bmce/vocals_revamp/secguard/death_02.wav","vj_bmce/vocals_revamp/secguard/death_03.wav","vj_bmce/vocals_revamp/secguard/death_04.wav","vj_bmce/vocals_revamp/secguard/death_05.wav","vj_bmce/vocals_revamp/secguard/death_06.wav","vj_bmce/vocals_revamp/secguard/death_07.wav","vj_bmce/vocals_revamp/secguard/death_08.wav","vj_bmce/vocals_revamp/secguard/death_09.wav","vj_bmce/vocals_revamp/secguard/death_10.wav","vj_bmce/vocals_revamp/male/death_shared_01.mp3","vj_bmce/vocals_revamp/male/death_shared_02.mp3","vj_bmce/vocals_revamp/male/death_shared_03.mp3","vj_bmce/vocals_revamp/male/death_shared_04.mp3","vj_bmce/vocals_revamp/male/death_shared_05.mp3","vj_bmce/vocals_revamp/male/death_shared_06.mp3","vj_bmce/vocals_revamp/male/death_shared_07.mp3","vj_bmce/vocals_revamp/male/death_shared_08.mp3","vj_bmce/vocals_revamp/male/death_shared_09.mp3","vj_bmce/vocals_revamp/male/death_shared_10.mp3"}
+		self.SoundTbl_LostEnemy = {"vj_bmce/vocals_revamp/secguard/danger_08.wav","vj_bmce/vocals_revamp/secguard/danger_03.wav","vj_bmce/vocals_revamp/secguard/idle/idle_31.wav","vj_bmce/vocals_revamp/secguard/disaster/idle/idle_16.wav","vj_bmce/vocals_revamp/secguard/combat/ally_death_03.wav"}		
+		-- custom
+		self.SoundTbl_LeaveMeAlone = {"vj_bmce/vocals_revamp/secguard/ply_interact/busy_01.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_02.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_03.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_04.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_05.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_06.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_07.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_08.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_09.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_10.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_11.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_12.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_13.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_14.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_15.wav","vj_bmce/vocals_revamp/secguard/ply_interact/busy_16.wav"}
+		self.SoundTbl_OnFire = {"vj_bmce/vocals_revamp/male/burning_tough_01.mp3","vj_bmce/vocals_revamp/male/burning_tough_02.mp3","vj_bmce/vocals_revamp/male/burning_tough_03.mp3","vj_bmce/vocals_revamp/male/burning_tough_04.mp3","vj_bmce/vocals_revamp/male/burning_tough_05.mp3","vj_bmce/vocals_revamp/male/burning_tough_06.mp3","vj_bmce/vocals_revamp/male/burning_tough_07.mp3","vj_bmce/vocals_revamp/male/burning_tough_08.mp3"}
+		self.SoundTbl_RadioChatter = {"vj_bmce/vocals_revamp/radio/gen_01.ogg","vj_bmce/vocals_revamp/radio/gen_02.ogg","vj_bmce/vocals_revamp/radio/gen_03.ogg","vj_bmce/vocals_revamp/radio/gen_04.ogg","vj_bmce/vocals_revamp/radio/grd_01.wav","vj_bmce/vocals_revamp/radio/grd_02.wav","vj_bmce/vocals_revamp/radio/grd_03.wav","vj_bmce/vocals_revamp/radio/grd_04.wav","vj_bmce/vocals_revamp/radio/grd_05.wav","vj_bmce/vocals_revamp/radio/grd_06.wav","vj_bmce/vocals_revamp/radio/grd_07.wav","vj_bmce/vocals_revamp/radio/grd_08.wav"}
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnPreInitialize() -- rework this crap later!!!!!!
+function ENT:CustomOnPreInitialize()
 	local NPC = self:GetClass()
-	local Unique_Hat = random(1,1)
-
+	local MDL = self:GetModel()
+	
 	if behaviour:GetInt() == 0 then
 		-- males
 		if NPC == "npc_vj_bmce_scientist_m" then
@@ -169,6 +184,24 @@ function ENT:CustomOnPreInitialize() -- rework this crap later!!!!!!
 			self.IsMedicSNPC = true
 			self.BMCE_Staff = true
 			self.Model = {"models/humans/scientist.mdl","models/humans/scientist_02.mdl","models/humans/scientist_03.mdl","models/humans/scientist_cl.mdl"}
+			self:SetBehaviorAndWeapons()
+			self:UseMaleVoice()
+			self.ModelAnimationSet = VJ_MODEL_ANIMSET_BMSTAFF
+		elseif NPC == "npc_vj_bmce_scientist_f" then
+			self.StartHealth = 75
+			self.IsMedicSNPC = true
+			self.BMCE_Staff = true
+			self.Model = {"models/humans/scientist_female.mdl"}
+			self:SetBehaviorAndWeapons()
+			self:UseFemaleVoice()
+			self.ModelAnimationSet = VJ_MODEL_ANIMSET_BMSTAFF
+		end
+
+		if NPC == "npc_vj_bmce_hev_m" then
+			self.StartHealth = 175
+			self.IsMedicSNPC = true
+			self.BMCE_Staff = true
+			self.Model = {"models/humans/hev_male.mdl"}
 			self:SetBehaviorAndWeapons()
 			self:UseMaleVoice()
 			self.ModelAnimationSet = VJ_MODEL_ANIMSET_BMSTAFF
@@ -187,9 +220,16 @@ function ENT:CustomOnPreInitialize() -- rework this crap later!!!!!!
 		if NPC == "npc_vj_bmce_cw_m" then
 			self.StartHealth = 75
 			self.BMCE_Staff = true
-			self.Model = {"models/humans/cafeteria_male.mdl"}
+			self.Model = {"models/humans/cafeteria_male.mdl","models/humans/cafeteria_male_02.mdl"}
 			self:SetBehaviorAndWeapons()
 			self:UseMaleVoice()
+			self.ModelAnimationSet = VJ_MODEL_ANIMSET_BMSTAFF
+		elseif NPC == "npc_vj_bmce_cw_f" then
+			self.StartHealth = 75
+			self.BMCE_Staff = true
+			self.Model = {"models/humans/cafeteria_female.mdl"}
+			self:SetBehaviorAndWeapons()
+			self:UseFemaleVoice()
 			self.ModelAnimationSet = VJ_MODEL_ANIMSET_BMSTAFF
 		end
 
@@ -200,12 +240,28 @@ function ENT:CustomOnPreInitialize() -- rework this crap later!!!!!!
 			self:SetBehaviorAndWeapons()
 			self:UseMaleVoice()
 			self.ModelAnimationSet = VJ_MODEL_ANIMSET_BMSTAFF
+		elseif NPC == "npc_vj_bmce_custodian_f" then
+			self.StartHealth = 90
+			self.BMCE_Staff = true
+			self.Model = {"models/humans/custodian_female.mdl"}
+			self:SetBehaviorAndWeapons()
+			self:UseFemaleVoice()
+			self.ModelAnimationSet = VJ_MODEL_ANIMSET_BMSTAFF
 		end
 
 		if NPC == "npc_vj_bmce_constructw_m" then
 			self.StartHealth = 90
 			self.BMCE_Staff = true
 			self.Model = {"models/humans/construction_worker.mdl"}
+			self:SetBehaviorAndWeapons()
+			self:UseMaleVoice()
+			self.ModelAnimationSet = VJ_MODEL_ANIMSET_BMSTAFF
+		end
+
+		if NPC == "npc_vj_bmce_engineer_m" then
+			self.StartHealth = 90
+			self.BMCE_Staff = true
+			self.Model = {"models/humans/engineer.mdl"}
 			self:SetBehaviorAndWeapons()
 			self:UseMaleVoice()
 			self.ModelAnimationSet = VJ_MODEL_ANIMSET_BMSTAFF
@@ -219,9 +275,7 @@ function ENT:CustomOnPreInitialize() -- rework this crap later!!!!!!
 			self:SetBehaviorAndWeapons()
 			self:UseMaleSecGuardVoice()
 			self.ModelAnimationSet = VJ_MODEL_ANIMSET_BMSTAFF
-		end
-
-		if NPC == "npc_vj_bmce_secguard_capt" then
+		elseif NPC == "npc_vj_bmce_secguard_capt" then
 			self.StartHealth = 125
 			self.BMCE_Staff = true
 			self.Model = {"models/humans/guard.mdl","models/humans/guard_02.mdl","models/humans/guard_03.mdl","models/humans/guard_otis.mdl"}
@@ -231,27 +285,6 @@ function ENT:CustomOnPreInitialize() -- rework this crap later!!!!!!
 			self:UseMaleSecGuardVoice()
 			self.ModelAnimationSet = VJ_MODEL_ANIMSET_BMSTAFF
 		end
-
-		-- Females
-		if NPC == "npc_vj_bmce_scientist_f" then
-			self.StartHealth = 75
-			self.IsMedicSNPC = true
-			self.BMCE_Staff = true
-			self.Model = {"models/humans/scientist_female.mdl"}
-			self:SetBehaviorAndWeapons()
-			self:UseFemaleVoice()
-			self.ModelAnimationSet = VJ_MODEL_ANIMSET_BMSTAFF
-		end
-
-		if NPC == "npc_vj_bmce_cw_f" then
-			self.StartHealth = 75
-			self.BMCE_Staff = true
-			self.Model = {"models/humans/cafeteria_female.mdl"}
-			self:SetBehaviorAndWeapons()
-			self:UseFemaleVoice()
-			self.ModelAnimationSet = VJ_MODEL_ANIMSET_BMSTAFF
-		end
-
 	else -- If Disaster is enabled
 		-- males
 		if NPC == "npc_vj_bmce_scientist_m" then
@@ -267,9 +300,12 @@ function ENT:CustomOnPreInitialize() -- rework this crap later!!!!!!
 
 	if self.BMCE_Staff then
 		if enemy:GetInt() == 0 then
+			self.FriendsWithAllPlayerAllies = true
 			self.VJ_NPC_Class = {"CLASS_BLACKMESA_PERSONNEL","CLASS_PLAYER_ALLY"}
 		elseif enemy:GetInt() == 1 then
 			self.VJ_NPC_Class = {"CLASS_BLACKMESA_PERSONNEL_HOSTILE"}
+		elseif enemy:GetInt() == 2 then
+			self.HasAllies = false
 		end
 	else
 		self.VJ_NPC_Class = {"CLASS_BLACKMESA_HECU"}
@@ -280,10 +316,10 @@ function ENT:SetBehaviorAndWeapons() -- Sets the Black Mesa Staff disaster behav
 	local NPC = self:GetClass()
 	local MDL = self:GetModel()
 	local Weapon_Chance = random(1,3)
-	local Staff_Wep = VJ_PICK(VJ_BMCE_WP_STAFF[random(#VJ_BMCE_WP_STAFF)])
-	local Staff_Constu_Wep = VJ_PICK(VJ_BMCE_WP_STAFF_CONSTRU[random(#VJ_BMCE_WP_STAFF_CONSTRU)])
-	local BMSF_Wep = VJ_PICK(VJ_BMCE_WP_BMSF[random(#VJ_BMCE_WP_BMSF)])
-	local BMSFADV_Wep = VJ_PICK(VJ_BMCE_WP_BMSF_ADVW[random(#VJ_BMCE_WP_BMSF_ADVW)])
+	local Staff_Wep = VJ_PICK( VJ_BMCE_WP_STAFF [random ( #VJ_BMCE_WP_STAFF ) ] )
+	local Staff_Constu_Wep = VJ_PICK( VJ_BMCE_WP_STAFF_CONSTRU [ random( #VJ_BMCE_WP_STAFF_CONSTRU ) ] )
+	local BMSF_Wep = VJ_PICK( VJ_BMCE_WP_BMSF [ random ( #VJ_BMCE_WP_BMSF ) ] )
+	local BMSFADV_Wep = VJ_PICK( VJ_BMCE_WP_BMSF_ADVW [ random ( #VJ_BMCE_WP_BMSF_ADVW ) ] )
 
 	-- Setting the disaster behavior
 	if behaviour:GetInt() == 1 then
@@ -297,7 +333,7 @@ function ENT:SetBehaviorAndWeapons() -- Sets the Black Mesa Staff disaster behav
 	end
 
 	-- Setting the Custom Weapons
-	if NPC == "npc_vj_bmce_scientist_m" or NPC == "npc_vj_bmce_scientist_casual_m" or NPC == "npc_vj_bmce_scientist_f" or NPC == "npc_vj_bmce_cw_f" or NPC == "npc_vj_bmce_cw_m" then
+	if NPC == "npc_vj_bmce_scientist_m" or NPC == "npc_vj_bmce_scientist_casual_m" or NPC == "npc_vj_bmce_scientist_f" or NPC == "npc_vj_bmce_cw_f" or NPC == "npc_vj_bmce_cw_m" or NPC == "npc_vj_bmce_hev_m" then
 		if wpns:GetInt() == 1 then 
 			if Weapon_Chance == 1 then
 				self:Give(Staff_Wep)
@@ -313,7 +349,7 @@ function ENT:SetBehaviorAndWeapons() -- Sets the Black Mesa Staff disaster behav
 		end
 	end
 
-	if NPC == "npc_vj_bmce_constructw_m" or NPC == "npc_vj_bmce_custodian_m" then
+	if NPC == "npc_vj_bmce_constructw_m" or NPC == "npc_vj_bmce_custodian_m" or NPC == "npc_vj_bmce_custodian_f" or NPC == "npc_vj_bmce_engineer_m" then
 		if wpns:GetInt() == 1 then 
 			if Weapon_Chance == 1 then
 				self:Give(Staff_Constu_Wep)
@@ -330,7 +366,7 @@ function ENT:SetBehaviorAndWeapons() -- Sets the Black Mesa Staff disaster behav
 	end
 
 	if NPC == "npc_vj_bmce_secguard_m" or NPC == "npc_vj_bmce_secguard_capt" then
-		--local rnd = random( 1, 3 )
+		self.Radio_ChatterTime = CurTime() + rand(1, 30)
 
 		if (Weapon_Chance >= 1 and Weapon_Chance <= 2) then
 			self:Give(BMSF_Wep)
@@ -345,20 +381,17 @@ function ENT:SetBehaviorAndWeapons() -- Sets the Black Mesa Staff disaster behav
 	if wpns:GetInt() == 0 and !self.Agressive then
 		self.Behavior = VJ_BEHAVIOR_PASSIVE
 	end
-
-	--print(self.Agressive)
-	--PrintMessage(HUD_PRINTTALK, "Weapon chance is " .. Weapon_Chance)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetNPCBodyGroups() -- Sets the bodygroups for NPCS
 	local NPC = self:GetClass()
-	local Hat_Chance = random(1,3)
-
+	local MDL = self:GetModel()
 	if (self.BMCE_Hat >= 1) then self:GiveUniqueHat() end
 
 	--PrintMessage(HUD_PRINTTALK, self.BMCE_Hat)
 
 	if behaviour:GetInt() == 0 then
+		
 		if NPC == "npc_vj_bmce_scientist_m" then
 			local hats = random( 1, 5 )
 			self:SetSkin( random( 0, 14 ))
@@ -379,6 +412,24 @@ function ENT:SetNPCBodyGroups() -- Sets the bodygroups for NPCS
 				self:SetBodygroup(3,random( 0, 6 )) -- Glasses
 				if Hat_Chance == 1 then self:SetBodygroup( 4, random( 0, 2 )) end
 			end
+			
+		elseif NPC == "npc_vj_bmce_scientist_f" then
+			local body = random(1,3)
+			self:SetSkin(random( 0, 9 ))
+			if body == 1 then
+				self:SetBodygroup(1,0)
+			elseif body == 2 then
+				self:SetBodygroup(1,2)
+			elseif body == 2 then
+				self:SetBodygroup(1,4)
+			end
+			self:SetBodygroup(2,random( 0, 5 )) -- Hair
+			self:SetBodygroup(3,random( 0, 14 )) -- Glasses
+		end
+
+		if NPC == "npc_vj_bmce_hev_m" then
+			self:SetSkin(random( 0, 14 ))
+			self:SetBodygroup( 2, random( 0, 1 )) -- helmet
 		end
 
 		if NPC == "npc_vj_bmce_scientist_casual_m" then
@@ -415,13 +466,21 @@ function ENT:SetNPCBodyGroups() -- Sets the bodygroups for NPCS
 			self:SetBodygroup(4,random( 0, 14 )) -- Glasses
 			self:SetBodygroup(2,random( 0, 1 )) -- Apron
 			self:SetBodygroup(3,random( 0, 8 )) -- Hair
-		end
 		
-		if NPC == "npc_vj_bmce_cw_m" then
+		elseif NPC == "npc_vj_bmce_cw_m" then
 			self:SetSkin(random( 0, 14 ))
-			self:SetBodygroup(4,random( 0, 14 )) -- Glasses
+			if MDL == "models/humans/cafeteria_male.mdl" then
+			self:SetBodygroup(1,random( 0, 1 )) -- Body
 			self:SetBodygroup(2,random( 0, 1 )) -- Apron
 			self:SetBodygroup(3,random( 0, 8 )) -- Hair
+			self:SetBodygroup(4,random( 0, 14 )) -- Glasses
+			self:SetBodygroup(5,random( 0, 1 )) -- Flashlight
+			elseif MDL == "models/humans/cafeteria_male_02.mdl" then
+				self:SetBodygroup(2,random( 0, 3 )) -- helmet
+				self:SetBodygroup(3,random( 0, 15 )) -- Glasses
+				self:SetBodygroup(4,random( 0, 1 )) -- Apron
+				self:SetBodygroup(5,random( 0, 1 )) -- Flashlight
+			end
 		end
 
 		if NPC == "npc_vj_bmce_custodian_m" then
@@ -430,6 +489,13 @@ function ENT:SetNPCBodyGroups() -- Sets the bodygroups for NPCS
 			self:SetBodygroup(3,random( 0, 1 )) -- vest
 			self:SetBodygroup(4,random( 3, 14 )) -- Glasses
 			if Hat_Chance == 1 then self:SetBodygroup( 2, random( 0, 4 )) end
+
+		elseif NPC == "npc_vj_bmce_custodian_f" then
+			self:SetSkin(random( 0, 14 ))
+			self:SetBodygroup(1,random( 0, 1 )) -- body
+			self:SetBodygroup(2,random( 0, 1 )) -- vest
+			self:SetBodygroup(3,random( 0, 10 )) -- Hair
+			self:SetBodygroup(4,random( 0, 14 )) -- glasses
 		end
 
 		if NPC == "npc_vj_bmce_constructw_m" then
@@ -441,8 +507,41 @@ function ENT:SetNPCBodyGroups() -- Sets the bodygroups for NPCS
 			if Hat_Chance == 1 then self:SetBodygroup( 4, random( 0, 4 )) end
 		end
 
+		if NPC == "npc_vj_bmce_engineer_m" then
+			local hats = random( 1, 5 )
+			self:SetSkin( random( 0, 14 ))
+			self:SetBodygroup( 1, random( 0, 1 )) -- Body
+			self:SetBodygroup( 3, random( 0, 1 )) -- Vest
+
+			if hats == 1 then
+				self:SetBodygroup( 2, random( 0, 2 )) -- Hat
+				self:SetBodygroup( 4, 1 ) -- Glasses
+			elseif hats == 2 then
+				self:SetBodygroup( 2, 1 ) -- Hat
+				self:SetBodygroup( 4, 2 ) -- Glasses
+			elseif hats == 3 then
+				self:SetBodygroup( 4, random( 3, 16 )) -- Glasses
+				if Hat_Chance == 1 then self:SetBodygroup( 2, 1) end
+			elseif hats == 4 then
+				self:SetBodygroup( 4, random( 3, 16 )) -- Glasses
+				self:SetBodygroup( 2, 1)
+			elseif hats == 5 then
+				self:SetBodygroup( 2, random( 0, 2 )) -- Hat
+			end
+		end
+
 		if NPC == "npc_vj_bmce_secguard_m" then
-			self:SetSkin(random(0,14))
+			if MDL == "models/humans/guard.mdl" then
+				self:SetSkin(random(0,13))
+			elseif MDL == "models/humans/guard_02.mdl" then
+				self:SetSkin(random(0,12))
+			elseif MDL == "models/humans/guard_03.mdl" then
+				self:SetSkin(random(0,11))
+			elseif MDL == "models/humans/guard_otis.mdl" then
+				self:SetSkin(random(0,15))
+			end
+
+			self:SetBodygroup(1,random(0,1)) -- Body
 			self:SetBodygroup(2,random(0,5)) --Helmet
 			self:SetBodygroup(4,random(0,11)) -- Glasses
 			self:SetBodygroup(6,random(0,1)) -- Flash
@@ -476,10 +575,19 @@ function ENT:SetNPCBodyGroups() -- Sets the bodygroups for NPCS
 				self:SetBodygroup(4,11)
 				self:SetBodygroup(5,0)
 			end
-		end
 		
-		if NPC == "npc_vj_bmce_secguard_capt" then
-			self:SetSkin(random(0,14))
+		elseif NPC == "npc_vj_bmce_secguard_capt" then
+			if MDL == "models/humans/guard.mdl" then
+				self:SetSkin(random(0,13))
+			elseif MDL == "models/humans/guard_02.mdl" then
+				self:SetSkin(random(0,12))
+			elseif MDL == "models/humans/guard_03.mdl" then
+				self:SetSkin(random(0,11))
+			elseif MDL == "models/humans/guard_otis.mdl" then
+				self:SetSkin(random(0,15))
+			end
+			
+			self:SetBodygroup(1,random(0,1)) -- Body
 			self:SetBodygroup(4,random(0,11)) -- Glasses
 			self:SetBodygroup(6,random(0,1)) -- Flash
 		
@@ -512,20 +620,6 @@ function ENT:SetNPCBodyGroups() -- Sets the bodygroups for NPCS
 				self:SetBodygroup(5,0)
 			end
 		end
-
-		if NPC == "npc_vj_bmce_scientist_f" then
-			local body = random(1,3)
-			self:SetSkin(random( 0, 9 ))
-			if body == 1 then
-				self:SetBodygroup(1,0)
-			elseif body == 2 then
-				self:SetBodygroup(1,2)
-			elseif body == 2 then
-				self:SetBodygroup(1,4)
-			end
-			self:SetBodygroup(2,random( 0, 5 )) -- Hair
-			self:SetBodygroup(3,random( 0, 14 )) -- Glasses
-		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -546,9 +640,19 @@ function ENT:GiveUniqueHat()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnThink_AIEnabled()
+	-- Random background radio sounds
+	if self.Radio_ChatterTime < CurTime() then
+		if random(1, 2) == 1 then
+			VJ_CreateSound(self, self.SoundTbl_RadioChatter, 50, 90)
+		end
+		self.Radio_ChatterTime = CurTime() + rand(1, 40)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
-	if self:Health() > 0 && dmginfo:IsDamageType(DMG_BURN) then
-		self:PlaySoundSystem("Pain", (self.PainVoice == 1 and SoundTbl_OnFire))
+	if self:Health() > 0 and dmginfo:IsDamageType(DMG_BURN) then
+		self:PlaySoundSystem("Pain", self.SoundTbl_OnFire or self.SoundTbl_Pain)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -655,28 +759,28 @@ function ENT:CustomOnFootStepSound()
 		endpos = self:GetPos() +Vector(0,0,-150),
 		filter = {self}
 	})
-	if tr.Hit && self.FootSteps[tr.MatType] then
+	if tr.Hit and self.FootSteps[tr.MatType] then
 		VJ_EmitSound(self,VJ_PICK(self.FootSteps[tr.MatType]),self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))
 	end
-	if self:WaterLevel() > 0 && self:WaterLevel() < 3 then
+	if self:WaterLevel() > 0 and self:WaterLevel() < 3 then
 		VJ_EmitSound(self,"vj_bmce/footsteps/water_wade" .. random( 1, 4 ) .. ".mp3",self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:FootStepSoundCode(CustomTbl)
 	if self.HasSounds == false or self.HasFootStepSound == false or self.MovementType == VJ_MOVETYPE_STATIONARY then return end
-	if self:IsOnGround() && self:GetGroundEntity() != NULL then
+	if self:IsOnGround() and self:GetGroundEntity() != NULL then
 		if self.DisableFootStepSoundTimer == true then
 			self:CustomOnFootStepSound()
 			return
-		elseif self:IsMoving() && CurTime() > self.FootStepT then
+		elseif self:IsMoving() and CurTime() > self.FootStepT then
 			self:CustomOnFootStepSound()
 			local CurSched = self.CurrentSchedule
-			if self.DisableFootStepOnRun == false && ((VJ_HasValue(self.AnimTbl_Run,self:GetMovementActivity())) or (CurSched != nil  && CurSched.IsMovingTask_Run == true)) /*(VJ_HasValue(VJ_RunActivites,self:GetMovementActivity()) or VJ_HasValue(self.CustomRunActivites,self:GetMovementActivity()))*/ then
+			if self.DisableFootStepOnRun == false and ((VJ_HasValue(self.AnimTbl_Run,self:GetMovementActivity())) or (CurSched != nil  and CurSched.IsMovingTask_Run == true)) /*(VJ_HasValue(VJ_RunActivites,self:GetMovementActivity()) or VJ_HasValue(self.CustomRunActivites,self:GetMovementActivity()))*/ then
 				self:CustomOnFootStepSound_Run()
 				self.FootStepT = CurTime() + self.FootStepTimeRun
 				return
-			elseif self.DisableFootStepOnWalk == false && (VJ_HasValue(self.AnimTbl_Walk,self:GetMovementActivity()) or (CurSched != nil  && CurSched.IsMovingTask_Walk == true)) /*(VJ_HasValue(VJ_WalkActivites,self:GetMovementActivity()) or VJ_HasValue(self.CustomWalkActivites,self:GetMovementActivity()))*/ then
+			elseif self.DisableFootStepOnWalk == false and (VJ_HasValue(self.AnimTbl_Walk,self:GetMovementActivity()) or (CurSched != nil  and CurSched.IsMovingTask_Walk == true)) /*(VJ_HasValue(VJ_WalkActivites,self:GetMovementActivity()) or VJ_HasValue(self.CustomWalkActivites,self:GetMovementActivity()))*/ then
 				self:CustomOnFootStepSound_Walk()
 				self.FootStepT = CurTime() + self.FootStepTimeWalk
 				return
@@ -688,6 +792,28 @@ end
 function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	if key == "step" then
 		self:FootStepSoundCode()
+	end
+
+	if key == "Use" then
+		if follower:GetBool() then -- If the convar is enabled, we allow our SNPC to follow the player.
+			if self.IsFollowing == false then
+				activator:PrintMessage(HUD_PRINTTALK, self:GetName().. ": I'll follow you.")
+			elseif self.IsFollowing == true then
+				activator:PrintMessage(HUD_PRINTTALK, self:GetName().. ": I'll stay here.")
+			end
+		else -- If not, then we don't want to follow them
+			if self.DisasterBehavior == 0 then -- Make sure that it's a pre-d npc
+				self.IsFollowing = true -- Trick VJ base thinking that this NPC can't follow.
+				self:PlaySoundSystem("GeneralSpeech", self.SoundTbl_LeaveMeAlone)
+				activator:PrintMessage(HUD_PRINTTALK, self:GetName().. ": I'm busy " .. activator:GetName().. ", go bother someone else.")
+			else
+				if self.IsFollowing == false then
+					activator:PrintMessage(HUD_PRINTTALK, self:GetName().. ": I'll follow you.")
+				elseif self.IsFollowing == true then
+					activator:PrintMessage(HUD_PRINTTALK, self:GetName().. ": I'll stay here.")
+				end
+			end
+		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

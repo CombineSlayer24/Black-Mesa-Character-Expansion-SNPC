@@ -23,6 +23,7 @@ if VJExists == true then
 
 	VJ.AddNPC("Male Scientist","npc_vj_bmce_scientist_m",vPDCat)
 	VJ.AddNPC("Female Scientist","npc_vj_bmce_scientist_f",vPDCat)
+	VJ.AddNPC("Male H.E.V Scientist","npc_vj_bmce_hev_m",vPDCat)
 	VJ.AddNPC("Female Canteen Worker","npc_vj_bmce_cw_f",vPDCat)
 	VJ.AddNPC("Male Canteen Worker","npc_vj_bmce_cw_m",vPDCat)
 	VJ.AddNPC("Male Casual Scientist","npc_vj_bmce_scientist_casual_m",vPDCat)
@@ -30,6 +31,9 @@ if VJExists == true then
 	VJ.AddNPC("Male Custodian Worker","npc_vj_bmce_custodian_m",vPDCat)
 	VJ.AddNPC("Male Security Guard","npc_vj_bmce_secguard_m",vPDCat)
 	VJ.AddNPC("Security Guard Captain","npc_vj_bmce_secguard_capt",vPDCat)
+	VJ.AddNPC("Male Custodian","npc_vj_bmce_custodian_m",vPDCat)
+	VJ.AddNPC("Female Custodian","npc_vj_bmce_custodian_f",vPDCat)
+	VJ.AddNPC("Male Engineer","npc_vj_bmce_engineer_m",vPDCat)
 
 	-- Weapons
 	VJ.AddNPCWeapon("VJ_BMCE_M4_GRENADIER", "weapon_vj_bmce_m4")
@@ -57,6 +61,7 @@ if VJExists == true then
 	VJ.AddConVar("vj_bmce_disaster_status", 0, {FCVAR_ARCHIVE})
 	VJ.AddConVar("vj_bmce_weapons", 0, {FCVAR_ARCHIVE})
 	VJ.AddConVar("vj_bmce_hostile", 0, {FCVAR_ARCHIVE})
+	VJ.AddConVar("vj_bmce_following", 0, {FCVAR_ARCHIVE})
 
 	-- Globals --
 
@@ -86,7 +91,6 @@ if VJExists == true then
 		"weapon_vj_crowbar",
 		"weapon_vj_crowbar",
 		"weapon_vj_crowbar",
-		"weapon_vj_crowbar",
 		"weapon_vj_bmce_m9",
 		"weapon_vj_bmce_m9",
 		"weapon_vj_bmce_mp5"
@@ -112,8 +116,9 @@ if VJExists == true then
 	}
 
 	VJ_MODEL_ANIMSET_BMSTAFF = 0
-	VJ_MODEL_ANIMSET_HECU = 1
-
+	VJ_MODEL_ANIMSET_BMSTAFF_FEMALE = 1
+	VJ_MODEL_ANIMSET_HECU = 2
+	
 	------------------------------------------------------------------------------------------------------------------------------------------------------
 	if CLIENT then
 		hook.Add("PopulateToolMenu", "VJ_ADDTOMENU_BMCE", function()
@@ -130,8 +135,14 @@ if VJExists == true then
 				Panel:AddControl("Checkbox", {Label = "Should SNPCs use Disaster behaviour?", Command = "vj_bmce_disaster_status"})
 				Panel:ControlHelp("if checked, SNPCs will be in Disaster status. If unchecked, SNPCs will be in Pre-Disaster status. \n\nH.E.C.U Soldiers will attack Staff Members if enabled.")
 
+				Panel:AddControl("Checkbox", {Label = "Enable following?", Command = "vj_bmce_following"})
+				Panel:ControlHelp("if checked, SNPCs in Pre-Disaster status will follow you. If unchecked, SNPCs in Pre-Disaster status won't follow you. Post-Disaster SNPCS will still follow you regardless. \n\nH.E.C.U Soldiers will attack Staff Members if enabled.")
+
 				Panel:AddControl("Checkbox", {Label = "Should SNPCs names draw to the hud?", Command = "vj_bmce_shownames"})
 				Panel:ControlHelp("if checked, SNPCs on croshair will show their name.")
+
+				Panel:AddControl("Slider", { Label 	= "Should SNPCs health draw to the hud?", Command = "vj_bmce_showhealthinfo", Type = "0", Min = "0", Max = "3"})
+				Panel:ControlHelp("0 = Disable \n1 = Healthbar \n2 = Precise \n 3 = Both")
 				
 				Panel:AddControl("Slider", { Label 	= "Hostility", Command = "vj_bmce_hostile", Type = "0", Min = "0", Max = "2"})
 				Panel:ControlHelp("0 = Friendly \n1 = Hostile \n2 = Hates everyone")

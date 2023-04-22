@@ -1,0 +1,8 @@
+UnlitGeneric
+{
+    "$basetexture" 		"vgui/wep/mp5"
+    "$vertexcolor" 		1
+    "$vertexalpha" 		1
+    "$nolod" 		1
+    "$additive"		1 // hldm style!
+}

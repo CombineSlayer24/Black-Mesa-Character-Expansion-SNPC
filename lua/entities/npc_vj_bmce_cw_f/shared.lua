@@ -1,6 +1,6 @@
 ENT.Base 			= "npc_vj_bmce_base" -- List of all base types: https://github.com/DrVrej/VJ-Base/wiki/Base-Types
 ENT.Type 			= "ai"
-ENT.PrintName 		= "Female Canteen Worker"
+ENT.PrintName 		= ""
 ENT.Author 			= "Pyri"
 ENT.Contact 		= "http://steamcommunity.com/id/swellseeker7820"
 ENT.Purpose 		= "Spawn it and fight with it!"

@@ -19,7 +19,7 @@ SWEP.NPC_NextPrimaryFire 		= 3.2 -- Next time it can use primary fire
 SWEP.NPC_TimeUntilFire	 		= 0.1 -- How much time until the bullet/projectile is fired?
 SWEP.NPC_TimeUntilFireExtraTimers = {0.4,0.8,1.2,1.6} -- Next time it can use primary fire
 SWEP.NPC_CustomSpread	 		= 0.75 -- This is added on top of the custom spread that's set inside the SNPC! | Starting from 1: Closer to 0 = better accuracy, Farther than 1 = worse accuracy
-SWEP.NPC_ReloadSound			= {"vj_weapons/bmce_m9/reload.mp3"} -- Sounds it plays when the base detects the SNPC playing a reload animation
+SWEP.NPC_ReloadSound			= {"vj_bmce/weapons/bmce_m9/reload.mp3"} -- Sounds it plays when the base detects the SNPC playing a reload animation
 	-- Main Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.ViewModel					= "models/weapons/viewmodels/bmce/v_glock.mdl"
 SWEP.WorldModel					= "models/weapons/bmce_weapons/bmce_m9/w_glock.mdl"

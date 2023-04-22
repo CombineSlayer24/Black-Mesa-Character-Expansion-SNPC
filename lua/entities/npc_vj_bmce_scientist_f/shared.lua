@@ -13,12 +13,14 @@ if CLIENT then
         local lastname = VJ_PICK(VJ_BMCE_NAMES_LAST)
         local sci_ranks = VJ_PICK(VJ_BMCE_RANKS_SCI)
         local random = math.random
-        local rc = random(1,2)
+        local rc = random(1,3)
 
         if rc == 1 then
             self.PrintName = sci_ranks .. firstname .. lastname
         elseif rc == 2 then
             self.PrintName = firstname .. lastname
+        elseif rc == 3 then
+            self.PrintName = "Dr." .. firstname .. lastname
         end
     end
 end

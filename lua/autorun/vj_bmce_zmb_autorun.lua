@@ -143,6 +143,13 @@ if VJExists == true then
 				Panel:AddControl( "Checkbox", { Label = "Enable Undead Bruiser chance?", Command = "vj_bmce_zmb_bruisers" } )
 				Panel:ControlHelp( "If enabled, Undead may have a chance to be a Brusier. Only applies to certain Undead." )
 
+				Panel:AddControl("Header", {Description = "Undead Map Spawner Commands"})
+				Panel:ControlHelp("Navigate to LNR (MapSp) to tinker settings for the Manhunt Undead Map Spawner.")
+
+				Panel:AddControl("Checkbox", {Label = "Map Spawner: Enable starting music?", Command = "vj_bmce_zmb_map_music"})
+				Panel:AddControl("Checkbox", {Label = "Map Spawner: Enable spooky sounds?", Command = "vj_bmce_zmb_map_spooky_snds"})
+				Panel:AddControl("Checkbox", {Label = "Map Spawner: Remove all undead NPCs upon deleting Map Spawner?", Command = "vj_bmce_zmb_map_delete"})
+
 				Panel:AddControl( "Checkbox", { Label = "Enable Powerups?", Command = "vj_bmce_zmb_powerups" } )
 				Panel:ControlHelp( "If enabled, Undead may have a chance to drop powerups." )
 			end)

@@ -19,6 +19,7 @@ function EFFECT:Init( data )
 		for i = 0, 10 do
 			local p = em:Add( matshoot[math.random(#matshoot)] , pos )
 			if p then
+				--p:SetColor(math.random(189,189), math.random(200,200), math.random(212,212))
 		        p:SetColor(math.random(45,55), math.random(40,50), math.random(40,50))
 		        p:SetStartAlpha(255)
 		        p:SetEndAlpha(0)

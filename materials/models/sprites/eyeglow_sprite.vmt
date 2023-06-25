@@ -1,6 +1,8 @@
-"Sprite"
+"UnLitGeneric"
 {
-	"$spriteorientation" "vp_parallel"
-	"$spriteorigin" "[ 0.50 0.50 ]"
 	"$basetexture" "models/sprites/eyeglow_sprite"
+	"$nocull" 1
+	"$additive" 1
+	"$vertexalpha" 1
+	"$vertexcolor" 1
 }

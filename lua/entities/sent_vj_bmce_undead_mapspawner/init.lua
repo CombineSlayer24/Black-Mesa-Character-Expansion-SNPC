@@ -7,18 +7,21 @@ local table_remove = table.remove
 
 
 ENT.Zombie = {
-	{class="npc_vj_bmce_und_wlk_sci_male",chance=1},
-	{class="npc_vj_bmce_und_run_sci_male",chance=1},
-	{class="npc_vj_bmce_und_wlk_sci_cas_male",chance=1},
-	{class="npc_vj_bmce_und_run_sci_cas_male",chance=1},
-	{class="npc_vj_bmce_und_wlk_guard",chance=1},
-	{class="npc_vj_bmce_und_run_guard",chance=1},
-	{class="npc_vj_bmce_und_wlk_guardfem",chance=1},
-	{class="npc_vj_bmce_und_run_guardfem",chance=1},
+	{class="npc_vj_bmce_und_cw_fem",chance=1},
+	{class="npc_vj_bmce_und_cw_male",chance=1},
+	{class="npc_vj_bmce_und_sci_cas_male",chance=1},
+	{class="npc_vj_bmce_und_constwrk",chance=1},
+	{class="npc_vj_bmce_und_custodian_male",chance=1},
+	{class="npc_vj_bmce_und_fireman",chance=1},
+	{class="npc_vj_bmce_und_guard_fem",chance=1},
+	{class="npc_vj_bmce_und_guard_male",chance=1},
+	{class="npc_vj_bmce_und_hgrunt_male",chance=1},
+	{class="npc_vj_bmce_und_offworker_fem",chance=1},
+	{class="npc_vj_bmce_und_sci_male",chance=1}
 }
 
 ENT.SpecialZombie = {
-	{class="npc_vj_bmce_und_wlk_guardfem",max=5},
+	{class="npc_vj_bmce_und_fireman",max=5},
 }
 -- i'll add the main characters as special zmbs
 ---------------------------------------------------------------------------------------------------------------------------------------------

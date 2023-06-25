@@ -1,0 +1,48 @@
+________________________________________________________________________
+BLACK MESA CHARACTER EXPANSION: UNDEAD PACK
+________________________________________________________________________
+Made for fun, made for Garry's Mod ONLY!
+
+Requires VJ Base, a good noded map (no shitty nodes)
+
+
+During the development cylce of doing the Undead pack, I've been having 
+lots of burnouts, code changes, optimizationsand rework of something 
+because there was a better way, or I didn't like how it was done.
+
+That, and shifting through the Main BMCE SNPCs, playermodels.
+I wanted to somehow try and attempt to make these into Nextbots
+one day, but for now, they'll be SNPCs, on VJ Base.
+________________________________________________________________________
+DEVELOPMENT BACKSTORY: (TLDR SOON)
+After doing Manhunt Undead NPCs, I wanted to expand my hobby of
+zombifying models from LQ models to HQ models, BMCE. With permission.
+
+I ported BMCE models the first time around 2020, while my coding
+wasn't good back then, it has been improved from working with StarFrost
+on Zeta Players and Lambda Players. I wanted to start work on the undead
+before even doing the main BMCE SNPCs, which would've been dumb, but
+I was eager to get started on it.
+
+Now I have to worry about both the undead and main human snpcs, that's
+what happens when you don't plan, not only that, but having to keep up
+from the constant comments on "Where's VJ BMCE".
+
+There's only so much I can do before I get burnt out, coding wise no...
+
+Texturing, that takes the burnout more than coding, tbh.
+________________________________________________________________________
+DEV REFERENCES:
+Zombie sounds:
+- Call Of Duty: World At War (Nacht Der Untoten)
+- Call Of Duty: World At War, BO1 - BO2
+- Call Of Duty: Black Ops 3
+- Call Of Duty: Cold War
+- Red Dead Redemption: Undead Nightmare
+
+//////////////////////////////////////////////////////////////////////////
+Textures used / referenced off of:
+DWBoy for textures
+Using L4D1 Common Infected
+Using RDR:UN Randomly Generated Blood stains
+________________________________________________________________________

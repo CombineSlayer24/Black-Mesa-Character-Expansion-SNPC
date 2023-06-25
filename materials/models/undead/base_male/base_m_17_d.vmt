@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
 	"$baseTexture" "models\undead\base_male/base_m_17_d"
-	"$bumpmap" "models\humans\base_male/base_m_17_n"
+	"$bumpmap" "models\undead\base_male/base_m_17_n"
         "$lightwarptexture" "models\humans\base_male\Base_M_caucasian_wrp"
 //        "$lightwarptexture" "models\humans\base_male\Base_M_african_wrp"
         $halflambert 0

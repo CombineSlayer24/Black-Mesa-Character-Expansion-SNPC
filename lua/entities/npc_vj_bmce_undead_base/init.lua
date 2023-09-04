@@ -182,8 +182,8 @@ local blueEyeMdls = {
 local bruiserChance = GetConVar( "vj_bmce_zmb_bruiserchance" )
 local crawlerChance = GetConVar( "vj_bmce_zmb_crawlerchance" )
 local superCrawlerChance = GetConVar( "vj_bmce_zmb_supercrawlerchance" )
---local specialEyeColors =  GetConVar( "vj_bmce_zmb_specialeyecolors" )
-local burnParticles = GetConVar( "vj_bmce_zmb_burnparticles" )
+local specialEyeColors =  GetConVar( "vj_bmce_zmb_specialeyecolors" )
+--local burnParticles = GetConVar( "vj_bmce_zmb_burnparticles" )
 local voiceset = GetConVar( "vj_bmce_zmb_voiceset" )
 local zombie_Speed = GetConVar( "vj_bmce_zmb_speed" )
 

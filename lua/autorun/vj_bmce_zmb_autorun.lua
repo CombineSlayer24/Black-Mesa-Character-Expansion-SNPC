@@ -330,8 +330,7 @@ local function DrawZombieCount()
 	local count = 0
 	local color = Color(0, 255, 0) -- Placeholder "default" local color
 
-	--for _, ent in pairs(ents.FindByClass("npc_vj_bmce_und_*")) do
-	for _, ent in pairs(ents.FindByClass("npc_vj_l4d_ri_*")) do
+	for _, ent in pairs(ents.FindByClass("npc_vj_bmce_und_*")) do
 		if ent:IsNPC() and ent:GetMoveType() == MOVETYPE_STEP then
 			count = count + 1
 		end
@@ -350,9 +349,9 @@ local function DrawZombieCount()
 	end
 	
 	if count > 0 then
-		draw.SimpleTextOutlined("Total Infected Alive: " .. count, "DermaLarge", ScrW() / 2, 42, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0, 0, 0))
+		draw.SimpleTextOutlined("Total Zombies Alive: " .. count, "DermaLarge", ScrW() / 2, 42, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0, 0, 0))
 	else
-		draw.SimpleTextOutlined("Total Infected Alive:", "DermaLarge", ScrW() / 2, 42, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0, 0, 0))
+		draw.SimpleTextOutlined("Total Zombies Alive:", "DermaLarge", ScrW() / 2, 42, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0, 0, 0))
 	end
 end
 

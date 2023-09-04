@@ -8,7 +8,7 @@
 local PublicAddonName = "Black Mesa Character Expansion SNPCs"
 local AddonName = "Black Mesa Character Expansion - Undead (ADDON)"
 local AddonType = "SNPC"
-local AutorunFile = "autorun/vj_bmce_autorun.lua"
+local AutorunFile = "autorun/vj_bmce_zmb_autorun.lua"
 -------------------------------------------------------
 local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
 include("autorun/music.lua")
@@ -41,7 +41,8 @@ if VJExists == true then
 	VJ.BMCER_UNDEAD_INSTALLED = file.Exists("lua/autorun/vj_bmcer_undead_autorun.lua","GAME")
 
 	---------- Undead ----------------------
-	VJ.AddNPC( "Undead Scientist", "npc_vj_bmce_und_sci_male", vCat )
+	VJ.AddNPC( "Undead Scientist Male", "npc_vj_bmce_und_sci_male", vCat )
+	VJ.AddNPC( "Undead Scientist Female", "npc_vj_bmce_und_sci_female", vCat )
 	VJ.AddNPC( "Undead Casual Scientist", "npc_vj_bmce_und_sci_cas_male", vCat )
 	VJ.AddNPC( "Undead Office Worker Female", "npc_vj_bmce_und_offworker_fem", vCat )
 	VJ.AddNPC( "Undead Construction Worker", "npc_vj_bmce_und_constwrk", vCat )
@@ -62,7 +63,6 @@ if VJExists == true then
 
 	VJ.AddConVar( "vj_bmce_zmb_eyeglow", 1, {FCVAR_ARCHIVE} )
 	VJ.AddConVar( "vj_bmce_zmb_specialeyecolors", 1, {FCVAR_ARCHIVE} )
-	VJ.AddConVar( "vj_bmce_zmb_eyeglow_lighter", 0, {FCVAR_ARCHIVE} )
 	--VJ.AddConVar( "vj_bmce_zmb_glowtrail", 0, {FCVAR_ARCHIVE} )
 	VJ.AddConVar( "vj_bmce_zmb_noisy", 0, {FCVAR_ARCHIVE} )
 	VJ.AddConVar( "vj_bmce_zmb_speed", 4, {FCVAR_ARCHIVE} )
@@ -73,23 +73,25 @@ if VJExists == true then
 	VJ.AddConVar( "vj_bmce_zmb_map_music", 1, {FCVAR_ARCHIVE} )
 	VJ.AddConVar( "vj_bmce_zmb_map_spooky_snds", 1, {FCVAR_ARCHIVE} )
 	VJ.AddConVar( "vj_bmce_zmb_map_delete", 1, {FCVAR_ARCHIVE} )
-	VJ.AddConVar( "vj_bmce_zmb_bruisers", 1, {FCVAR_ARCHIVE} )
 	VJ.AddConVar( "vj_bmce_zmb_powerups", 1, {FCVAR_ARCHIVE} )
-	VJ.AddConVar( "vj_bmce_zmb_burnparticles", 0, {FCVAR_ARCHIVE} )
-	VJ.AddConVar( "vj_bmce_zmb_explode", 1, {FCVAR_ARCHIVE} )
+	--VJ.AddConVar( "vj_bmce_zmb_burnparticles", 0, {FCVAR_ARCHIVE} )
+	--VJ.AddConVar( "vj_bmce_zmb_explode", 1, {FCVAR_ARCHIVE} )
 	VJ.AddConVar( "vj_bmce_zmb_voiceset", 0, {FCVAR_ARCHIVE} )
 	VJ.AddConVar( "vj_bmce_zmb_spawnamount", 1, {FCVAR_ARCHIVE} )
 	VJ.AddConVar( "vj_bmce_zmb_spawnradius", 1000, {FCVAR_ARCHIVE} )
+	VJ.AddConVar( "vj_bmce_zmb_supercrawlerchance", 25, {FCVAR_ARCHIVE} )
+	VJ.AddConVar( "vj_bmce_zmb_bruiserchance", 25, {FCVAR_ARCHIVE} )
+	VJ.AddConVar( "vj_bmce_zmb_crawlerchance", 10, {FCVAR_ARCHIVE} )
 
 	util.PrecacheModel("models/undead/scientist.mdl")
 	util.PrecacheModel("models/undead/scientist_02.mdl")
-	util.PrecacheModel("models/undead/scientist_burned.mdl")
+	--util.PrecacheModel("models/undead/scientist_burned.mdl")
 	util.PrecacheModel("models/undead/scientist_casual.mdl")
 	util.PrecacheModel("models/undead/scientist_casual_02.mdl")
 	util.PrecacheModel("models/undead/guard.mdl")
 	util.PrecacheModel("models/undead/guard_02.mdl")
 	util.PrecacheModel("models/undead/guard_03.mdl")
-	util.PrecacheModel("models/undead/guard_burned.mdl")
+	--util.PrecacheModel("models/undead/guard_burned.mdl")
 	util.PrecacheModel("models/undead/guard_female.mdl")
 	util.PrecacheModel("models/undead/fem_office_worker.mdl")
 	util.PrecacheModel("models/undead/cafeteria_female.mdl")
@@ -119,13 +121,10 @@ if VJExists == true then
 				--Panel:AddControl("Checkbox", {Label = "Enable eye glow trail for Undead?", Command = "vj_bmce_zmb_glowtrail"})
 				--Panel:ControlHelp("Please be aware that having too many Undead SNPCs with glow trails enabled may cause performance issues.")
 
-				Panel:AddControl("Checkbox", {Label = "Different Eyeglow texture", Command = "vj_bmce_zmb_eyeglow_lighter"})
-				Panel:ControlHelp("IF checked, use a lighter eye glow texture.")
-
-				Panel:AddControl("Slider", {Label = "Undead Burning Particles", Command ="vj_bmce_zmb_burnparticles", Min = "0", Max = "2"})
-				Panel:ControlHelp("If enabled, burnt undead will have particles following them. NOTE: Having too many will lag your computer.\n\n0 = Disabled\n1 = Fire + Smoke\n2 = Smoke only")
+				--Panel:AddControl("Slider", {Label = "Undead Burning Particles", Command = "vj_bmce_zmb_burnparticles", Min = "0", Max = "2"})
+				--Panel:ControlHelp("If enabled, burnt undead will have particles following them. NOTE: Having too many will lag your computer.\n\n0 = Disabled\n1 = Fire + Smoke\n2 = Smoke only")
 				
-				Panel:AddControl("Checkbox", {Label = "Burning undead explode on death?", Command = "vj_bmce_zmb_explode"})
+				--Panel:AddControl("Checkbox", {Label = "Burning undead explode on death?", Command = "vj_bmce_zmb_explode"})
 
 				Panel:AddControl("Checkbox", {Label = "Enable ground spawn animation?", Command = "vj_bmce_zmb_riser"})
 				Panel:ControlHelp("If enabled, Undead will play a spawning animation when they rise from the ground, only applies to 'soft surfaces' like grass, gravel. This feature can add a new layer of 'immersion'.")
@@ -140,8 +139,16 @@ if VJExists == true then
 				Panel:AddControl( "Slider", { Label ="Undead Death Rand Max", Command = "vj_bmce_zmb_deathtime_max", Min = "5", Max = "120" } )
 				Panel:ControlHelp( "Note: Max must be higher than Min." )
 
-				Panel:AddControl( "Checkbox", { Label = "Enable Undead Bruiser chance?", Command = "vj_bmce_zmb_bruisers" } )
-				Panel:ControlHelp( "If enabled, Undead may have a chance to be a Brusier. Only applies to certain Undead." )
+				Panel:AddControl("Header", {Description = "Note: Don't have Crawler and Super Crawler chances both set at 100%"})
+
+				Panel:AddControl( "Slider", { Label = "Undead Bruiser chance?", Command = "vj_bmce_zmb_bruiserchance", Min = "0", Max = "100" } )
+				Panel:ControlHelp( "The chance if a Undead will be a Brusier. Only applies to certain Undead." )
+
+				Panel:AddControl( "Slider", { Label = "Crawler chance?", Command = "vj_bmce_zmb_crawlerchance", Min = "0", Max = "100" } )
+				Panel:ControlHelp( "The chance if a Undead will be a Crawler." )
+
+				Panel:AddControl( "Slider", { Label = "Super Crawler chance?", Command = "vj_bmce_zmb_supercrawlerchance", Min = "0", Max = "100" } )
+				Panel:ControlHelp( "The chance if a Undead will be a Super Crawler (Must be super sprinters)." )
 
 				Panel:AddControl("Header", {Description = "Undead Map Spawner Commands"})
 				Panel:ControlHelp("Navigate to LNR (MapSp) to tinker settings for the Manhunt Undead Map Spawner.")
@@ -234,21 +241,20 @@ local entsList = {
 	"npc_vj_bmce_und_hgrunt_male",
 	"npc_vj_bmce_und_offworker_fem",
 	"npc_vj_bmce_und_sci_male",
+	"npc_vj_bmce_und_sci_female",
 	"npc_vj_bmce_und_cwork_male",
 }
+
+--Get's the same height level as player
 local function GetNavAreasNear(pos, radius)
     local navareas = navmesh.GetAllNavAreas()
     local foundareas = {}
-
     local playerZ = pos.z
 
     for i = 1, #navareas do
-        local nav = navareas[i]
-        if IsValid(nav) and nav:GetSizeX() > 40 and nav:GetSizeY() > 40 and not nav:IsUnderwater() and
-           (pos:DistToSqr(nav:GetClosestPointOnArea(pos)) < (radius * radius) and
-           pos:DistToSqr(nav:GetClosestPointOnArea(pos)) > ((radius / 3) * (radius / 3)) and
-           nav:GetCenter().z >= playerZ - 40 and nav:GetCenter().z <= playerZ + 40) then
-            foundareas[#foundareas + 1] = nav
+        local nav = navareas[ i ]
+        if IsValid( nav ) and nav:GetSizeX() > 40 and nav:GetSizeY() > 40 and !nav:IsUnderwater() and ( pos:DistToSqr( nav:GetClosestPointOnArea( pos ) ) < ( radius * radius ) and pos:DistToSqr( nav:GetClosestPointOnArea( pos ) ) > ( ( radius / 3) * ( radius / 3 ) ) and nav:GetCenter().z >= playerZ - 40 and nav:GetCenter().z <= playerZ + 40 ) then
+            foundareas[ #foundareas + 1 ] = nav
         end
     end
 
@@ -269,35 +275,30 @@ end
 	return foundareas
 end ]]
 
+local random = math.random
 
 local function SpawnNPC(pos, class, caller)
     local plyradius = GetConVar("vj_bmce_zmb_spawnradius")
     if not IsValid(caller) then return end
     
     if not pos then
-        local areas = GetNavAreasNear(caller:GetPos(), plyradius:GetInt())
-        local area = areas[math.random(#areas)]
-        if not IsValid(area) then return end
+        local areas = GetNavAreasNear( caller:GetPos(), plyradius:GetInt() )
+        local area = areas[ random( #areas ) ]
+        if !IsValid(area) then return end
         
-        -- Calculate the center of the navmesh area
         local center = area:GetCenter()
-        
-        -- Calculate the width and height of the navmesh area
         local width = area:GetSizeX()
         local height = area:GetSizeY()
-        
-        -- Set the max offset based on the size of the navmesh area
         local maxOffset = width <= 40 and height <= 40 and 1 or 15
-        
-        -- Randomize X and Y components, keep Z at 0
         local xyOffset = VectorRand() * maxOffset
-        xyOffset.z = 25
+
+        xyOffset.z = 10
         pos = center + xyOffset
     end
 
-    local npc = ents.Create(class)
-    npc:SetPos(pos)
-    npc:SetAngles(Angle(0, math.random(-180, 180), 0))
+    local npc = ents.Create( class )
+    npc:SetPos( pos )
+    npc:SetAngles( Angle( 0, random( -180, 180 ), 0 ) )
     npc:Spawn()
 
    -- local entIndex = npc:EntIndex()
@@ -329,7 +330,8 @@ local function DrawZombieCount()
 	local count = 0
 	local color = Color(0, 255, 0) -- Placeholder "default" local color
 
-	for _, ent in pairs(ents.FindByClass("npc_vj_bmce_und_*")) do
+	--for _, ent in pairs(ents.FindByClass("npc_vj_bmce_und_*")) do
+	for _, ent in pairs(ents.FindByClass("npc_vj_l4d_ri_*")) do
 		if ent:IsNPC() and ent:GetMoveType() == MOVETYPE_STEP then
 			count = count + 1
 		end
@@ -348,10 +350,13 @@ local function DrawZombieCount()
 	end
 	
 	if count > 0 then
-		draw.SimpleTextOutlined("Total Zombies Alive: " .. count, "DermaLarge", ScrW() / 2, 42, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0, 0, 0))
+		draw.SimpleTextOutlined("Total Infected Alive: " .. count, "DermaLarge", ScrW() / 2, 42, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0, 0, 0))
 	else
-		draw.SimpleTextOutlined("Total Zombies Alive:", "DermaLarge", ScrW() / 2, 42, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0, 0, 0))
+		draw.SimpleTextOutlined("Total Infected Alive:", "DermaLarge", ScrW() / 2, 42, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0, 0, 0))
 	end
 end
+
+game.AddParticles("particles/blackops3zombies_fx.pcf")
+PrecacheParticleSystem("bo3_zombie_spawn")
 
 --hook.Add("HUDPaint", "DrawZombieCount", DrawZombieCount)

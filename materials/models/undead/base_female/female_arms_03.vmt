@@ -2,8 +2,8 @@
 {
 	"$baseTexture" "models\undead\base_female/female_arms_03"
 	"$bumpmap" "models\humans\base_female/female_arms_normal"
-//        "$lightwarptexture" "models\humans\base_male\Base_M_caucasian_wrp"
-        "$lightwarptexture" "models\humans\base_male\Base_M_african_wrp"
+        "$lightwarptexture" "models\humans\base_male\Base_M_caucasian_wrp"
+//        "$lightwarptexture" "models\humans\base_male\Base_M_african_wrp"
         $halflambert 0
 	"$model" "1"
 	"$surfaceprop" "flesh"

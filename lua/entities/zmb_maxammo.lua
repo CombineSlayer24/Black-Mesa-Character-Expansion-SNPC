@@ -55,7 +55,7 @@ function ENT:OnGrab()
             local clipSize = weapon:GetMaxClip1()
             local ammoType = weapon:GetPrimaryAmmoType()
             if ammoType != -1 then
-                local ammoToAdd = math.floor(clipSize * 5)
+                local ammoToAdd = math.floor(clipSize * 3)
                 ply:GiveAmmo(ammoToAdd, ammoType)
             end
         end

@@ -43,6 +43,8 @@ Zombie sounds:
 //////////////////////////////////////////////////////////////////////////
 Textures used / referenced off of:
 DWBoy for textures
+☢ Nebo Strelok ☣ for L4D1 textures
 Using L4D1 Common Infected
-Using RDR:UN Randomly Generated Blood stains
+Using RDR Undead Nightmare
+Using Dead Rising
 ________________________________________________________________________

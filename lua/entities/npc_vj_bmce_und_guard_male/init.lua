@@ -5,4 +5,4 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/undead/guard.mdl", "models/undead/guard_02.mdl", "models/undead/guard_03.mdl", "models/undead/guard_burned.mdl"}
+ENT.Model = {"models/undead/guard.mdl"}
